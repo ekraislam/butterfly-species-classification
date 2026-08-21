@@ -184,8 +184,9 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
     # LEFT COLUMN: Specimen Photographic Evidence Chambers
     # -------------------------------------------------------------------------
     img_size = 390
-    orig_thumb = original_image.convert("RGB").resize((img_size, img_size), Image.Resampling.LANCZOS)
-    ov_thumb = overlay_image.convert("RGB").resize((img_size, img_size), Image.Resampling.LANCZOS)
+    from PIL import ImageOps
+    orig_thumb = ImageOps.fit(original_image.convert("RGB"), (img_size, img_size), method=Image.Resampling.LANCZOS)
+    ov_thumb = ImageOps.fit(overlay_image.convert("RGB"), (img_size, img_size), method=Image.Resampling.LANCZOS)
 
     # Chamber 1: Original Image
     ch1_x, ch1_y = 75, 230

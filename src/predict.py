@@ -38,23 +38,17 @@ class ButterflyPredictor:
         self.model.to(self.device)
         self.model.eval()
 
-        # Preprocessing pipeline
+        # Direct (224, 224) resize without CenterCrop to preserve 100% full specimen framing
         self.preprocess = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
+            transforms.Resize((224, 224)),
             transforms.ToTensor(),
             transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD)
-        ])
-
-        # Preprocessing without normalization (for visual display alignment)
-        self.display_transform = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224)
         ])
 
     def preprocess_image(self, image_input):
         """
         Validates and converts image_input into a 4D PyTorch tensor and display PIL image.
+        Preserves 100% full original uncropped framing for visualization.
         """
         if isinstance(image_input, str):
             if not os.path.exists(image_input):
@@ -65,9 +59,8 @@ class ButterflyPredictor:
         else:
             raise TypeError(f"Unsupported image input type: {type(image_input)}. Expected PIL.Image or filepath.")
 
-        display_img = self.display_transform(img)
         tensor = self.preprocess(img).unsqueeze(0).to(self.device)
-        return tensor, display_img
+        return tensor, img
 
     def predict(self, image_input, top_k=3):
         """
@@ -109,20 +102,3 @@ class ButterflyPredictor:
             'input_tensor': tensor,
             'display_image': display_img
         }
-
-if __name__ == "__main__":
-    predictor = ButterflyPredictor()
-    print("=" * 60)
-    print("PREDICTION MODULE VERIFICATION")
-    print("=" * 60)
-    print(f"Model successfully loaded on device : {predictor.device}")
-    print(f"Classes ({predictor.num_classes})            : {predictor.class_names}")
-
-    # Test with a sample from test set
-    sample_path = os.path.join("prepared_dataset", "test", "MONARCH", os.listdir("prepared_dataset/test/MONARCH")[0])
-    result = predictor.predict(sample_path)
-    print(f"\nTest Sample: {sample_path}")
-    print(f"Predicted Class : {result['predicted_class']} (Confidence: {result['confidence']:.2f}%)")
-    print("Top-3 Predictions:")
-    for rank, (cls, p) in enumerate(result['top_k'], 1):
-        print(f"  {rank}. {cls:<24}: {p:5.2f}%")

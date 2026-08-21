@@ -823,7 +823,7 @@ if active_image is not None:
             with cam_tab3:
                 st.image(
                     display_img,
-                    caption="Preprocessed Model Input (224x224)",
+                    caption="Original Specimen Input",
                     use_container_width=True
                 )
             with cam_tab4:
