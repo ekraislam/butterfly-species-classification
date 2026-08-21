@@ -439,9 +439,139 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(2, 132, 199, 0.5);
     }
 
-    .adonis-body {
+    /* Emerald Cattleheart Flight */
+    .emerald-carrier {
+        position: absolute;
+        top: 15px;
+        left: 8%;
+        animation: emerald-flight 7.0s ease-in-out infinite alternate;
+        transform-style: preserve-3d;
+    }
+    @keyframes emerald-flight {
+        0% { transform: translate3d(0, 0, 0) rotate(8deg); }
+        50% { transform: translate3d(20px, 24px, 8px) rotate(-10deg); }
+        100% { transform: translate3d(-10px, 8px, -5px) rotate(4deg); }
+    }
+    .butterfly-emerald {
+        display: flex;
+        align-items: center;
+        transform-style: preserve-3d;
+    }
+    .emerald-wing-left {
+        width: 36px;
+        height: 40px;
+        background: radial-gradient(circle at 100% 50%, #10B981 25%, #047857 70%, #0F172A 95%);
+        border-radius: 80% 20% 60% 40%;
+        border: 1.5px solid #065F46;
+        transform-origin: right center;
+        animation: wing-flap-left 0.25s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.45);
+    }
+    .emerald-wing-right {
+        width: 36px;
+        height: 40px;
+        background: radial-gradient(circle at 0% 50%, #10B981 25%, #047857 70%, #0F172A 95%);
+        border-radius: 20% 80% 40% 60%;
+        border: 1.5px solid #065F46;
+        transform-origin: left center;
+        animation: wing-flap-right 0.25s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.45);
+    }
+    .emerald-body {
         width: 4px;
-        height: 28px;
+        height: 32px;
+        background: #0F172A;
+        border-radius: 999px;
+        z-index: 5;
+    }
+
+    /* Red Postman Flight */
+    .postman-carrier {
+        position: absolute;
+        top: 75px;
+        left: 42%;
+        animation: postman-flight 5.8s ease-in-out infinite alternate;
+        transform-style: preserve-3d;
+    }
+    @keyframes postman-flight {
+        0% { transform: translate3d(0, 0, 0) rotate(-4deg); }
+        45% { transform: translate3d(-18px, -16px, 10px) rotate(6deg); }
+        100% { transform: translate3d(22px, 12px, -8px) rotate(-3deg); }
+    }
+    .butterfly-postman {
+        display: flex;
+        align-items: center;
+        transform-style: preserve-3d;
+    }
+    .postman-wing-left {
+        width: 38px;
+        height: 42px;
+        background: radial-gradient(circle at 100% 50%, #EF4444 30%, #991B1B 75%, #0F172A 95%);
+        border-radius: 80% 20% 60% 40%;
+        border: 1.5px solid #7F1D1D;
+        transform-origin: right center;
+        animation: wing-flap-left 0.27s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.45);
+    }
+    .postman-wing-right {
+        width: 38px;
+        height: 42px;
+        background: radial-gradient(circle at 0% 50%, #EF4444 30%, #991B1B 75%, #0F172A 95%);
+        border-radius: 20% 80% 40% 60%;
+        border: 1.5px solid #7F1D1D;
+        transform-origin: left center;
+        animation: wing-flap-right 0.27s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.45);
+    }
+    .postman-body {
+        width: 5px;
+        height: 34px;
+        background: #0F172A;
+        border-radius: 999px;
+        z-index: 5;
+    }
+
+    /* Southern Dogface / Golden Swallowtail Flight */
+    .dogface-carrier {
+        position: absolute;
+        top: 20px;
+        right: 6%;
+        animation: dogface-flight 6.2s ease-in-out infinite alternate;
+        transform-style: preserve-3d;
+    }
+    @keyframes dogface-flight {
+        0% { transform: translate3d(0, 0, 0) rotate(6deg); }
+        55% { transform: translate3d(-15px, 20px, 12px) rotate(-8deg); }
+        100% { transform: translate3d(10px, -12px, -6px) rotate(4deg); }
+    }
+    .butterfly-dogface {
+        display: flex;
+        align-items: center;
+        transform-style: preserve-3d;
+    }
+    .dogface-wing-left {
+        width: 34px;
+        height: 38px;
+        background: radial-gradient(circle at 100% 50%, #FBBF24 25%, #D97706 70%, #0F172A 95%);
+        border-radius: 80% 20% 60% 40%;
+        border: 1.5px solid #B45309;
+        transform-origin: right center;
+        animation: wing-flap-left 0.29s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.45);
+    }
+    .dogface-wing-right {
+        width: 34px;
+        height: 38px;
+        background: radial-gradient(circle at 0% 50%, #FBBF24 25%, #D97706 70%, #0F172A 95%);
+        border-radius: 20% 80% 40% 60%;
+        border: 1.5px solid #B45309;
+        transform-origin: left center;
+        animation: wing-flap-right 0.29s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.45);
+    }
+    .dogface-body {
+        width: 4px;
+        height: 30px;
         background: #0F172A;
         border-radius: 999px;
         z-index: 5;
@@ -856,7 +986,15 @@ st.markdown("""
         <div class="sanctuary-terrarium">
             <div class="sanctuary-glow"></div>
             <div class="butterfly-stage">
-                <!-- 3D Fluttering Monarch -->
+                <!-- 1. 3D Fluttering Emerald Cattleheart -->
+                <div class="emerald-carrier">
+                    <div class="butterfly-emerald">
+                        <div class="emerald-wing-left"></div>
+                        <div class="emerald-body"></div>
+                        <div class="emerald-wing-right"></div>
+                    </div>
+                </div>
+                <!-- 2. 3D Fluttering Monarch -->
                 <div class="monarch-carrier">
                     <div class="butterfly-monarch">
                         <div class="monarch-wing-left"></div>
@@ -864,12 +1002,28 @@ st.markdown("""
                         <div class="monarch-wing-right"></div>
                     </div>
                 </div>
-                <!-- 3D Fluttering Adonis Blue -->
+                <!-- 3. 3D Fluttering Red Postman -->
+                <div class="postman-carrier">
+                    <div class="butterfly-postman">
+                        <div class="postman-wing-left"></div>
+                        <div class="postman-body"></div>
+                        <div class="postman-wing-right"></div>
+                    </div>
+                </div>
+                <!-- 4. 3D Fluttering Adonis Blue -->
                 <div class="adonis-carrier">
                     <div class="butterfly-adonis">
                         <div class="adonis-wing-left"></div>
                         <div class="adonis-body"></div>
                         <div class="adonis-wing-right"></div>
+                    </div>
+                </div>
+                <!-- 5. 3D Fluttering Southern Dogface -->
+                <div class="dogface-carrier">
+                    <div class="butterfly-dogface">
+                        <div class="dogface-wing-left"></div>
+                        <div class="dogface-body"></div>
+                        <div class="dogface-wing-right"></div>
                     </div>
                 </div>
             </div>
