@@ -639,7 +639,7 @@ with input_tab3:
                 st.error(f"Error capturing camera snapshot: {e}")
 
 # -----------------------------------------------------------------------------
-# 6. Analysis & Visual Diagnostic Suite (With Persistent Cache & Instant Slider)
+# 6. Analysis & Visual Diagnostic Suite (With Persistent Cache & Instant Dynamic Controls)
 # -----------------------------------------------------------------------------
 active_image = st.session_state.selected_image
 active_filename = st.session_state.selected_filename
@@ -674,7 +674,7 @@ if active_image is not None:
                 pred_res = predictor.predict(active_image)
                 # 2. Grad-CAM
                 with GradCAM(predictor.model) as gradcam_engine:
-                    heatmap_norm, _, _ = gradcam_engine.generate(
+                    raw_heatmap, _, _ = gradcam_engine.generate(
                         pred_res['input_tensor'],
                         pred_res['predicted_idx']
                     )
@@ -684,7 +684,7 @@ if active_image is not None:
                     "confidence": pred_res['confidence'],
                     "top_k": pred_res['top_k'],
                     "display_img": pred_res['display_image'],
-                    "heatmap_norm": heatmap_norm,
+                    "raw_heatmap": raw_heatmap,
                 }
             except Exception as e:
                 st.error(f"Error during AI analysis: {e}")
@@ -696,7 +696,7 @@ if active_image is not None:
         confidence = cached["confidence"]
         top_k = cached["top_k"]
         display_img = cached["display_img"]
-        heatmap_norm = cached["heatmap_norm"]
+        raw_heatmap = cached["raw_heatmap"]
 
         st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
 
@@ -770,20 +770,25 @@ if active_image is not None:
             st.markdown("## 🔬 Explainable AI Studio (Grad-CAM)")
             st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The highlighted heat regions indicate image areas that strongly influenced the model's prediction:</p>", unsafe_allow_html=True)
 
-            # Smooth Real-Time Heatmap Blend Slider
+            # Smooth Real-Time Heatmap Blend & Intensity Slider
             blend_alpha = st.slider(
-                "Heatmap Blend Intensity (α)",
+                "Heatmap Blend Intensity & Focus (α)",
                 min_value=0.20,
                 max_value=0.85,
                 value=0.55,
                 step=0.05,
                 key="gradcam_alpha_slider",
-                help="Adjust opacity of the Grad-CAM thermal overlay"
+                help="Controls transparency overlay AND adjusts thermal hotspot focus sensitivity"
             )
+
+            # DYNAMIC SENSITIVITY TRANSFORMATION: Modulates both Thermal Heatmap contrast and Overlay blend
+            # When slider increases: thermal hotspots become richer and more concentrated
+            gamma_exponent = 1.0 + (0.55 - blend_alpha) * 1.4
+            modulated_heatmap = np.clip(np.power(raw_heatmap, gamma_exponent), 0.0, 1.0)
 
             with GradCAM(predictor.model) as gradcam_engine:
                 heatmap_img, overlay_img = gradcam_engine.overlay_heatmap(
-                    heatmap_norm,
+                    modulated_heatmap,
                     display_img,
                     alpha=blend_alpha
                 )
@@ -798,13 +803,13 @@ if active_image is not None:
             with cam_tab1:
                 st.image(
                     overlay_img,
-                    caption=f"Grad-CAM Attention Map on {pred_class} (α = {blend_alpha:.2f})",
+                    caption=f"Grad-CAM Attention Overlay on {pred_class} (α = {blend_alpha:.2f})",
                     use_container_width=True
                 )
             with cam_tab2:
                 st.image(
                     heatmap_img,
-                    caption="Raw Class Activation Heatmap (Jet Colormap)",
+                    caption=f"Dynamic Thermal Activation Heatmap (Jet Colormap, Sensitivity α = {blend_alpha:.2f})",
                     use_container_width=True
                 )
             with cam_tab3:
@@ -818,7 +823,7 @@ if active_image is not None:
                 with comp_col1:
                     st.image(display_img, caption="Original Input", use_container_width=True)
                 with comp_col2:
-                    st.image(overlay_img, caption="Grad-CAM Overlay", use_container_width=True)
+                    st.image(overlay_img, caption=f"Dynamic Grad-CAM Overlay (α = {blend_alpha:.2f})", use_container_width=True)
 
             # Export / Downloadable Inspection Report Card
             st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
