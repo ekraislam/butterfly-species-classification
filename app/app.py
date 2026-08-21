@@ -202,6 +202,71 @@ st.markdown("""
         box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15) !important;
         border: 2px solid #94A3B8 !important;
     }
+
+    /* ========================================================================= */
+    /* MASTERPIECE DRAG & DROP FILE UPLOADER (HIGH-CONTRAST LUXURY CYAN CARD)    */
+    /* ========================================================================= */
+    [data-testid="stFileUploader"],
+    [data-testid="stFileUploadDropzone"],
+    section[data-testid="stFileUploadDropzone"],
+    div[data-testid="stFileUploaderDropzone"] {
+        background: #FFFFFF !important;
+        border: 2.5px dashed #0284C7 !important;
+        border-radius: 22px !important;
+        padding: 28px 20px !important;
+        text-align: center !important;
+        box-shadow: 0 8px 24px rgba(2, 132, 199, 0.08) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    [data-testid="stFileUploader"]:hover,
+    section[data-testid="stFileUploadDropzone"]:hover,
+    div[data-testid="stFileUploaderDropzone"]:hover {
+        background: #F0F9FF !important;
+        border-color: #0369A1 !important;
+        border-style: solid !important;
+        box-shadow: 0 14px 32px rgba(2, 132, 199, 0.18) !important;
+        transform: translateY(-2px) !important;
+    }
+
+    /* Text inside Dropzone */
+    [data-testid="stFileUploadDropzone"] span,
+    [data-testid="stFileUploadDropzone"] p,
+    [data-testid="stFileUploadDropzone"] small,
+    [data-testid="stFileUploaderDropzoneInstructions"] span,
+    [data-testid="stFileUploaderDropzoneInstructions"] small,
+    [data-testid="stFileUploaderDropzoneInstructions"] div {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 800 !important;
+        font-size: 1.12rem !important;
+    }
+
+    /* Browse Files Button inside Dropzone */
+    [data-testid="stFileUploadDropzone"] button,
+    div[data-testid="stFileUploader"] button[kind="secondary"] {
+        background: #0284C7 !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        border: none !important;
+        border-radius: 12px !important;
+        font-weight: 900 !important;
+        font-size: 1.05rem !important;
+        padding: 10px 24px !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3) !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="stFileUploadDropzone"] button:hover,
+    div[data-testid="stFileUploader"] button[kind="secondary"]:hover {
+        background: #0369A1 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(2, 132, 199, 0.45) !important;
+    }
+    [data-testid="stFileUploadDropzone"] button * {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 900 !important;
+    }
     
     /* ========================================================================= */
     /* MASTERPIECE SPLIT HERO & 3D ANIMATED BUTTERFLY SANCTUARY                   */
@@ -1118,11 +1183,22 @@ with input_tab1:
                 st.session_state.show_report_modal = False
 
 with input_tab2:
-    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Drop or browse an image from your computer:</p>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style="text-align: center; padding: 14px 10px 10px 10px;">
+        <div style="font-size: 1.25rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+            📥 Drag & Drop Your Butterfly Image File Here
+        </div>
+        <div style="font-size: 1.0rem; font-weight: 700; color: #0284C7;">
+            or click the <strong>Browse files</strong> button inside the box • Supports JPG, JPEG, PNG (High-Res)
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
     uploaded_file = st.file_uploader(
         "Upload Image File",
         type=["jpg", "jpeg", "png"],
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        help="Drag and drop any butterfly image directly into this box or browse your disk"
     )
     if uploaded_file is not None:
         try:
