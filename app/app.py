@@ -1997,16 +1997,16 @@ body {{
 /* Lush Layered Meadow Grass Bed & Botanical Wildflower Garden */
 .meadow-grass-bed {{
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     width: 100%;
-    height: 38px;
+    height: 30px;
     z-index: 4;
     pointer-events: none;
     transition: filter 0.6s ease;
 }}
 .sanctuary-night .meadow-grass-bed {{
-    filter: drop-shadow(0 -2px 14px rgba(16, 185, 129, 0.45));
+    filter: drop-shadow(0 -2px 12px rgba(16, 185, 129, 0.5));
 }}
 .meadow-grass-svg {{
     width: 100%;
@@ -2016,29 +2016,40 @@ body {{
 
 .flower-habitat {{
     position: absolute;
-    bottom: 8px;
+    bottom: 2px;
     left: 0;
     width: 100%;
-    height: 46px;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    padding: 0 16px;
+    height: 38px;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: flex-end !important;
+    padding: 0 12px;
+    box-sizing: border-box;
     z-index: 7;
     pointer-events: none;
 }}
 .botanical-flower {{
-    width: 34px;
-    height: 42px;
+    width: 30px;
+    height: 36px;
+    display: inline-flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
     animation: flower-sway 4.5s ease-in-out infinite alternate;
     transform-origin: bottom center;
-    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
     cursor: pointer;
     pointer-events: auto;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+}}
+.botanical-flower svg {{
+    width: 100%;
+    height: 100%;
+    display: block;
 }}
 .botanical-flower:hover {{
-    transform: translateY(-5px) scale(1.22);
+    transform: translateY(-4px) scale(1.2);
 }}
 .fl-orchid {{ animation-delay: 0s; }}
 .fl-lotus {{ animation-delay: -1.5s; }}
