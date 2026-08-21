@@ -62,10 +62,17 @@ st.markdown("""
         font-family: 'Space Grotesk', monospace !important;
     }
     
-    /* Clean Soft Background */
-    .stApp {
+    /* Clean Soft Background & Reset */
+    .stApp,
+    [data-testid="stAppViewContainer"],
+    [data-testid="stAppViewContainer"] > .main,
+    [data-testid="stAppViewContainer"] > section.main,
+    .stAppViewContainer,
+    section.main {
         background-color: #EEF2F6 !important;
         color: #0F172A !important;
+        padding-top: 0px !important;
+        margin-top: 0px !important;
     }
     
     /* Hide Default Streamlit Clutter & Header */
@@ -74,6 +81,7 @@ st.markdown("""
         visibility: hidden !important;
         height: 0px !important;
         min-height: 0px !important;
+        max-height: 0px !important;
         padding: 0px !important;
         margin: 0px !important;
     }
@@ -1447,22 +1455,27 @@ st.markdown("""
     }
 
     /* ========================================================================= */
-    /* 100% BULLETPROOF RESPONSIVE DESIGN (MOBILE, TABLET, LAPTOP, DESKTOP)       */
+    /* 100% BULLETPROOF ZERO TOP GAP RESPONSIVE DESIGN                            */
     /* ========================================================================= */
-    .main .block-container {
+    .main .block-container,
+    .stMainBlockContainer,
+    [data-testid="stAppViewBlockContainer"],
+    div.block-container {
         max-width: 1360px !important;
-        padding-top: 0rem !important;
-        margin-top: -2.5rem !important;
+        padding-top: 6px !important;
+        margin-top: -65px !important;
         padding-bottom: 3rem !important;
         transition: padding 0.3s ease !important;
     }
 
     @media (max-width: 992px) {
-        .main .block-container {
+        .main .block-container,
+        .stMainBlockContainer,
+        div.block-container {
             padding-left: 1.0rem !important;
             padding-right: 1.0rem !important;
-            padding-top: 0rem !important;
-            margin-top: -2.2rem !important;
+            padding-top: 4px !important;
+            margin-top: -55px !important;
         }
         
         .metric-grid {
@@ -1472,9 +1485,11 @@ st.markdown("""
     }
 
     @media (max-width: 768px) {
-        .main .block-container {
-            padding-top: 0rem !important;
-            margin-top: -2.0rem !important;
+        .main .block-container,
+        .stMainBlockContainer,
+        div.block-container {
+            padding-top: 4px !important;
+            margin-top: -50px !important;
         }
     }
 
