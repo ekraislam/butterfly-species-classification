@@ -1462,8 +1462,8 @@ st.markdown("""
     [data-testid="stAppViewBlockContainer"],
     div.block-container {
         max-width: 1360px !important;
-        padding-top: 6px !important;
-        margin-top: -65px !important;
+        padding-top: 10px !important;
+        margin-top: -28px !important;
         padding-bottom: 3rem !important;
         transition: padding 0.3s ease !important;
     }
@@ -1474,8 +1474,8 @@ st.markdown("""
         div.block-container {
             padding-left: 1.0rem !important;
             padding-right: 1.0rem !important;
-            padding-top: 4px !important;
-            margin-top: -55px !important;
+            padding-top: 8px !important;
+            margin-top: -22px !important;
         }
         
         .metric-grid {
@@ -1488,8 +1488,8 @@ st.markdown("""
         .main .block-container,
         .stMainBlockContainer,
         div.block-container {
-            padding-top: 4px !important;
-            margin-top: -50px !important;
+            padding-top: 6px !important;
+            margin-top: -18px !important;
         }
     }
 
