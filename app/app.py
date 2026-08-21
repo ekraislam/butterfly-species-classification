@@ -204,32 +204,48 @@ st.markdown("""
     }
 
     /* ========================================================================= */
-    /* MASTERPIECE DRAG & DROP FILE UPLOADER (HIGH-CONTRAST LUXURY CYAN CARD)    */
+    /* MASTERPIECE DRAG & DROP FILE UPLOADER (ZERO BLACK • PURE WHITE & SKY BLUE) */
     /* ========================================================================= */
     [data-testid="stFileUploader"],
+    [data-testid="stFileUploader"] > div,
+    [data-testid="stFileUploader"] section,
     [data-testid="stFileUploadDropzone"],
     section[data-testid="stFileUploadDropzone"],
-    div[data-testid="stFileUploaderDropzone"] {
+    div[data-testid="stFileUploaderDropzone"],
+    div[data-baseweb="file-uploader"],
+    div[data-baseweb="file-uploader"] > div {
         background: #FFFFFF !important;
+        background-color: #FFFFFF !important;
+        border-radius: 20px !important;
+    }
+
+    [data-testid="stFileUploader"] section,
+    section[data-testid="stFileUploadDropzone"],
+    div[data-testid="stFileUploaderDropzone"],
+    div[data-baseweb="file-uploader"] > div {
         border: 2.5px dashed #0284C7 !important;
-        border-radius: 22px !important;
-        padding: 28px 20px !important;
+        padding: 24px 20px !important;
         text-align: center !important;
         box-shadow: 0 8px 24px rgba(2, 132, 199, 0.08) !important;
-        transition: all 0.3s ease !important;
+        transition: all 0.25s ease !important;
     }
     
-    [data-testid="stFileUploader"]:hover,
+    [data-testid="stFileUploader"] section:hover,
     section[data-testid="stFileUploadDropzone"]:hover,
     div[data-testid="stFileUploaderDropzone"]:hover {
         background: #F0F9FF !important;
+        background-color: #F0F9FF !important;
         border-color: #0369A1 !important;
         border-style: solid !important;
         box-shadow: 0 14px 32px rgba(2, 132, 199, 0.18) !important;
         transform: translateY(-2px) !important;
     }
 
-    /* Text inside Dropzone */
+    /* All text inside uploader: Deep Solid Black */
+    [data-testid="stFileUploader"] span,
+    [data-testid="stFileUploader"] p,
+    [data-testid="stFileUploader"] small,
+    [data-testid="stFileUploader"] div,
     [data-testid="stFileUploadDropzone"] span,
     [data-testid="stFileUploadDropzone"] p,
     [data-testid="stFileUploadDropzone"] small,
@@ -239,13 +255,15 @@ st.markdown("""
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
         font-weight: 800 !important;
-        font-size: 1.12rem !important;
+        font-size: 1.05rem !important;
     }
 
-    /* Browse Files Button inside Dropzone */
+    /* Upload Button: Solid Royal Blue */
+    [data-testid="stFileUploader"] button,
     [data-testid="stFileUploadDropzone"] button,
     div[data-testid="stFileUploader"] button[kind="secondary"] {
         background: #0284C7 !important;
+        background-color: #0284C7 !important;
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         border: none !important;
@@ -256,12 +274,15 @@ st.markdown("""
         box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3) !important;
         transition: all 0.2s ease !important;
     }
+    [data-testid="stFileUploader"] button:hover,
     [data-testid="stFileUploadDropzone"] button:hover,
     div[data-testid="stFileUploader"] button[kind="secondary"]:hover {
         background: #0369A1 !important;
+        background-color: #0369A1 !important;
         transform: translateY(-2px) !important;
         box-shadow: 0 8px 20px rgba(2, 132, 199, 0.45) !important;
     }
+    [data-testid="stFileUploader"] button *,
     [data-testid="stFileUploadDropzone"] button * {
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
