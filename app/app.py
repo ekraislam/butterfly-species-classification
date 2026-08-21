@@ -24,7 +24,7 @@ from gradcam import GradCAM
 from utils import SPECIES_METADATA, resolve_project_paths, generate_report_card
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Ultra-Legible Typography System
+# 1. Page Configuration & Ultra-High Contrast CSS (100% Guaranteed Legibility)
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="AI Butterfly Vision • Explainable AI",
@@ -47,7 +47,7 @@ st.markdown("""
         font-family: 'Space Grotesk', monospace !important;
     }
     
-    /* Clean Soft Canvas */
+    /* Clean Soft Background */
     .stApp {
         background-color: #EEF2F6 !important;
         color: #0F172A !important;
@@ -59,7 +59,70 @@ st.markdown("""
         visibility: hidden !important;
     }
     
+    /* ------------------------------------------------------------- */
+    /* GUARANTEED CRYSTAL-CLEAR TABS (FIX FOR INVISIBLE UNSELECTED TABS) */
+    /* ------------------------------------------------------------- */
+    div[data-testid="stTabs"] {
+        background: transparent !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+        gap: 12px !important;
+        background: #E2E8F0 !important;
+        padding: 8px !important;
+        border-radius: 16px !important;
+        border: 2px solid #94A3B8 !important;
+    }
+    
+    /* All Tab Buttons Base */
+    div[data-testid="stTabs"] button,
+    button[data-baseweb="tab"],
+    .stTabs button {
+        border-radius: 12px !important;
+        padding: 10px 22px !important;
+        font-size: 1.1rem !important;
+        font-weight: 900 !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    /* Unselected Tabs: White Card, Dark Solid Border, Deep Black Text */
+    div[data-testid="stTabs"] button[aria-selected="false"],
+    button[data-baseweb="tab"][aria-selected="false"],
+    .stTabs button[aria-selected="false"] {
+        background-color: #FFFFFF !important;
+        border: 2px solid #94A3B8 !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
+    }
+    
+    div[data-testid="stTabs"] button[aria-selected="false"] *,
+    button[data-baseweb="tab"][aria-selected="false"] *,
+    .stTabs button[aria-selected="false"] * {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 800 !important;
+    }
+    
+    /* Selected Tab: Vibrant Blue Card, White Text */
+    div[data-testid="stTabs"] button[aria-selected="true"],
+    button[data-baseweb="tab"][aria-selected="true"],
+    .stTabs button[aria-selected="true"] {
+        background-color: #0284C7 !important;
+        border: 2px solid #0369A1 !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35) !important;
+    }
+    
+    div[data-testid="stTabs"] button[aria-selected="true"] *,
+    button[data-baseweb="tab"][aria-selected="true"] *,
+    .stTabs button[aria-selected="true"] * {
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
+        font-weight: 900 !important;
+    }
+    
+    /* ------------------------------------------------------------- */
     /* Hero Header */
+    /* ------------------------------------------------------------- */
     .hero-container {
         text-align: center;
         padding: 2.5rem 1rem 1.5rem 1rem;
@@ -156,13 +219,18 @@ st.markdown("""
     button[kind="secondary"] {
         background: #FFFFFF !important;
         color: #0F172A !important;
-        border: 2px solid #94A3B8 !important;
+        border: 2px solid #64748B !important;
         border-radius: 14px !important;
         font-weight: 900 !important;
-        font-size: 1.05rem !important;
+        font-size: 1.1rem !important;
         transition: all 0.2s ease !important;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06) !important;
-        padding: 0.85rem 1.0rem !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
+        padding: 0.9rem 1.1rem !important;
+    }
+    button[kind="secondary"] * {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 900 !important;
     }
     button[kind="secondary"]:hover {
         border-color: #0284C7 !important;
@@ -315,29 +383,6 @@ st.markdown("""
         margin-bottom: 6px;
     }
 
-    /* High-Contrast Tabs (100% Readable) */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 12px;
-        background: #CBD5E1;
-        padding: 8px;
-        border-radius: 16px;
-        border: 2px solid #94A3B8;
-    }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 12px;
-        color: #0F172A !important;
-        font-weight: 900 !important;
-        font-size: 1.1rem !important;
-        padding: 12px 22px !important;
-        background: #F1F5F9;
-        transition: all 0.2s ease;
-    }
-    .stTabs [aria-selected="true"] {
-        background: #0284C7 !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
-    }
-
     /* Supported Species Showcase Cards */
     .species-pod {
         background: #FFFFFF;
@@ -472,7 +517,7 @@ input_tab1, input_tab2, input_tab3 = st.tabs([
 ])
 
 with input_tab1:
-    st.markdown("**Click any butterfly card below to instantly classify and view explanation maps:**")
+    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Click any butterfly card below to instantly classify and view explanation maps:</p>", unsafe_allow_html=True)
     sample_cols = st.columns(4)
     for idx, (cls_name, fpath) in enumerate(benchmark_samples.items()):
         col_target = sample_cols[idx % 4]
@@ -482,10 +527,11 @@ with input_tab1:
                 st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
 
 with input_tab2:
+    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Drop or browse an image from your computer:</p>", unsafe_allow_html=True)
     uploaded_file = st.file_uploader(
-        "Drop or browse a butterfly image (JPG, JPEG, PNG)",
+        "Upload Image File",
         type=["jpg", "jpeg", "png"],
-        help="Upload a clear image of a butterfly to analyze its species."
+        label_visibility="collapsed"
     )
     if uploaded_file is not None:
         try:
@@ -495,7 +541,7 @@ with input_tab2:
             st.error(f"Error reading image: {e}")
 
 with input_tab3:
-    st.markdown("**Point your webcam or mobile camera directly at a butterfly specimen:**")
+    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Point your webcam or mobile camera directly at a butterfly specimen:</p>", unsafe_allow_html=True)
     camera_photo = st.camera_input("Take a butterfly snapshot", label_visibility="collapsed")
     if camera_photo is not None:
         try:
@@ -520,7 +566,7 @@ if active_image is not None:
     
     with cmd_col2:
         st.markdown("### 🔬 Neural Diagnostics Ready")
-        st.markdown("Extract deep features with ResNet-18 and compute spatial backpropagation gradients with Grad-CAM.")
+        st.markdown("<p style='font-size: 1.15rem; font-weight: 700; color: #1E293B;'>Extract deep features with ResNet-18 and compute spatial backpropagation gradients with Grad-CAM.</p>", unsafe_allow_html=True)
         
         btn_c1, btn_c2 = st.columns([2.2, 1.2])
         with btn_c1:
@@ -618,7 +664,7 @@ if active_image is not None:
                 # --- RIGHT COLUMN: Explainable AI (Grad-CAM) Studio ---
                 with col_right:
                     st.markdown("## 🔬 Explainable AI Studio (Grad-CAM)")
-                    st.markdown("**The highlighted heat regions indicate image areas that strongly influenced the model's prediction:**")
+                    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The highlighted heat regions indicate image areas that strongly influenced the model's prediction:</p>", unsafe_allow_html=True)
 
                     # Overlay Intensity Slider
                     blend_alpha = st.slider(
@@ -697,7 +743,7 @@ else:
 # -----------------------------------------------------------------------------
 st.markdown("<div style='height: 45px;'></div>", unsafe_allow_html=True)
 st.markdown("## 🌿 Supported Butterfly Species Taxonomy (8 Classes)")
-st.markdown("**The neural network is specialized to distinguish the following 8 butterfly species:**")
+st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The neural network is specialized to distinguish the following 8 butterfly species:</p>", unsafe_allow_html=True)
 
 species_items = list(SPECIES_METADATA.items())
 row1_cols = st.columns(4)
