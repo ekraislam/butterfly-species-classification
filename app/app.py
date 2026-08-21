@@ -112,7 +112,7 @@ st.markdown("""
     }
 
     /* ========================================================================= */
-    /* BULLETPROOF UNIVERSAL TABS (COVERS EVERY SINGLE TAB IN STREAMLIT)         */
+    /* BULLETPROOF UNIVERSAL TABS (100% FIT • ZERO HORIZONTAL SCROLL CHEVRONS)   */
     /* ========================================================================= */
     
     /* Tab Container Bar */
@@ -120,11 +120,14 @@ st.markdown("""
     [data-baseweb="tab-list"],
     div[data-testid="stTabs"] > div:first-child {
         display: flex !important;
-        gap: 12px !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
         background: #CBD5E1 !important;
-        padding: 8px !important;
+        padding: 6px !important;
         border-radius: 16px !important;
         border: 2px solid #94A3B8 !important;
+        overflow: hidden !important;
     }
     
     /* All Individual Tab Items */
@@ -132,12 +135,16 @@ st.markdown("""
     div[role="tab"],
     [data-baseweb="tab"],
     .stTabs [data-baseweb="tab"] {
+        flex: 1 1 0 !important;
         border-radius: 12px !important;
-        padding: 10px 22px !important;
-        font-size: 1.1rem !important;
+        padding: 8px 10px !important;
+        font-size: 0.98rem !important;
         font-weight: 900 !important;
         transition: all 0.2s ease !important;
         border: none !important;
+        text-align: center !important;
+        justify-content: center !important;
+        white-space: nowrap !important;
     }
     
     /* UNSELECTED TABS */
@@ -146,7 +153,7 @@ st.markdown("""
     [data-baseweb="tab"][aria-selected="false"] {
         background-color: #FFFFFF !important;
         border: 2px solid #64748B !important;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
     }
     
     button[role="tab"][aria-selected="false"] *,
@@ -158,7 +165,7 @@ st.markdown("""
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
         font-weight: 900 !important;
-        font-size: 1.05rem !important;
+        font-size: 0.98rem !important;
     }
     
     /* SELECTED TAB */
@@ -179,18 +186,57 @@ st.markdown("""
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
-        font-size: 1.05rem !important;
+        font-size: 0.98rem !important;
     }
     
-    /* REMOVE ALL STREAMLIT RED HIGHLIGHT LINES ON TABS */
+    /* REMOVE ALL STREAMLIT RED HIGHLIGHT LINES & SCROLL CHEVRONS */
     [data-baseweb="tab-highlight"],
     [data-baseweb="tab-border"],
     div[data-testid="stTabs"] hr,
-    div[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
+    div[data-testid="stTabs"] [data-baseweb="tab-highlight"],
+    div[data-testid="stTabs"] button[aria-label*="scroll"],
+    [data-baseweb="tab-list"] button[aria-label*="scroll"] {
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
+        width: 0 !important;
         background-color: transparent !important;
+    }
+
+    /* ========================================================================= */
+    /* MASTERPIECE SPECIMEN STUDIO IMAGE FRAMING (CONTAINED • ZERO OVERFLOW)     */
+    /* ========================================================================= */
+    div[data-testid="stImage"] {
+        background: #FFFFFF !important;
+        border: 2px solid #CBD5E1 !important;
+        border-radius: 20px !important;
+        padding: 10px !important;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: hidden !important;
+        margin-top: 10px !important;
+    }
+    
+    div[data-testid="stImage"] img {
+        max-height: 440px !important;
+        width: auto !important;
+        max-width: 100% !important;
+        object-fit: contain !important;
+        border-radius: 14px !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    div[data-testid="stImage"] [data-testid="stImageCaption"],
+    div[data-testid="stImage"] [data-testid="stCaptionContainer"] {
+        text-align: center !important;
+        font-weight: 800 !important;
+        color: #0F172A !important;
+        font-size: 0.98rem !important;
+        margin-top: 6px !important;
     }
     
     /* Compact Camera Box */
@@ -1594,10 +1640,10 @@ if active_image is not None:
                 )
 
             cam_tab1, cam_tab2, cam_tab3, cam_tab4 = st.tabs([
-                "✨ Explanation Overlay",
-                "🌡️ Thermal Heatmap",
-                "🖼️ Original Input",
-                "🔍 Split Comparison"
+                "✨ AI Overlay",
+                "🌡️ Heatmap",
+                "🖼️ Original",
+                "🔍 Compare"
             ])
 
             with cam_tab1:
