@@ -464,21 +464,21 @@ st.markdown("""
         margin-bottom: 6px;
     }
 
-    /* Supported Species Showcase Cards */
+    /* Supported Species Showcase Cards (100% Consistent Across All 8) */
     .species-pod {
-        background: #FFFFFF;
-        border: 2px solid #94A3B8;
-        border-radius: 18px;
-        padding: 22px 18px;
-        text-align: center;
-        height: 100%;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
-        transition: all 0.25s ease;
+        background: #FFFFFF !important;
+        border: 2px solid #CBD5E1 !important;
+        border-radius: 18px !important;
+        padding: 22px 18px !important;
+        text-align: center !important;
+        height: 100% !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+        position: relative !important;
     }
     .species-pod:hover {
-        transform: translateY(-3px);
-        border-color: #0284C7;
-        box-shadow: 0 12px 28px rgba(2, 132, 199, 0.2);
+        transform: translateY(-4px) !important;
+        box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12) !important;
     }
     .pod-name {
         font-weight: 900;

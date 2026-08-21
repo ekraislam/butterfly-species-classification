@@ -65,7 +65,7 @@ SPECIES_METADATA = {
         "appearance": "Large translucent white-yellow wings patterned with dramatic black streaks and margin spots.",
         "distribution": "Mangrove swamps and lowland rainforests of Southeast Asia.",
         "key_features": "Slow gliding flight; bold black venation against paper-white background.",
-        "color_primary": "#475569",
+        "color_primary": "#0284C7",
         "xai_insight": "Model neural attention detects the high-contrast black grid venation and translucent white wing cells."
     },
     "RED POSTMAN": {
