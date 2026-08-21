@@ -60,7 +60,7 @@ st.markdown("""
     }
     
     /* ========================================================================= */
-    /* ALL LABELS, WIDGETS, AND SLIDERS: 100% DEEP BLACK & CRYSTAL CLEAR         */
+    /* ALL LABELS, WIDGETS, AND SLIDERS: 100% DEEP BLACK & ROYAL BLUE TRACK      */
     /* ========================================================================= */
     label, 
     [data-testid="stWidgetLabel"], 
@@ -75,18 +75,38 @@ st.markdown("""
         font-size: 1.15rem !important;
     }
 
+    /* Slider Value Floating Badge */
     div[data-testid="stSlider"] div[data-testid="stThumbValue"] {
-        color: #0284C7 !important;
-        -webkit-text-fill-color: #0284C7 !important;
+        background: #0284C7 !important;
+        color: #FFFFFF !important;
+        -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
-        font-size: 1.15rem !important;
+        font-size: 1.0rem !important;
+        padding: 2px 10px !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3) !important;
     }
 
-    /* Slider Track and Knob */
+    /* Slider Knob */
     div[data-testid="stSlider"] [role="slider"] {
         background-color: #0284C7 !important;
         border: 3px solid #FFFFFF !important;
-        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5) !important;
+        box-shadow: 0 3px 10px rgba(2, 132, 199, 0.5) !important;
+        width: 22px !important;
+        height: 22px !important;
+    }
+
+    /* Slider Track (Replace default red line with royal blue & emerald gradient) */
+    div[data-testid="stSlider"] div[data-baseweb="slider"] > div > div:first-child {
+        background: linear-gradient(90deg, #0284C7, #0D9488) !important;
+        height: 8px !important;
+        border-radius: 999px !important;
+    }
+    
+    div[data-testid="stSlider"] div[data-baseweb="slider"] > div {
+        background-color: #CBD5E1 !important;
+        height: 8px !important;
+        border-radius: 999px !important;
     }
 
     /* ========================================================================= */
@@ -160,13 +180,15 @@ st.markdown("""
         font-size: 1.05rem !important;
     }
     
-    /* Remove Streamlit default red/coral bottom line on tabs */
+    /* REMOVE ALL STREAMLIT RED HIGHLIGHT LINES ON TABS */
     [data-baseweb="tab-highlight"],
     [data-baseweb="tab-border"],
-    div[data-testid="stTabs"] hr {
+    div[data-testid="stTabs"] hr,
+    div[data-testid="stTabs"] [data-baseweb="tab-highlight"] {
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
+        background-color: transparent !important;
     }
     
     /* Compact Camera Box */
@@ -556,8 +578,8 @@ if "selected_image" not in st.session_state:
     st.session_state.selected_image = None
 if "selected_filename" not in st.session_state:
     st.session_state.selected_filename = None
-if "has_analyzed" not in st.session_state:
-    st.session_state.has_analyzed = False
+if "analysis_cache" not in st.session_state:
+    st.session_state.analysis_cache = None
 
 test_dir = paths["test_data_dir"]
 benchmark_samples = {}
@@ -584,7 +606,7 @@ with input_tab1:
             if st.button(f"🦋 {cls_name}", key=f"btn_sample_{idx}", use_container_width=True):
                 st.session_state.selected_image = Image.open(fpath).convert("RGB")
                 st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
-                st.session_state.has_analyzed = False
+                st.session_state.analysis_cache = None
 
 with input_tab2:
     st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Drop or browse an image from your computer:</p>", unsafe_allow_html=True)
@@ -597,7 +619,7 @@ with input_tab2:
         try:
             st.session_state.selected_image = Image.open(uploaded_file).convert("RGB")
             st.session_state.selected_filename = uploaded_file.name
-            st.session_state.has_analyzed = False
+            st.session_state.analysis_cache = None
         except Exception as e:
             st.error(f"Error reading image: {e}")
 
@@ -612,12 +634,12 @@ with input_tab3:
             try:
                 st.session_state.selected_image = Image.open(camera_photo).convert("RGB")
                 st.session_state.selected_filename = "Live_Camera_Capture.jpg"
-                st.session_state.has_analyzed = False
+                st.session_state.analysis_cache = None
             except Exception as e:
                 st.error(f"Error capturing camera snapshot: {e}")
 
 # -----------------------------------------------------------------------------
-# 6. Analysis & Visual Diagnostic Suite (With Reset / Clear Button)
+# 6. Analysis & Visual Diagnostic Suite (With Persistent Cache & Instant Slider)
 # -----------------------------------------------------------------------------
 active_image = st.session_state.selected_image
 active_filename = st.session_state.selected_filename
@@ -637,173 +659,183 @@ if active_image is not None:
         btn_c1, btn_c2 = st.columns([2.2, 1.2])
         with btn_c1:
             run_analysis = st.button("✨ Run Neural Analysis", type="primary", use_container_width=True)
-            if run_analysis:
-                st.session_state.has_analyzed = True
         with btn_c2:
             if st.button("🔄 Reset / Clear", use_container_width=True, help="Clear active specimen and start fresh"):
                 st.session_state.selected_image = None
                 st.session_state.selected_filename = None
-                st.session_state.has_analyzed = False
+                st.session_state.analysis_cache = None
                 st.rerun()
 
-    # ONLY RUN AND DISPLAY INFERENCE RESULTS AFTER CLICKING RUN
-    if st.session_state.has_analyzed:
+    # Trigger computation on button click and persist into session cache
+    if run_analysis:
         with st.spinner("Executing neural feature mapping and gradient backpropagation..."):
             try:
                 # 1. Inference
                 pred_res = predictor.predict(active_image)
-                pred_class = pred_res['predicted_class']
-                confidence = pred_res['confidence']
-                top_k = pred_res['top_k']
-                display_img = pred_res['display_image']
-
                 # 2. Grad-CAM
                 with GradCAM(predictor.model) as gradcam_engine:
                     heatmap_norm, _, _ = gradcam_engine.generate(
                         pred_res['input_tensor'],
                         pred_res['predicted_idx']
                     )
-
-                st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
-
-                # Two-Column Results Suite
-                col_left, col_right = st.columns([1.15, 1.35], gap="large")
-
-                # --- LEFT COLUMN: Prediction Cockpit & Biological Facts ---
-                with col_left:
-                    st.markdown("## 🎯 Classification Result")
-                    
-                    meta = SPECIES_METADATA.get(pred_class, {
-                        "scientific_name": "Unknown",
-                        "family": "Insecta",
-                        "color_primary": "#0284C7",
-                        "xai_insight": "Model focused on discriminative visual wing patterns."
-                    })
-
-                    gauge_color = "#10B981" if confidence >= 80.0 else "#F59E0B"
-                    gauge_lbl = "HIGH" if confidence >= 80.0 else "MODERATE"
-
-                    st.markdown(f"""
-                    <div class="result-capsule" style="border-top: 7px solid {meta['color_primary']};">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <div>
-                                <div class="result-tag">IDENTIFIED SPECIES</div>
-                                <div class="result-name">{pred_class}</div>
-                                <div class="result-meta">{meta['scientific_name']} • {meta['family']}</div>
-                            </div>
-                            <div class="hud-gauge" style="border-color: {gauge_color};">
-                                <div class="gauge-val">{confidence:.1f}%</div>
-                                <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
-                            </div>
-                        </div>
-                        <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
-                            <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                    # Top-3 Probabilities
-                    st.markdown("### 🏆 Top-3 Ranked Probabilities")
-                    for rank, (cls_name, prob) in enumerate(top_k, 1):
-                        st.markdown(f"""
-                        <div class="rank-capsule">
-                            <div style="display: flex; align-items: center;">
-                                <span class="rank-badge">{rank}</span>
-                                <span class="rank-title">{cls_name}</span>
-                            </div>
-                            <span class="rank-score">{prob:.2f}%</span>
-                        </div>
-                        """, unsafe_allow_html=True)
-
-                    # XAI Diagnostic Callout
-                    st.markdown(f"""
-                    <div class="xai-callout">
-                        <div class="xai-hdr">🔬 Neural Attention Diagnostic (XAI)</div>
-                        {meta['xai_insight']}
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                    # Biological Metadata Expander
-                    with st.expander("📖 View Biological Taxonomy & Ecological Habitat", expanded=False):
-                        st.markdown(f"""
-                        - **Visual Markers**: {meta['appearance']}
-                        - **Geographic Range**: {meta['distribution']}
-                        - **Ecological Feature**: {meta['key_features']}
-                        """)
-
-                # --- RIGHT COLUMN: Explainable AI (Grad-CAM) Studio ---
-                with col_right:
-                    st.markdown("## 🔬 Explainable AI Studio (Grad-CAM)")
-                    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The highlighted heat regions indicate image areas that strongly influenced the model's prediction:</p>", unsafe_allow_html=True)
-
-                    # Overlay Intensity Slider with bold clear label
-                    blend_alpha = st.slider(
-                        "Heatmap Blend Intensity (α)",
-                        min_value=0.2,
-                        max_value=0.85,
-                        value=0.55,
-                        step=0.05,
-                        help="Adjust opacity of the Grad-CAM thermal overlay"
-                    )
-
-                    with GradCAM(predictor.model) as gradcam_engine:
-                        heatmap_img, overlay_img = gradcam_engine.overlay_heatmap(
-                            heatmap_norm,
-                            display_img,
-                            alpha=blend_alpha
-                        )
-
-                    cam_tab1, cam_tab2, cam_tab3, cam_tab4 = st.tabs([
-                        "✨ Explanation Overlay",
-                        "🌡️ Thermal Heatmap",
-                        "🖼️ Original Input",
-                        "🔍 Split Comparison"
-                    ])
-
-                    with cam_tab1:
-                        st.image(
-                            overlay_img,
-                            caption=f"Grad-CAM Attention Map on {pred_class} (α = {blend_alpha:.2f})",
-                            use_container_width=True
-                        )
-                    with cam_tab2:
-                        st.image(
-                            heatmap_img,
-                            caption="Raw Class Activation Heatmap (Jet Colormap)",
-                            use_container_width=True
-                        )
-                    with cam_tab3:
-                        st.image(
-                            display_img,
-                            caption="Preprocessed Model Input (224x224)",
-                            use_container_width=True
-                        )
-                    with cam_tab4:
-                        comp_col1, comp_col2 = st.columns(2)
-                        with comp_col1:
-                            st.image(display_img, caption="Original Input", use_container_width=True)
-                        with comp_col2:
-                            st.image(overlay_img, caption="Grad-CAM Overlay", use_container_width=True)
-
-                    # Export / Downloadable Inspection Report Card
-                    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-                    report_bytes = generate_report_card(
-                        original_image=display_img,
-                        overlay_image=overlay_img,
-                        pred_class=pred_class,
-                        confidence=confidence,
-                        top_k=top_k
-                    )
-                    st.download_button(
-                        label="📥 Download AI Inspection Report Card (PNG)",
-                        data=report_bytes,
-                        file_name=f"Butterfly_AI_Report_{pred_class.replace(' ', '_')}.png",
-                        mime="image/png",
-                        use_container_width=True
-                    )
-
+                # Persist full analysis in session cache
+                st.session_state.analysis_cache = {
+                    "pred_class": pred_res['predicted_class'],
+                    "confidence": pred_res['confidence'],
+                    "top_k": pred_res['top_k'],
+                    "display_img": pred_res['display_image'],
+                    "heatmap_norm": heatmap_norm,
+                }
             except Exception as e:
                 st.error(f"Error during AI analysis: {e}")
+
+    # RENDER PERSISTENT ANALYSIS (Never disappears when slider changes!)
+    if st.session_state.analysis_cache is not None:
+        cached = st.session_state.analysis_cache
+        pred_class = cached["pred_class"]
+        confidence = cached["confidence"]
+        top_k = cached["top_k"]
+        display_img = cached["display_img"]
+        heatmap_norm = cached["heatmap_norm"]
+
+        st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
+
+        # Two-Column Results Suite
+        col_left, col_right = st.columns([1.15, 1.35], gap="large")
+
+        # --- LEFT COLUMN: Prediction Cockpit & Biological Facts ---
+        with col_left:
+            st.markdown("## 🎯 Classification Result")
+            
+            meta = SPECIES_METADATA.get(pred_class, {
+                "scientific_name": "Unknown",
+                "family": "Insecta",
+                "color_primary": "#0284C7",
+                "xai_insight": "Model focused on discriminative visual wing patterns."
+            })
+
+            gauge_color = "#10B981" if confidence >= 80.0 else "#F59E0B"
+            gauge_lbl = "HIGH" if confidence >= 80.0 else "MODERATE"
+
+            st.markdown(f"""
+            <div class="result-capsule" style="border-top: 7px solid {meta['color_primary']};">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div>
+                        <div class="result-tag">IDENTIFIED SPECIES</div>
+                        <div class="result-name">{pred_class}</div>
+                        <div class="result-meta">{meta['scientific_name']} • {meta['family']}</div>
+                    </div>
+                    <div class="hud-gauge" style="border-color: {gauge_color};">
+                        <div class="gauge-val">{confidence:.1f}%</div>
+                        <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
+                    </div>
+                </div>
+                <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
+                    <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Top-3 Probabilities
+            st.markdown("### 🏆 Top-3 Ranked Probabilities")
+            for rank, (cls_name, prob) in enumerate(top_k, 1):
+                st.markdown(f"""
+                <div class="rank-capsule">
+                    <div style="display: flex; align-items: center;">
+                        <span class="rank-badge">{rank}</span>
+                        <span class="rank-title">{cls_name}</span>
+                    </div>
+                    <span class="rank-score">{prob:.2f}%</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # XAI Diagnostic Callout
+            st.markdown(f"""
+            <div class="xai-callout">
+                <div class="xai-hdr">🔬 Neural Attention Diagnostic (XAI)</div>
+                {meta['xai_insight']}
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Biological Metadata Expander
+            with st.expander("📖 View Biological Taxonomy & Ecological Habitat", expanded=False):
+                st.markdown(f"""
+                - **Visual Markers**: {meta['appearance']}
+                - **Geographic Range**: {meta['distribution']}
+                - **Ecological Feature**: {meta['key_features']}
+                """)
+
+        # --- RIGHT COLUMN: Explainable AI (Grad-CAM) Studio ---
+        with col_right:
+            st.markdown("## 🔬 Explainable AI Studio (Grad-CAM)")
+            st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The highlighted heat regions indicate image areas that strongly influenced the model's prediction:</p>", unsafe_allow_html=True)
+
+            # Smooth Real-Time Heatmap Blend Slider
+            blend_alpha = st.slider(
+                "Heatmap Blend Intensity (α)",
+                min_value=0.20,
+                max_value=0.85,
+                value=0.55,
+                step=0.05,
+                key="gradcam_alpha_slider",
+                help="Adjust opacity of the Grad-CAM thermal overlay"
+            )
+
+            with GradCAM(predictor.model) as gradcam_engine:
+                heatmap_img, overlay_img = gradcam_engine.overlay_heatmap(
+                    heatmap_norm,
+                    display_img,
+                    alpha=blend_alpha
+                )
+
+            cam_tab1, cam_tab2, cam_tab3, cam_tab4 = st.tabs([
+                "✨ Explanation Overlay",
+                "🌡️ Thermal Heatmap",
+                "🖼️ Original Input",
+                "🔍 Split Comparison"
+            ])
+
+            with cam_tab1:
+                st.image(
+                    overlay_img,
+                    caption=f"Grad-CAM Attention Map on {pred_class} (α = {blend_alpha:.2f})",
+                    use_container_width=True
+                )
+            with cam_tab2:
+                st.image(
+                    heatmap_img,
+                    caption="Raw Class Activation Heatmap (Jet Colormap)",
+                    use_container_width=True
+                )
+            with cam_tab3:
+                st.image(
+                    display_img,
+                    caption="Preprocessed Model Input (224x224)",
+                    use_container_width=True
+                )
+            with cam_tab4:
+                comp_col1, comp_col2 = st.columns(2)
+                with comp_col1:
+                    st.image(display_img, caption="Original Input", use_container_width=True)
+                with comp_col2:
+                    st.image(overlay_img, caption="Grad-CAM Overlay", use_container_width=True)
+
+            # Export / Downloadable Inspection Report Card
+            st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+            report_bytes = generate_report_card(
+                original_image=display_img,
+                overlay_image=overlay_img,
+                pred_class=pred_class,
+                confidence=confidence,
+                top_k=top_k
+            )
+            st.download_button(
+                label="📥 Download AI Inspection Report Card (PNG)",
+                data=report_bytes,
+                file_name=f"Butterfly_AI_Report_{pred_class.replace(' ', '_')}.png",
+                mime="image/png",
+                use_container_width=True
+            )
     else:
         st.info("👆 Click **✨ Run Neural Analysis** above to identify species and generate Grad-CAM explanation.")
 
