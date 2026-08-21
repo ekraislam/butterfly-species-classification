@@ -203,11 +203,37 @@ st.markdown("""
         border: 2px solid #94A3B8 !important;
     }
     
-    /* Hero Header */
-    .hero-container {
-        text-align: center;
-        padding: 2.5rem 1rem 1.5rem 1rem;
+    /* ========================================================================= */
+    /* MASTERPIECE SPLIT HERO & 3D ANIMATED BUTTERFLY SANCTUARY                   */
+    /* ========================================================================= */
+    .hero-split-wrapper {
+        display: grid;
+        grid-template-columns: 1.35fr 1.0fr;
+        gap: 28px;
+        align-items: center;
+        padding: 2.2rem 1rem 1.2rem 1rem;
+        position: relative;
     }
+    
+    @media (max-width: 992px) {
+        .hero-split-wrapper {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+    }
+    
+    .hero-left-pane {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    @media (max-width: 992px) {
+        .hero-left-pane {
+            align-items: center;
+        }
+    }
+    
     .hero-badge {
         display: inline-flex;
         align-items: center;
@@ -215,17 +241,17 @@ st.markdown("""
         background: #E0F2FE;
         border: 2px solid #0284C7;
         color: #0369A1;
-        font-size: 1.0rem;
+        font-size: 0.96rem;
         font-weight: 900;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
-        padding: 8px 24px;
+        padding: 7px 20px;
         border-radius: 999px;
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.1rem;
         box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15);
     }
     .hero-title {
-        font-size: 4.0rem;
+        font-size: 3.8rem;
         font-weight: 900;
         letter-spacing: -0.03em;
         line-height: 1.1;
@@ -233,12 +259,241 @@ st.markdown("""
         margin-bottom: 0.8rem;
     }
     .hero-subtitle {
-        font-size: 1.4rem;
+        font-size: 1.32rem;
         color: #1E293B;
         font-weight: 700;
-        max-width: 820px;
-        margin: 0 auto;
-        line-height: 1.6;
+        line-height: 1.55;
+        margin-bottom: 1.4rem;
+    }
+    
+    .hero-tag-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 0.4rem;
+    }
+    .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        background: #FFFFFF;
+        border: 1.5px solid #CBD5E1;
+        color: #0F172A;
+        font-size: 0.94rem;
+        font-weight: 800;
+        padding: 6px 16px;
+        border-radius: 999px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        transition: all 0.2s ease;
+    }
+    .hero-tag:hover {
+        border-color: #0284C7;
+        color: #0284C7;
+        transform: translateY(-2px);
+    }
+
+    /* Luminous Glass Butterfly Sanctuary Card */
+    .sanctuary-terrarium {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 60%, #E0F2FE 100%);
+        border: 2.5px solid #94A3B8;
+        border-radius: 28px;
+        padding: 24px;
+        height: 250px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* Ambient Bioluminescent Sparkles */
+    .sanctuary-glow {
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 140px;
+        height: 140px;
+        background: radial-gradient(circle, rgba(2, 132, 199, 0.25) 0%, rgba(2, 132, 199, 0) 70%);
+        border-radius: 50%;
+        animation: glow-pulse 4s ease-in-out infinite alternate;
+        pointer-events: none;
+    }
+    
+    @keyframes glow-pulse {
+        0% { transform: scale(0.9); opacity: 0.5; }
+        100% { transform: scale(1.3); opacity: 0.9; }
+    }
+
+    /* 3D Butterfly Realistic Wing Flutter Mechanics */
+    .butterfly-stage {
+        position: relative;
+        width: 100%;
+        height: 140px;
+        perspective: 600px;
+    }
+
+    /* Monarch Natural Flight */
+    .monarch-carrier {
+        position: absolute;
+        top: 25px;
+        left: 28%;
+        animation: monarch-flight 6.5s ease-in-out infinite alternate;
+        transform-style: preserve-3d;
+    }
+
+    @keyframes monarch-flight {
+        0% { transform: translate3d(0, 0, 0) rotate(4deg); }
+        30% { transform: translate3d(25px, -18px, 15px) rotate(-6deg); }
+        70% { transform: translate3d(-15px, 14px, -10px) rotate(5deg); }
+        100% { transform: translate3d(18px, -10px, 8px) rotate(-2deg); }
+    }
+
+    .butterfly-monarch {
+        display: flex;
+        align-items: center;
+        transform-style: preserve-3d;
+    }
+
+    .monarch-wing-left {
+        width: 44px;
+        height: 48px;
+        background: radial-gradient(circle at 100% 50%, #EA580C 20%, #C2410C 70%, #0F172A 95%);
+        border-radius: 80% 20% 60% 40%;
+        border: 2px solid #0F172A;
+        transform-origin: right center;
+        animation: wing-flap-left 0.28s ease-in-out infinite alternate;
+        box-shadow: 0 4px 10px rgba(234, 88, 12, 0.4);
+    }
+
+    .monarch-wing-right {
+        width: 44px;
+        height: 48px;
+        background: radial-gradient(circle at 0% 50%, #EA580C 20%, #C2410C 70%, #0F172A 95%);
+        border-radius: 20% 80% 40% 60%;
+        border: 2px solid #0F172A;
+        transform-origin: left center;
+        animation: wing-flap-right 0.28s ease-in-out infinite alternate;
+        box-shadow: 0 4px 10px rgba(234, 88, 12, 0.4);
+    }
+
+    .butterfly-body {
+        width: 6px;
+        height: 38px;
+        background: #0F172A;
+        border-radius: 999px;
+        z-index: 5;
+        position: relative;
+    }
+    .butterfly-body::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: -4px;
+        width: 14px;
+        height: 6px;
+        border-top: 2px solid #0F172A;
+        border-radius: 50%;
+    }
+
+    /* Adonis Blue Playful Flutter */
+    .adonis-carrier {
+        position: absolute;
+        top: 60px;
+        right: 18%;
+        animation: adonis-flight 5.2s ease-in-out infinite alternate;
+        transform-style: preserve-3d;
+    }
+
+    @keyframes adonis-flight {
+        0% { transform: translate3d(0, 0, 0) rotate(-5deg); }
+        40% { transform: translate3d(-30px, -22px, 12px) rotate(8deg); }
+        80% { transform: translate3d(12px, 16px, -8px) rotate(-4deg); }
+        100% { transform: translate3d(-18px, -12px, 5px) rotate(3deg); }
+    }
+
+    .butterfly-adonis {
+        display: flex;
+        align-items: center;
+        transform-style: preserve-3d;
+    }
+
+    .adonis-wing-left {
+        width: 32px;
+        height: 36px;
+        background: radial-gradient(circle at 100% 50%, #38BDF8 20%, #0284C7 70%, #0369A1 95%);
+        border-radius: 80% 20% 60% 40%;
+        border: 1.5px solid #0369A1;
+        transform-origin: right center;
+        animation: wing-flap-left 0.24s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.5);
+    }
+
+    .adonis-wing-right {
+        width: 32px;
+        height: 36px;
+        background: radial-gradient(circle at 0% 50%, #38BDF8 20%, #0284C7 70%, #0369A1 95%);
+        border-radius: 20% 80% 40% 60%;
+        border: 1.5px solid #0369A1;
+        transform-origin: left center;
+        animation: wing-flap-right 0.24s ease-in-out infinite alternate;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.5);
+    }
+
+    .adonis-body {
+        width: 4px;
+        height: 28px;
+        background: #0F172A;
+        border-radius: 999px;
+        z-index: 5;
+    }
+
+    @keyframes wing-flap-left {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(-68deg); }
+    }
+
+    @keyframes wing-flap-right {
+        0% { transform: rotateY(0deg); }
+        100% { transform: rotateY(68deg); }
+    }
+
+    /* Terrarium Bottom Badge */
+    .terrarium-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1.5px solid #CBD5E1;
+        border-radius: 14px;
+        padding: 8px 16px;
+        z-index: 10;
+    }
+    .terrarium-title {
+        font-size: 0.92rem;
+        font-weight: 900;
+        color: #0F172A;
+        letter-spacing: 0.04em;
+    }
+    .terrarium-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.84rem;
+        font-weight: 900;
+        color: #059669;
+    }
+    .live-dot {
+        width: 8px;
+        height: 8px;
+        background: #10B981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #10B981;
+        animation: pulse-dot 1.5s infinite;
+    }
+    @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.8); }
     }
 
     /* Floating Metric Strip */
@@ -246,7 +501,7 @@ st.markdown("""
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 18px;
-        margin: 1.8rem 0 2.5rem 0;
+        margin: 1.2rem 0 2.5rem 0;
     }
     .metric-card {
         background: #FFFFFF;
@@ -582,13 +837,48 @@ paths = resolve_project_paths()
 predictor = load_predictor()
 
 # -----------------------------------------------------------------------------
-# 3. Hero Header
+# 3. Hero Header (Masterpiece Split Layout & 3D Butterfly Sanctuary)
 # -----------------------------------------------------------------------------
 st.markdown("""
-<div class="hero-container">
-    <div class="hero-badge">🦋 ResNet18 • Deep Transfer Learning • Grad-CAM XAI</div>
-    <div class="hero-title">AI Butterfly Vision</div>
-    <div class="hero-subtitle">High-Precision Butterfly Species Classification with Real-Time Explainable AI (XAI) Diagnostics</div>
+<div class="hero-split-wrapper">
+    <div class="hero-left-pane">
+        <div class="hero-badge">🦋 ResNet-18 • Deep Transfer Learning • Grad-CAM XAI</div>
+        <div class="hero-title">AI Butterfly Vision</div>
+        <div class="hero-subtitle">High-Precision Butterfly Species Classification with Real-Time Explainable AI (XAI) Diagnostics</div>
+        <div class="hero-tag-strip">
+            <span class="hero-tag">🌿 8 Tropical Species</span>
+            <span class="hero-tag">🔬 Real-Time Grad-CAM XAI</span>
+            <span class="hero-tag">⚡ 97.22% Precision</span>
+            <span class="hero-tag">📄 4K Report Generator</span>
+        </div>
+    </div>
+    <div class="hero-right-pane">
+        <div class="sanctuary-terrarium">
+            <div class="sanctuary-glow"></div>
+            <div class="butterfly-stage">
+                <!-- 3D Fluttering Monarch -->
+                <div class="monarch-carrier">
+                    <div class="butterfly-monarch">
+                        <div class="monarch-wing-left"></div>
+                        <div class="butterfly-body"></div>
+                        <div class="monarch-wing-right"></div>
+                    </div>
+                </div>
+                <!-- 3D Fluttering Adonis Blue -->
+                <div class="adonis-carrier">
+                    <div class="butterfly-adonis">
+                        <div class="adonis-wing-left"></div>
+                        <div class="adonis-body"></div>
+                        <div class="adonis-wing-right"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="terrarium-footer">
+                <span class="terrarium-title">🌸 AI BIO-VISION TERRARIUM</span>
+                <span class="terrarium-live"><span class="live-dot"></span> NEURAL ENGINE LIVE</span>
+            </div>
+        </div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
