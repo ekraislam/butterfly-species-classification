@@ -1977,6 +1977,7 @@ body {{
     align-items: center;
     transform-style: preserve-3d;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+}}
 .wing-left-svg {{
     transform-origin: 100% 50%;
     animation: wing-flap-left 0.22s ease-in-out infinite alternate;
@@ -2571,11 +2572,11 @@ body {{
     }});
 
     const carriers = [
-        {{ name: 'Emerald', el: terrarium.querySelector('.emerald-carrier'), homeX: 45, homeY: 35, x: 45, y: 35, bank: 0, glow: '#10B981' }},
-        {{ name: 'Monarch', el: terrarium.querySelector('.monarch-carrier'), homeX: 145, homeY: 25, x: 145, y: 25, bank: 0, glow: '#F97316' }},
-        {{ name: 'Postman', el: terrarium.querySelector('.postman-carrier'), homeX: 245, homeY: 48, x: 245, y: 48, bank: 0, glow: '#EF4444' }},
-        {{ name: 'Adonis', el: terrarium.querySelector('.adonis-carrier'), homeX: 345, homeY: 28, x: 345, y: 28, bank: 0, glow: '#38BDF8' }},
-        {{ name: 'Dogface', el: terrarium.querySelector('.dogface-carrier'), homeX: 435, homeY: 32, x: 435, y: 32, bank: 0, glow: '#FBBF24' }}
+        {{ name: 'Emerald', el: terrarium.querySelector('.emerald-carrier'), homeX: 40, homeY: 16, x: 40, y: 16, bank: 0, glow: '#10B981' }},
+        {{ name: 'Monarch', el: terrarium.querySelector('.monarch-carrier'), homeX: 135, homeY: 12, x: 135, y: 12, bank: 0, glow: '#F97316' }},
+        {{ name: 'Postman', el: terrarium.querySelector('.postman-carrier'), homeX: 230, homeY: 18, x: 230, y: 18, bank: 0, glow: '#EF4444' }},
+        {{ name: 'Adonis', el: terrarium.querySelector('.adonis-carrier'), homeX: 330, homeY: 14, x: 330, y: 14, bank: 0, glow: '#38BDF8' }},
+        {{ name: 'Dogface', el: terrarium.querySelector('.dogface-carrier'), homeX: 425, homeY: 16, x: 425, y: 16, bank: 0, glow: '#FBBF24' }}
     ].filter(b => b.el !== null);
 
     let mouseX = -999;
