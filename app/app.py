@@ -2058,21 +2058,7 @@ body {{
 </head>
 <body>
 
-<div class="hero-split-wrapper">
-    <div class="hero-left-pane">
-        <div class="hero-badge">{t_badge}</div>
-        <div class="hero-title">{t_title}</div>
-        <div class="hero-subtitle">{t_subtitle}</div>
-        <div class="hero-tag-strip">
-            <span class="hero-tag">{t_tag1}</span>
-            <span class="hero-tag">{t_tag2}</span>
-            <span class="hero-tag">{t_tag3}</span>
-            <span class="hero-tag">{t_tag4}</span>
-        </div>
-    </div>
-    
-    <div class="hero-right-pane">
-        <div class="sanctuary-terrarium" id="sanctuaryTerrarium">
+<div class="sanctuary-terrarium" id="sanctuaryTerrarium">
             <button class="sanctuary-theme-toggle" id="sanctuaryThemeToggle" title="Toggle Day / Night Bioluminescence">{t_day}</button>
             <div class="sanctuary-glow"></div>
             
@@ -2350,8 +2336,6 @@ body {{
                 <span class="terrarium-live"><span class="live-dot"></span> {t_terrarium_live}</span>
             </div>
         </div>
-    </div>
-</div>
 
 <script>
 (function() {{
