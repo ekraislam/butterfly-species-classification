@@ -1439,31 +1439,15 @@ st.markdown("""
     }
 
     /* ========================================================================= */
-    /* LUXURY GLASSMORPHIC TOP NAVIGATION DOCK BAR                               */
-    /* ========================================================================= */
-    div[data-testid="stHorizontalBlock"]:has([key="lang_switcher_radio"]),
-    div[data-testid="stHorizontalBlock"]:has(div[data-testid="stRadio"]) {
-        background: rgba(255, 255, 255, 0.88) !important;
-        backdrop-filter: blur(18px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
-        border: 1.5px solid rgba(203, 213, 225, 0.85) !important;
-        border-radius: 18px !important;
-        padding: 5px 16px !important;
-        margin-bottom: 12px !important;
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
-        align-items: center !important;
-    }
-
-    /* ========================================================================= */
-    /* 100% BULLETPROOF ZERO TOP GAP RESPONSIVE DESIGN                            */
+    /* 100% BULLETPROOF RESPONSIVE DESIGN (NATURAL, CLEAN & BALANCED)             */
     /* ========================================================================= */
     .main .block-container,
     .stMainBlockContainer,
     [data-testid="stAppViewBlockContainer"],
     div.block-container {
         max-width: 1360px !important;
-        padding-top: 10px !important;
-        margin-top: -28px !important;
+        padding-top: 0.8rem !important;
+        margin-top: 0 !important;
         padding-bottom: 3rem !important;
         transition: padding 0.3s ease !important;
     }
@@ -1474,8 +1458,8 @@ st.markdown("""
         div.block-container {
             padding-left: 1.0rem !important;
             padding-right: 1.0rem !important;
-            padding-top: 8px !important;
-            margin-top: -22px !important;
+            padding-top: 0.6rem !important;
+            margin-top: 0 !important;
         }
         
         .metric-grid {
@@ -1488,8 +1472,8 @@ st.markdown("""
         .main .block-container,
         .stMainBlockContainer,
         div.block-container {
-            padding-top: 6px !important;
-            margin-top: -18px !important;
+            padding-top: 0.5rem !important;
+            margin-top: 0 !important;
         }
     }
 
