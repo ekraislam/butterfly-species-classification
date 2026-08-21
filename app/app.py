@@ -582,6 +582,8 @@ if "selected_filename" not in st.session_state:
     st.session_state.selected_filename = None
 if "analysis_cache" not in st.session_state:
     st.session_state.analysis_cache = None
+if "show_report_modal" not in st.session_state:
+    st.session_state.show_report_modal = False
 
 test_dir = paths["test_data_dir"]
 benchmark_samples = {}
@@ -609,6 +611,7 @@ with input_tab1:
                 st.session_state.selected_image = Image.open(fpath).convert("RGB")
                 st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
                 st.session_state.analysis_cache = None
+                st.session_state.show_report_modal = False
 
 with input_tab2:
     st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Drop or browse an image from your computer:</p>", unsafe_allow_html=True)
@@ -622,6 +625,7 @@ with input_tab2:
             st.session_state.selected_image = Image.open(uploaded_file).convert("RGB")
             st.session_state.selected_filename = uploaded_file.name
             st.session_state.analysis_cache = None
+            st.session_state.show_report_modal = False
         except Exception as e:
             st.error(f"Error reading image: {e}")
 
@@ -637,11 +641,12 @@ with input_tab3:
                 st.session_state.selected_image = Image.open(camera_photo).convert("RGB")
                 st.session_state.selected_filename = "Live_Camera_Capture.jpg"
                 st.session_state.analysis_cache = None
+                st.session_state.show_report_modal = False
             except Exception as e:
                 st.error(f"Error capturing camera snapshot: {e}")
 
 # -----------------------------------------------------------------------------
-# 6. Analysis & Visual Diagnostic Suite (With Persistent Cache & Instant Dynamic Controls)
+# 6. Analysis & Visual Diagnostic Suite (With On-Demand Report Inspector)
 # -----------------------------------------------------------------------------
 active_image = st.session_state.selected_image
 active_filename = st.session_state.selected_filename
@@ -666,6 +671,7 @@ if active_image is not None:
                 st.session_state.selected_image = None
                 st.session_state.selected_filename = None
                 st.session_state.analysis_cache = None
+                st.session_state.show_report_modal = False
                 st.rerun()
 
     # Trigger computation on button click and persist into session cache
@@ -688,10 +694,11 @@ if active_image is not None:
                     "display_img": pred_res['display_image'],
                     "raw_heatmap": raw_heatmap,
                 }
+                st.session_state.show_report_modal = False
             except Exception as e:
                 st.error(f"Error during AI analysis: {e}")
 
-    # RENDER PERSISTENT ANALYSIS (Never disappears when slider changes!)
+    # RENDER PERSISTENT ANALYSIS
     if st.session_state.analysis_cache is not None:
         cached = st.session_state.analysis_cache
         pred_class = cached["pred_class"]
@@ -722,20 +729,20 @@ if active_image is not None:
             st.markdown(f"""
             <div class="result-capsule" style="border-top: 7px solid {meta['color_primary']};">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                            <div>
-                                <div class="result-tag">IDENTIFIED SPECIES</div>
-                                <div class="result-name">{pred_class}</div>
-                                <div class="result-meta">{meta['scientific_name']} • {meta['family']}</div>
-                            </div>
-                            <div class="hud-gauge" style="border-color: {gauge_color};">
-                                <div class="gauge-val">{confidence:.1f}%</div>
-                                <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
-                            </div>
-                        </div>
-                        <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
-                            <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
-                        </div>
+                    <div>
+                        <div class="result-tag">IDENTIFIED SPECIES</div>
+                        <div class="result-name">{pred_class}</div>
+                        <div class="result-meta">{meta['scientific_name']} • {meta['family']}</div>
                     </div>
+                    <div class="hud-gauge" style="border-color: {gauge_color};">
+                        <div class="gauge-val">{confidence:.1f}%</div>
+                        <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
+                    </div>
+                </div>
+                <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
+                    <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
+                </div>
+            </div>
             """, unsafe_allow_html=True)
 
             # Top-3 Probabilities
@@ -783,7 +790,7 @@ if active_image is not None:
                 help="Controls transparency overlay AND adjusts thermal hotspot focus sensitivity"
             )
 
-            # DYNAMIC SENSITIVITY TRANSFORMATION: Modulates both Thermal Heatmap contrast and Overlay blend
+            # DYNAMIC SENSITIVITY TRANSFORMATION
             gamma_exponent = 1.0 + (0.55 - blend_alpha) * 1.4
             modulated_heatmap = np.clip(np.power(raw_heatmap, gamma_exponent), 0.0, 1.0)
 
@@ -827,13 +834,20 @@ if active_image is not None:
                     st.image(overlay_img, caption=f"Dynamic Grad-CAM Overlay (α = {blend_alpha:.2f})", use_container_width=True)
 
             # -------------------------------------------------------------
-            # AI INSPECTION REPORT CARD: LIVE PREVIEW & DOWNLOAD SUITE
+            # ON-DEMAND REPORT CARD INSPECTOR BUTTON
             # -------------------------------------------------------------
-            st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
-            st.markdown("### 📄 AI Inspection Certificate Card")
-            st.markdown("<p style='font-size: 1.05rem; font-weight: 700; color: #334155;'>Preview your official AI Inspection Report below before downloading as high-resolution PNG:</p>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+            
+            if st.button("📄 Generate & Inspect AI Report Certificate", type="primary", use_container_width=True):
+                st.session_state.show_report_modal = True
 
-            # Generate Report Card Graphic
+        # -----------------------------------------------------------------
+        # MODAL / EXPANDED REPORT CERTIFICATE INSPECTION SUITE
+        # -----------------------------------------------------------------
+        if st.session_state.get("show_report_modal", False):
+            st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
+            
+            # Generate Ultra-HD 1600x960 Report Graphic
             report_bytes = generate_report_card(
                 original_image=display_img,
                 overlay_image=overlay_img,
@@ -842,24 +856,40 @@ if active_image is not None:
                 top_k=top_k
             )
 
-            # Live Inline Preview of the Report Card
-            with st.expander("👁️ Live Preview Inspection Report Card (Click to View Full Certificate)", expanded=True):
-                st.image(
-                    report_bytes,
-                    caption=f"Official AI Inspection Certificate Card • Specimen: {pred_class} (ResNet-18 + Grad-CAM)",
-                    use_container_width=True
-                )
+            # Dedicated Certificate Inspection Card
+            st.markdown("""
+            <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 20px; padding: 24px; box-shadow: 0 15px 35px rgba(2, 132, 199, 0.15); margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div>
+                        <div style="font-size: 0.95rem; font-weight: 900; color: #0284C7; text-transform: uppercase; letter-spacing: 0.08em;">Official Specimen Inspection</div>
+                        <div style="font-size: 1.85rem; font-weight: 900; color: #0F172A;">AI Inspection Certificate Preview</div>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
-            # High-Resolution PNG Download Button
-            st.download_button(
-                label="📥 Download Official AI Report Card (High-Res PNG)",
-                data=report_bytes,
-                file_name=f"Butterfly_AI_Report_{pred_class.replace(' ', '_')}.png",
-                mime="image/png",
+            st.image(
+                report_bytes,
+                caption=f"Ultra-HD Inspection Certificate • Specimen: {pred_class} • Verified by ResNet-18 & Grad-CAM",
                 use_container_width=True
             )
 
-            st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+            # Action Buttons Row: Download & Close/Exit
+            action_c1, action_c2 = st.columns([1.5, 1])
+            with action_c1:
+                st.download_button(
+                    label="📥 Download Official Report Certificate (High-Res PNG)",
+                    data=report_bytes,
+                    file_name=f"Butterfly_AI_Report_{pred_class.replace(' ', '_')}.png",
+                    mime="image/png",
+                    use_container_width=True
+                )
+            with action_c2:
+                if st.button("❌ Close / Exit Report View", use_container_width=True):
+                    st.session_state.show_report_modal = False
+                    st.rerun()
 
     else:
         st.info("👆 Click **✨ Run Neural Analysis** above to identify species and generate Grad-CAM explanation.")
