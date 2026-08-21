@@ -7,7 +7,7 @@ Languages Supported: English (EN) & Bengali (BN)
 
 UI_TEXT = {
     "EN": {
-        # App Header
+        # App Header & Nav
         "app_title": "AI Butterfly Vision",
         "app_subtitle": "Ultra-High Precision Butterfly Species Identification with Real-Time Explainable AI (XAI)",
         "hero_badge": "🦋 ResNet-18 • Deep Transfer Learning • Grad-CAM XAI",
@@ -15,6 +15,17 @@ UI_TEXT = {
         "hero_tag_xai": "🔬 Real-Time Grad-CAM XAI",
         "hero_tag_acc": "⚡ 97.22% Precision",
         "hero_tag_cert": "📄 4K Report Generator",
+        "btn_install_app": "📲 Install App",
+        "install_modal_title": "📲 Install AI Butterfly Vision on Your Device",
+        "install_modal_sub": "Install this web app on your phone or desktop to access it instantly like a native app!",
+        "install_android_title": "🤖 Android & Chrome / Desktop",
+        "install_android_step1": "1. Tap the <strong>⋮ (3-dots menu)</strong> at the top right (or click <strong>Install</strong> on the address bar).",
+        "install_android_step2": "2. Select <strong>'Install app'</strong> or <strong>'Add to Home screen'</strong>.",
+        "install_android_step3": "3. Tap <strong>'Install'</strong> to enjoy the full-screen native experience!",
+        "install_ios_title": "🍎 iPhone & iPad (Safari)",
+        "install_ios_step1": "1. Tap the <strong>Share button ( ⬆️ )</strong> at the bottom bar in Safari.",
+        "install_ios_step2": "2. Scroll down and tap <strong>'Add to Home Screen'</strong>.",
+        "install_ios_step3": "3. Tap <strong>'Add'</strong> at the top right to create the home screen icon.",
         
         # Metric Strip
         "metric_acc_val": "97.22%",
@@ -103,7 +114,7 @@ UI_TEXT = {
     },
     
     "BN": {
-        # App Header
+        # App Header & Nav
         "app_title": "এআই বাটারফ্লাই ভিশন",
         "app_subtitle": "কৃত্রিম বুদ্ধিমত্তা (AI) ও যুক্তিনির্ভর ব্যাখ্যা (XAI) সহ অত্যন্ত নির্ভুল প্রজাপতি শনাক্তকরণ ব্যবস্থা",
         "hero_badge": "🦋 ডিপ লার্নিং • রেসনেট-১৮ • গ্র্যাড-ক্যাম XAI",
@@ -111,6 +122,17 @@ UI_TEXT = {
         "hero_tag_xai": "🔬 লাইভ এআই দৃষ্টি (Grad-CAM)",
         "hero_tag_acc": "⚡ ৯৭.২২% শনাক্তকরণ নির্ভুলতা",
         "hero_tag_cert": "📄 অফিশিয়াল রিপোর্ট সার্টিফিকেট",
+        "btn_install_app": "📲 অ্যাপ ইনস্টল করুন",
+        "install_modal_title": "📲 আপনার ডিভাইসে অ্যাপ হিসেবে ইনস্টল করুন",
+        "install_modal_sub": "ব্রাউজারের কোনো বাড়তি ঝামেলা ছাড়াই যেকোনো সময় সরাসরি ফুল-স্ক্রিন অ্যাপ হিসেবে চালান!",
+        "install_android_title": "🤖 অ্যান্ড্রয়েড (Chrome) ও ডেস্কটপ",
+        "install_android_step1": "১. ব্রাউজারের উপরে ডানে <strong>⋮ (৩-ডট মেনু)</strong>-তে চাপ দিন (অথবা অ্যাড্রেস বারের <strong>Install</strong> আইকনে চাপ দিন)।",
+        "install_android_step2": "২. মেনু থেকে <strong>'Install app'</strong> অথবা <strong>'Add to Home screen'</strong> বেছে নিন।",
+        "install_android_step3": "৩. <strong>'Install'</strong> বাটনে চাপ দিলেই হোমস্ক্রিনে অ্যাপটি চলে আসবে!",
+        "install_ios_title": "🍎 আইফোন ও আইপ্যাড (Safari)",
+        "install_ios_step1": "১. Safari ব্রাউজারের নিচে থাকা <strong>Share বোতাম ( ⬆️ )</strong>-এ চাপ দিন।",
+        "install_ios_step2": "২. মেনু থেকে নিচের দিকে স্ক্রোল করে <strong>'Add to Home Screen'</strong> বেছে নিন।",
+        "install_ios_step3": "৩. উপরে ডানে <strong>'Add'</strong> বাটনে চাপ দিন।",
         
         # Metric Strip
         "metric_acc_val": "৯৭.২২%",

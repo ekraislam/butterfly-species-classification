@@ -1664,9 +1664,52 @@ paths = resolve_project_paths()
 predictor = load_predictor()
 
 # -----------------------------------------------------------------------------
-# Top Navigation & Premium Segmented Language Switcher (🇬🇧 English / 🇧🇩 বাংলা)
+# Top Navigation & Install Guide Modal & Language Switcher
 # -----------------------------------------------------------------------------
-top_c1, top_c2 = st.columns([3.0, 1.4], vertical_alignment="center")
+if hasattr(st, "dialog"):
+    @st.dialog(t("install_modal_title"), width="large")
+    def show_install_app_dialog():
+        st.markdown(f"""
+        <div style="padding: 4px 2px 14px 2px;">
+            <p style="font-size: 1.05rem; font-weight: 700; color: #334155; margin-bottom: 20px; line-height: 1.5;">
+                {t('install_modal_sub')}
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                <!-- Android / Chrome / PC -->
+                <div style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #10B981; border-radius: 20px; padding: 20px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);">
+                    <div style="font-size: 1.12rem; font-weight: 900; color: #065F46; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        {t('install_android_title')}
+                    </div>
+                    <div style="font-size: 0.92rem; color: #1E293B; font-weight: 600; line-height: 1.6;">
+                        <p style="margin-bottom: 8px;">{t('install_android_step1')}</p>
+                        <p style="margin-bottom: 8px;">{t('install_android_step2')}</p>
+                        <p style="margin-bottom: 0;">{t('install_android_step3')}</p>
+                    </div>
+                </div>
+
+                <!-- iOS / Safari -->
+                <div style="background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 2px solid #0284C7; border-radius: 20px; padding: 20px; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);">
+                    <div style="font-size: 1.12rem; font-weight: 900; color: #075985; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        {t('install_ios_title')}
+                    </div>
+                    <div style="font-size: 0.92rem; color: #1E293B; font-weight: 600; line-height: 1.6;">
+                        <p style="margin-bottom: 8px;">{t('install_ios_step1')}</p>
+                        <p style="margin-bottom: 8px;">{t('install_ios_step2')}</p>
+                        <p style="margin-bottom: 0;">{t('install_ios_step3')}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; background: #FFFFFF; border: 2px solid #CBD5E1; border-radius: 16px; padding: 14px; color: #0F172A; font-weight: 800; font-size: 0.95rem; box-shadow: 0 3px 10px rgba(0,0,0,0.04);">
+                ✨ {"হোমস্ক্রিন থেকে ওপেন করলে ব্রাউজারের কোনো বার ছাড়াই সরাসরি আসল অ্যাপের মতো ফুল-স্ক্রিন চলবে!" if st.session_state.app_lang == "BN" else "Opening from your Home Screen gives you an immersive, standalone full-screen native app experience!"}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("✓ " + ("বুঝেছি / সম্পন্ন" if st.session_state.app_lang == "BN" else "Got It / Done"), key="btn_close_install_modal", type="primary", use_container_width=True):
+            st.rerun()
+
+top_c1, top_c2, top_c3 = st.columns([2.3, 0.95, 1.25], vertical_alignment="center")
 with top_c1:
     st.markdown("""
     <div style="display: flex; align-items: center; gap: 12px; padding: 4px 0;">
@@ -1676,6 +1719,10 @@ with top_c1:
     </div>
     """, unsafe_allow_html=True)
 with top_c2:
+    if st.button(t("btn_install_app"), key="btn_top_install_app", use_container_width=True):
+        if hasattr(st, "dialog"):
+            show_install_app_dialog()
+with top_c3:
     lang_options = ["🇬🇧 English", "🇧🇩 বাংলা"]
     current_idx = 0 if st.session_state.app_lang == "EN" else 1
     selected_lang_str = st.radio(
