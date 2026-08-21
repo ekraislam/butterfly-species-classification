@@ -518,91 +518,75 @@ st.markdown("""
     }
     
     /* ========================================================================= */
-    /* MASTERPIECE SPLIT HERO & 3D ANIMATED BUTTERFLY SANCTUARY                   */
+    /* MASTERPIECE FLUID HERO CARD (RESPONSIVE GLASSMORPHISM)                    */
     /* ========================================================================= */
-    .hero-split-wrapper {
-        display: grid;
-        grid-template-columns: 1.35fr 1.0fr;
-        gap: 28px;
-        align-items: center;
-        padding: 2.2rem 1rem 1.2rem 1rem;
-        position: relative;
-    }
-    
-    @media (max-width: 992px) {
-        .hero-split-wrapper {
-            grid-template-columns: 1fr;
-            text-align: center;
-        }
-    }
-    
-    .hero-left-pane {
+    .hero-left-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 60%, #E0F2FE 100%);
+        border: 2.5px solid #94A3B8;
+        border-radius: 28px;
+        padding: 22px 26px;
+        box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        justify-content: space-between;
+        min-height: 295px;
+        height: 295px;
+        box-sizing: border-box;
     }
-    
-    @media (max-width: 992px) {
-        .hero-left-pane {
-            align-items: center;
-        }
-    }
-    
     .hero-badge {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        background: #E0F2FE;
-        border: 2px solid #0284C7;
-        color: #0369A1;
-        font-size: 0.96rem;
+        gap: 6px;
+        background: #0284C7;
+        color: #FFFFFF;
+        font-size: 0.80rem;
         font-weight: 900;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        padding: 7px 20px;
+        padding: 5px 14px;
         border-radius: 999px;
-        margin-bottom: 1.1rem;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        width: fit-content;
+        margin-bottom: 6px;
     }
     .hero-title {
-        font-size: 3.8rem;
+        font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+        font-size: 2.15rem;
         font-weight: 900;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
         color: #0F172A;
-        margin-bottom: 0.8rem;
+        line-height: 1.15;
+        margin: 4px 0 6px 0;
+        letter-spacing: -0.02em;
     }
     .hero-subtitle {
-        font-size: 1.32rem;
-        color: #1E293B;
+        font-size: 0.94rem;
         font-weight: 700;
-        line-height: 1.55;
-        margin-bottom: 1.4rem;
+        color: #334155;
+        line-height: 1.4;
+        margin-bottom: 10px;
     }
-    
     .hero-tag-strip {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 0.4rem;
+        gap: 8px;
+        margin-top: auto;
     }
     .hero-tag {
         display: inline-flex;
         align-items: center;
         background: #FFFFFF;
-        border: 1.5px solid #CBD5E1;
+        border: 1.5px solid #94A3B8;
         color: #0F172A;
-        font-size: 0.94rem;
+        font-size: 0.78rem;
         font-weight: 800;
-        padding: 6px 16px;
+        padding: 4px 12px;
         border-radius: 999px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         transition: all 0.2s ease;
     }
     .hero-tag:hover {
         border-color: #0284C7;
         color: #0284C7;
-        transform: translateY(-2px);
+        transform: translateY(-1px);
     }
 
     /* ========================================================================= */
@@ -1470,10 +1454,34 @@ st.markdown("""
             padding-top: 0.8rem !important;
         }
 
+        /* Top Install App Button */
+        button[key="btn_top_install_app"],
+        div[data-testid="stButton"] button[key="btn_top_install_app"] {
+            background: #FFFFFF !important;
+            border: 2px solid #0284C7 !important;
+            color: #0284C7 !important;
+            border-radius: 999px !important;
+            padding: 5px 12px !important;
+            font-size: 0.86rem !important;
+            font-weight: 800 !important;
+            min-height: 40px !important;
+            height: 40px !important;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.12) !important;
+            transition: all 0.2s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        button[key="btn_top_install_app"]:hover {
+            background: #E0F2FE !important;
+            border-color: #0369A1 !important;
+            transform: translateY(-1px) !important;
+        }
+
         /* Top Navigation Header on Mobile */
         div[data-testid="stRadio"] {
             justify-content: center !important;
-            margin-top: 10px !important;
+            margin-top: 6px !important;
             width: 100% !important;
         }
         div[data-testid="stRadio"] div[role="radiogroup"],
@@ -1739,7 +1747,7 @@ with top_c3:
         st.rerun()
 
 # -----------------------------------------------------------------------------
-# 3. Hero Header (Masterpiece Split Layout & 3D Butterfly Sanctuary)
+# 3. Hero Header (Masterpiece Split Layout & 3D Botanical Vivarium)
 # -----------------------------------------------------------------------------
 t_badge = t("hero_badge")
 t_title = t("app_title")
@@ -1753,7 +1761,7 @@ t_night = "🌙 রাতের দ্যুতি" if st.session_state.app_lang
 t_terrarium_title = "🌺 মধু ও ফুলের বাগান" if st.session_state.app_lang == "BN" else "🌺 NECTAR & FLOWER SANCTUARY"
 t_terrarium_live = "৫টি জীবন্ত প্রজাপতি সক্রিয়" if st.session_state.app_lang == "BN" else "5 SPECIES ACTIVE"
 
-hero_iframe_html = f"""
+vivarium_iframe_html = f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1767,111 +1775,12 @@ body {{
     overflow: hidden;
     padding: 2px;
 }}
-.hero-split-wrapper {{
-    display: grid;
-    grid-template-columns: 1.12fr 1fr;
-    gap: 20px;
-    align-items: stretch;
-    width: 100%;
-}}
-@media (max-width: 860px) {{
-    .hero-split-wrapper {{
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }}
-    .hero-left-pane {{
-        height: auto !important;
-        min-height: 210px !important;
-        padding: 18px 16px !important;
-    }}
-    .hero-title {{
-        font-size: 1.65rem !important;
-    }}
-    .hero-subtitle {{
-        font-size: 0.86rem !important;
-    }}
-    .sanctuary-terrarium {{
-        height: 250px !important;
-        padding: 16px !important;
-    }}
-    .butterfly-stage {{
-        height: 130px !important;
-    }}
-}}
-@media (max-width: 480px) {{
-    .hero-title {{
-        font-size: 1.4rem !important;
-    }}
-    .hero-badge {{
-        font-size: 0.70rem !important;
-        padding: 3px 9px !important;
-    }}
-    .sanctuary-terrarium {{
-        height: 230px !important;
-    }}
-}}
-.hero-left-pane {{
-    background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 60%, #E0F2FE 100%);
-    border: 2.5px solid #94A3B8;
-    border-radius: 28px;
-    padding: 24px 28px;
-    box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 275px;
-}}
-.hero-badge {{
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #0284C7;
-    color: #FFFFFF;
-    font-size: 0.80rem;
-    font-weight: 900;
-    padding: 5px 13px;
-    border-radius: 999px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    width: fit-content;
-}}
-.hero-title {{
-    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
-    font-size: 2.15rem;
-    font-weight: 800;
-    color: #0F172A;
-    line-height: 1.12;
-    margin: 6px 0 2px 0;
-}}
-.hero-subtitle {{
-    font-size: 0.94rem;
-    font-weight: 700;
-    color: #334155;
-    line-height: 1.35;
-    margin-bottom: 8px;
-}}
-.hero-tag-strip {{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}}
-.hero-tag {{
-    background: #FFFFFF;
-    border: 1.5px solid #94A3B8;
-    border-radius: 999px;
-    padding: 4px 12px;
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: #0F172A;
-}}
-
-/* Sanctuary Terrarium */
 .sanctuary-terrarium {{
     background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 40%, #E0F2FE 100%);
     border: 2.5px solid #94A3B8;
     border-radius: 28px;
     padding: 20px 24px;
-    height: 275px;
+    height: 285px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
@@ -1911,11 +1820,6 @@ body {{
     border-color: #0284C7;
 }}
 .sanctuary-night .sanctuary-theme-toggle {{
-    background: rgba(15, 23, 42, 0.88);
-    border-color: #10B981;
-    color: #34D399;
-}}
-
 .sanctuary-glow {{
     position: absolute;
     top: -30px;
@@ -2670,7 +2574,25 @@ body {{
 </html>
 """
 
-components.html(hero_iframe_html, height=315, scrolling=False)
+hero_col1, hero_col2 = st.columns([1.16, 1.0], vertical_alignment="center")
+with hero_col1:
+    st.markdown(f"""
+    <div class="hero-left-card">
+        <div>
+            <div class="hero-badge">{t_badge}</div>
+            <div class="hero-title">{t_title}</div>
+            <div class="hero-subtitle">{t_subtitle}</div>
+        </div>
+        <div class="hero-tag-strip">
+            <span class="hero-tag">{t_tag1}</span>
+            <span class="hero-tag">{t_tag2}</span>
+            <span class="hero-tag">{t_tag3}</span>
+            <span class="hero-tag">{t_tag4}</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+with hero_col2:
+    components.html(vivarium_iframe_html, height=295, scrolling=False)
 
 # -----------------------------------------------------------------------------
 # 4. Floating Performance Metric Strip
