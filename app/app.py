@@ -1673,81 +1673,33 @@ paths = resolve_project_paths()
 predictor = load_predictor()
 
 # -----------------------------------------------------------------------------
-# Top Navigation & Install Guide Modal & Language Switcher
 # -----------------------------------------------------------------------------
-if hasattr(st, "dialog"):
-    @st.dialog(t("install_modal_title"), width="large")
-    def show_install_app_dialog():
-        st.markdown(textwrap.dedent(f"""
-        <div style="padding: 4px 2px 14px 2px;">
-            <p style="font-size: 1.05rem; font-weight: 700; color: #334155; margin-bottom: 20px; line-height: 1.5;">
-                {t('install_modal_sub')}
-            </p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px;">
-                <!-- Android / Chrome / PC -->
-                <div style="background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%); border: 2px solid #10B981; border-radius: 20px; padding: 20px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);">
-                    <div style="font-size: 1.12rem; font-weight: 900; color: #065F46; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        {t('install_android_title')}
-                    </div>
-                    <div style="font-size: 0.92rem; color: #1E293B; font-weight: 600; line-height: 1.6;">
-                        <p style="margin-bottom: 8px;">{t('install_android_step1')}</p>
-                        <p style="margin-bottom: 8px;">{t('install_android_step2')}</p>
-                        <p style="margin-bottom: 0;">{t('install_android_step3')}</p>
-                    </div>
-                </div>
-
-                <!-- iOS / Safari -->
-                <div style="background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 2px solid #0284C7; border-radius: 20px; padding: 20px; box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12);">
-                    <div style="font-size: 1.12rem; font-weight: 900; color: #075985; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                        {t('install_ios_title')}
-                    </div>
-                    <div style="font-size: 0.92rem; color: #1E293B; font-weight: 600; line-height: 1.6;">
-                        <p style="margin-bottom: 8px;">{t('install_ios_step1')}</p>
-                        <p style="margin-bottom: 8px;">{t('install_ios_step2')}</p>
-                        <p style="margin-bottom: 0;">{t('install_ios_step3')}</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; background: #FFFFFF; border: 2px solid #CBD5E1; border-radius: 16px; padding: 14px; color: #0F172A; font-weight: 800; font-size: 0.95rem; box-shadow: 0 3px 10px rgba(0,0,0,0.04);">
-                ✨ {"হোমস্ক্রিন থেকে ওপেন করলে ব্রাউজারের কোনো বার ছাড়াই সরাসরি আসল অ্যাপের মতো ফুল-স্ক্রিন চলবে!" if st.session_state.app_lang == "BN" else "Opening from your Home Screen gives you an immersive, standalone full-screen native app experience!"}
-            </div>
-        </div>
-        """), unsafe_allow_html=True)
-        if st.button("✓ " + ("বুঝেছি / সম্পন্ন" if st.session_state.app_lang == "BN" else "Got It / Done"), key="btn_close_install_modal", type="primary", use_container_width=True):
-            st.rerun()
-
-top_c1, top_c2 = st.columns([1.6, 1.25], vertical_alignment="center")
+# Top Navigation & Language Switcher
+# -----------------------------------------------------------------------------
+top_c1, top_c2 = st.columns([3.0, 1.0], vertical_alignment="center")
 with top_c1:
     st.markdown("""
-    <div style="display: flex; align-items: center; gap: 10px; padding: 2px 0;">
-        <span style="font-size: 1.5rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));">🦋</span>
-        <span style="font-size: 1.25rem; font-weight: 900; color: #0F172A; letter-spacing: -0.02em;">AI Butterfly Vision Lab</span>
-        <span style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); color: #059669; font-weight: 800; font-size: 0.74rem; padding: 3px 10px; border-radius: 999px; border: 1.5px solid #10B981; box-shadow: 0 2px 6px rgba(16,185,129,0.15);">● LIVE XAI v2.4</span>
+    <div style="display: flex; align-items: center; gap: 12px; padding: 2px 0;">
+        <span style="font-size: 1.6rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));">🦋</span>
+        <span style="font-size: 1.3rem; font-weight: 900; color: #0F172A; letter-spacing: -0.02em;">AI Butterfly Vision Lab</span>
+        <span style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); color: #059669; font-weight: 800; font-size: 0.76rem; padding: 3px 12px; border-radius: 999px; border: 1.5px solid #10B981; box-shadow: 0 2px 6px rgba(16,185,129,0.15);">● LIVE XAI v2.4</span>
     </div>
     """, unsafe_allow_html=True)
 with top_c2:
-    top_sub1, top_sub2 = st.columns([0.9, 1.1], vertical_alignment="center")
-    with top_sub1:
-        if st.button(t("btn_install_app"), key="btn_top_install_app", use_container_width=True):
-            if hasattr(st, "dialog"):
-                show_install_app_dialog()
-    with top_sub2:
-        lang_options = ["🇬🇧 English", "🇧🇩 বাংলা"]
-        current_idx = 0 if st.session_state.app_lang == "EN" else 1
-        selected_lang_str = st.radio(
-            "Language Selector",
-            options=lang_options,
-            index=current_idx,
-            horizontal=True,
-            label_visibility="collapsed",
-            key="lang_switcher_radio"
-        )
-        target_lang = "BN" if "বাংলা" in selected_lang_str else "EN"
-        if target_lang != st.session_state.app_lang:
-            st.session_state.app_lang = target_lang
-            st.rerun()
+    lang_options = ["🇬🇧 English", "🇧🇩 বাংলা"]
+    current_idx = 0 if st.session_state.app_lang == "EN" else 1
+    selected_lang_str = st.radio(
+        "Language Selector",
+        options=lang_options,
+        index=current_idx,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="lang_switcher_radio"
+    )
+    target_lang = "BN" if "বাংলা" in selected_lang_str else "EN"
+    if target_lang != st.session_state.app_lang:
+        st.session_state.app_lang = target_lang
+        st.rerun()
 
 # -----------------------------------------------------------------------------
 # 3. Hero Header (Masterpiece Split Layout & 3D Botanical Vivarium)
