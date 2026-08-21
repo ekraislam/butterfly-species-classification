@@ -1422,20 +1422,36 @@ st.markdown("""
     }
 
     /* ========================================================================= */
+    /* LUXURY GLASSMORPHIC TOP NAVIGATION DOCK BAR                               */
+    /* ========================================================================= */
+    div[data-testid="stHorizontalBlock"]:has([key="lang_switcher_radio"]),
+    div[data-testid="stHorizontalBlock"]:has(div[data-testid="stRadio"]) {
+        background: rgba(255, 255, 255, 0.88) !important;
+        backdrop-filter: blur(18px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+        border: 1.5px solid rgba(203, 213, 225, 0.85) !important;
+        border-radius: 18px !important;
+        padding: 5px 16px !important;
+        margin-bottom: 12px !important;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        align-items: center !important;
+    }
+
+    /* ========================================================================= */
     /* 100% BULLETPROOF RESPONSIVE DESIGN (MOBILE, TABLET, LAPTOP, DESKTOP)       */
     /* ========================================================================= */
     .main .block-container {
         max-width: 1360px !important;
-        padding-top: 1.2rem !important;
+        padding-top: 0.45rem !important;
         padding-bottom: 3rem !important;
         transition: padding 0.3s ease !important;
     }
 
     @media (max-width: 992px) {
         .main .block-container {
-            padding-left: 1.2rem !important;
-            padding-right: 1.2rem !important;
-            padding-top: 1.0rem !important;
+            padding-left: 1.0rem !important;
+            padding-right: 1.0rem !important;
+            padding-top: 0.35rem !important;
         }
         
         .metric-grid {
