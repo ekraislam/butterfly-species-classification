@@ -68,10 +68,19 @@ st.markdown("""
         color: #0F172A !important;
     }
     
-    /* Hide Default Streamlit Clutter */
-    #MainMenu, footer, header, .stDeployButton, [data-testid="stDeployButton"], [data-testid="stToolbar"], [data-testid="stDecoration"] {
+    /* Hide Default Streamlit Clutter & Header */
+    #MainMenu, footer, header, [data-testid="stHeader"], .stAppHeader, .stDeployButton, [data-testid="stDeployButton"], [data-testid="stToolbar"], [data-testid="stDecoration"] {
         display: none !important;
         visibility: hidden !important;
+        height: 0px !important;
+        min-height: 0px !important;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    
+    .stApp > header {
+        display: none !important;
+        height: 0px !important;
     }
     
     /* ========================================================================= */
@@ -1442,7 +1451,8 @@ st.markdown("""
     /* ========================================================================= */
     .main .block-container {
         max-width: 1360px !important;
-        padding-top: 0.45rem !important;
+        padding-top: 0rem !important;
+        margin-top: -2.5rem !important;
         padding-bottom: 3rem !important;
         transition: padding 0.3s ease !important;
     }
@@ -1451,12 +1461,20 @@ st.markdown("""
         .main .block-container {
             padding-left: 1.0rem !important;
             padding-right: 1.0rem !important;
-            padding-top: 0.35rem !important;
+            padding-top: 0rem !important;
+            margin-top: -2.2rem !important;
         }
         
         .metric-grid {
             grid-template-columns: repeat(2, 1fr) !important;
             gap: 12px !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main .block-container {
+            padding-top: 0rem !important;
+            margin-top: -2.0rem !important;
         }
     }
 
