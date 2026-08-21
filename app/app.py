@@ -1763,7 +1763,7 @@ t_night = "🌙 রাতের দ্যুতি" if st.session_state.app_lang
 t_terrarium_title = "🌺 মধু ও ফুলের বাগান" if st.session_state.app_lang == "BN" else "🌺 NECTAR & FLOWER SANCTUARY"
 t_terrarium_live = "৫টি জীবন্ত প্রজাপতি সক্রিয়" if st.session_state.app_lang == "BN" else "5 SPECIES ACTIVE"
 
-vivarium_iframe_html = f"""
+master_hero_html = f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1778,12 +1778,102 @@ body {{
     padding: 0;
     margin: 0;
 }}
+.hero-split-grid {{
+    display: grid;
+    grid-template-columns: 1.06fr 1fr;
+    gap: 18px;
+    align-items: stretch;
+    width: 100%;
+    height: 290px;
+    box-sizing: border-box;
+}}
+@media (max-width: 860px) {{
+    .hero-split-grid {{
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+        gap: 14px !important;
+    }}
+    .hero-left-card {{
+        height: auto !important;
+        min-height: 210px !important;
+        padding: 18px 16px !important;
+    }}
+    .hero-title {{
+        font-size: 1.65rem !important;
+    }}
+    .sanctuary-terrarium {{
+        height: 260px !important;
+    }}
+}}
+
+.hero-left-card {{
+    background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 60%, #E0F2FE 100%);
+    border: 2.5px solid #94A3B8;
+    border-radius: 24px;
+    padding: 20px 22px;
+    box-shadow: 0 14px 32px rgba(2, 132, 199, 0.10), inset 0 0 20px rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    box-sizing: border-box;
+}}
+.hero-badge {{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #0284C7;
+    color: #FFFFFF;
+    font-size: 0.78rem;
+    font-weight: 900;
+    padding: 4px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    width: fit-content;
+    margin-bottom: 6px;
+}}
+.hero-title {{
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+    font-size: 2.05rem;
+    font-weight: 900;
+    color: #0F172A;
+    line-height: 1.15;
+    margin: 3px 0 5px 0;
+    letter-spacing: -0.02em;
+}}
+.hero-subtitle {{
+    font-size: 0.90rem;
+    font-weight: 700;
+    color: #334155;
+    line-height: 1.38;
+    margin-bottom: 8px;
+}}
+.hero-tag-strip {{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: auto;
+}}
+.hero-tag {{
+    display: inline-flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid #94A3B8;
+    color: #0F172A;
+    font-size: 0.76rem;
+    font-weight: 800;
+    padding: 4px 11px;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}}
+
 .sanctuary-terrarium {{
     background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 40%, #E0F2FE 100%);
     border: 2.5px solid #94A3B8;
     border-radius: 24px;
     padding: 16px 20px;
-    height: 290px;
+    height: 100%;
     position: relative;
     overflow: hidden;
     box-shadow: 0 14px 32px rgba(2, 132, 199, 0.10), inset 0 0 20px rgba(255, 255, 255, 0.8);
@@ -2065,8 +2155,24 @@ body {{
 </style>
 </head>
 <body>
+<div class="hero-split-grid">
+    <!-- Left Hero Card -->
+    <div class="hero-left-card">
+        <div>
+            <div class="hero-badge">{t_badge}</div>
+            <div class="hero-title">{t_title}</div>
+            <div class="hero-subtitle">{t_subtitle}</div>
+        </div>
+        <div class="hero-tag-strip">
+            <span class="hero-tag">{t_tag1}</span>
+            <span class="hero-tag">{t_tag2}</span>
+            <span class="hero-tag">{t_tag3}</span>
+            <span class="hero-tag">{t_tag4}</span>
+        </div>
+    </div>
 
-<div class="sanctuary-terrarium" id="sanctuaryTerrarium">
+    <!-- Right 3D Botanical Vivarium -->
+    <div class="sanctuary-terrarium" id="sanctuaryTerrarium">
             <button class="sanctuary-theme-toggle" id="sanctuaryThemeToggle" title="Toggle Day / Night Bioluminescence">{t_day}</button>
             <div class="sanctuary-glow"></div>
             
@@ -2344,6 +2450,7 @@ body {{
                 <span class="terrarium-live"><span class="live-dot"></span> {t_terrarium_live}</span>
             </div>
         </div>
+</div>
 
 <script>
 (function() {{
@@ -2566,25 +2673,7 @@ body {{
 </html>
 """
 
-hero_col1, hero_col2 = st.columns([1, 1], gap="medium", vertical_alignment="center")
-with hero_col1:
-    st.markdown(f"""
-    <div class="hero-left-card">
-        <div>
-            <div class="hero-badge">{t_badge}</div>
-            <div class="hero-title">{t_title}</div>
-            <div class="hero-subtitle">{t_subtitle}</div>
-        </div>
-        <div class="hero-tag-strip">
-            <span class="hero-tag">{t_tag1}</span>
-            <span class="hero-tag">{t_tag2}</span>
-            <span class="hero-tag">{t_tag3}</span>
-            <span class="hero-tag">{t_tag4}</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-with hero_col2:
-    components.html(vivarium_iframe_html, height=290, scrolling=False)
+components.html(master_hero_html, height=296, scrolling=False)
 
 # -----------------------------------------------------------------------------
 # 4. Floating Performance Metric Strip
