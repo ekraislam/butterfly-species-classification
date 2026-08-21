@@ -60,12 +60,43 @@ st.markdown("""
     }
     
     /* ========================================================================= */
-    /* UNIVERSAL ULTRA-PREMIUM TABS STYLING (COVERS ALL TABS IN THE ENTIRE APP)  */
+    /* ALL LABELS, WIDGETS, AND SLIDERS: 100% DEEP BLACK & CRYSTAL CLEAR         */
+    /* ========================================================================= */
+    label, 
+    [data-testid="stWidgetLabel"], 
+    [data-testid="stWidgetLabel"] p, 
+    [data-testid="stWidgetLabel"] span,
+    div[data-testid="stSlider"] label,
+    div[data-testid="stSlider"] label p,
+    div[data-testid="stSlider"] [data-testid="stWidgetLabel"] p {
+        color: #0F172A !important;
+        -webkit-text-fill-color: #0F172A !important;
+        font-weight: 900 !important;
+        font-size: 1.15rem !important;
+    }
+
+    div[data-testid="stSlider"] div[data-testid="stThumbValue"] {
+        color: #0284C7 !important;
+        -webkit-text-fill-color: #0284C7 !important;
+        font-weight: 900 !important;
+        font-size: 1.15rem !important;
+    }
+
+    /* Slider Track and Knob */
+    div[data-testid="stSlider"] [role="slider"] {
+        background-color: #0284C7 !important;
+        border: 3px solid #FFFFFF !important;
+        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5) !important;
+    }
+
+    /* ========================================================================= */
+    /* BULLETPROOF UNIVERSAL TABS (COVERS EVERY SINGLE TAB IN STREAMLIT)         */
     /* ========================================================================= */
     
-    /* Tab bar container */
-    div[data-testid="stTabs"] [data-baseweb="tab-list"],
-    .stTabs [data-baseweb="tab-list"] {
+    /* Tab Container Bar */
+    div[role="tablist"],
+    [data-baseweb="tab-list"],
+    div[data-testid="stTabs"] > div:first-child {
         display: flex !important;
         gap: 12px !important;
         background: #CBD5E1 !important;
@@ -74,65 +105,55 @@ st.markdown("""
         border: 2px solid #94A3B8 !important;
     }
     
-    /* Individual tab buttons */
-    div[data-testid="stTabs"] button,
-    button[data-baseweb="tab"],
-    .stTabs button {
+    /* All Individual Tab Items */
+    button[role="tab"],
+    div[role="tab"],
+    [data-baseweb="tab"],
+    .stTabs [data-baseweb="tab"] {
         border-radius: 12px !important;
-        padding: 10px 20px !important;
+        padding: 10px 22px !important;
         font-size: 1.1rem !important;
         font-weight: 900 !important;
         transition: all 0.2s ease !important;
+        border: none !important;
     }
     
-    /* UNSELECTED TABS: Solid white card, strong dark border, 100% black text */
-    div[data-testid="stTabs"] button[aria-selected="false"],
-    button[data-baseweb="tab"][aria-selected="false"],
-    .stTabs button[aria-selected="false"] {
+    /* UNSELECTED TABS: Solid white card, dark border, 100% black text */
+    button[role="tab"][aria-selected="false"],
+    div[role="tab"][aria-selected="false"],
+    [data-baseweb="tab"][aria-selected="false"] {
         background-color: #FFFFFF !important;
         border: 2px solid #64748B !important;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08) !important;
     }
     
-    div[data-testid="stTabs"] button[aria-selected="false"] *,
-    button[data-baseweb="tab"][aria-selected="false"] *,
-    .stTabs button[aria-selected="false"] *,
-    div[data-testid="stTabs"] button[aria-selected="false"] p,
-    button[data-baseweb="tab"][aria-selected="false"] p,
-    .stTabs button[aria-selected="false"] p,
-    div[data-testid="stTabs"] button[aria-selected="false"] div,
-    button[data-baseweb="tab"][aria-selected="false"] div,
-    .stTabs button[aria-selected="false"] div,
-    div[data-testid="stTabs"] button[aria-selected="false"] span,
-    button[data-baseweb="tab"][aria-selected="false"] span,
-    .stTabs button[aria-selected="false"] span {
+    button[role="tab"][aria-selected="false"] *,
+    div[role="tab"][aria-selected="false"] *,
+    [data-baseweb="tab"][aria-selected="false"] *,
+    button[role="tab"][aria-selected="false"] p,
+    div[role="tab"][aria-selected="false"] p,
+    [data-baseweb="tab"][aria-selected="false"] p {
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
         font-weight: 900 !important;
         font-size: 1.05rem !important;
     }
     
-    /* SELECTED TABS: Royal blue gradient, crisp white text */
-    div[data-testid="stTabs"] button[aria-selected="true"],
-    button[data-baseweb="tab"][aria-selected="true"],
-    .stTabs button[aria-selected="true"] {
-        background: #0284C7 !important;
+    /* SELECTED TAB: Royal blue gradient, crisp white text */
+    button[role="tab"][aria-selected="true"],
+    div[role="tab"][aria-selected="true"],
+    [data-baseweb="tab"][aria-selected="true"] {
+        background-color: #0284C7 !important;
         border: 2px solid #0369A1 !important;
         box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4) !important;
     }
     
-    div[data-testid="stTabs"] button[aria-selected="true"] *,
-    button[data-baseweb="tab"][aria-selected="true"] *,
-    .stTabs button[aria-selected="true"] *,
-    div[data-testid="stTabs"] button[aria-selected="true"] p,
-    button[data-baseweb="tab"][aria-selected="true"] p,
-    .stTabs button[aria-selected="true"] p,
-    div[data-testid="stTabs"] button[aria-selected="true"] div,
-    button[data-baseweb="tab"][aria-selected="true"] div,
-    .stTabs button[aria-selected="true"] div,
-    div[data-testid="stTabs"] button[aria-selected="true"] span,
-    button[data-baseweb="tab"][aria-selected="true"] span,
-    .stTabs button[aria-selected="true"] span {
+    button[role="tab"][aria-selected="true"] *,
+    div[role="tab"][aria-selected="true"] *,
+    [data-baseweb="tab"][aria-selected="true"] *,
+    button[role="tab"][aria-selected="true"] p,
+    div[role="tab"][aria-selected="true"] p,
+    [data-baseweb="tab"][aria-selected="true"] p {
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
@@ -140,11 +161,12 @@ st.markdown("""
     }
     
     /* Remove Streamlit default red/coral bottom line on tabs */
-    div[data-testid="stTabs"] [data-baseweb="tab-highlight"],
-    .stTabs [data-baseweb="tab-highlight"],
-    [data-baseweb="tab-border"] {
+    [data-baseweb="tab-highlight"],
+    [data-baseweb="tab-border"],
+    div[data-testid="stTabs"] hr {
         display: none !important;
         visibility: hidden !important;
+        height: 0 !important;
     }
     
     /* Compact Camera Box */
@@ -714,7 +736,7 @@ if active_image is not None:
                     st.markdown("## 🔬 Explainable AI Studio (Grad-CAM)")
                     st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The highlighted heat regions indicate image areas that strongly influenced the model's prediction:</p>", unsafe_allow_html=True)
 
-                    # Overlay Intensity Slider
+                    # Overlay Intensity Slider with bold clear label
                     blend_alpha = st.slider(
                         "Heatmap Blend Intensity (α)",
                         min_value=0.2,
