@@ -216,8 +216,8 @@ UI_TEXT = {
         "dossier_stat_precision": "শনাক্তকরণ নির্ভুলতা",
         
         # Footer
-        "footer_designed_by": "প্রজেক্ট পরিকল্পনা ও বাস্তবায়নে",
-        "footer_tech": "ডিপ ট্রান্সফার লার্নিং (ResNet-18) • নেটিভ পাইটর্চ Grad-CAM • এজ ও মোবাইল ফ্রেন্ডলি আর্কিটেকচার"
+        "footer_designed_by": "পরিকল্পনা ও বাস্তবায়নে",
+        "footer_brand": "এআই বাটারফ্লাই ভিশন ল্যাব"
     }
 }
 

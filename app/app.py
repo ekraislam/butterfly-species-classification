@@ -1408,17 +1408,17 @@ st.markdown("""
     /* Footer */
     .app-footer {
         text-align: center;
-        padding: 3.5rem 1rem 2.2rem 1rem;
-        margin-top: 4rem;
-        border-top: 2px solid #94A3B8;
-        color: #1E293B;
-        font-size: 1.05rem;
+        padding: 2.2rem 1rem 1.8rem 1rem;
+        margin-top: 3.5rem;
+        border-top: 1.5px solid #CBD5E1;
+        color: #334155;
+        font-size: 1.02rem;
         font-weight: 700;
     }
     .footer-author {
         color: #0284C7;
         font-weight: 900;
-        font-size: 1.25rem;
+        font-size: 1.15rem;
     }
 
     /* ========================================================================= */
@@ -3334,9 +3334,6 @@ for i in range(4, 8):
 # -----------------------------------------------------------------------------
 st.markdown(f"""
 <div class="app-footer">
-    <div>{t('footer_designed_by')} <span class="footer-author">Ohi</span></div>
-    <div style="margin-top: 8px; font-size: 1.05rem; color: #1E293B; font-weight: 700;">
-        {t('footer_tech')}
-    </div>
+    <div>🦋 AI Butterfly Vision Lab • {t('footer_designed_by')} <span class="footer-author">Ohi</span> © 2026</div>
 </div>
 """, unsafe_allow_html=True)
