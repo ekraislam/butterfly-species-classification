@@ -3075,79 +3075,70 @@ if active_image is not None:
             )
 
             # Crystal Clear Interactive High-Contrast Native Web Report Dossier
-            st.markdown(textwrap.dedent(f"""
-            <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 24px; padding: 28px; box-shadow: 0 16px 40px rgba(2, 132, 199, 0.16); margin-bottom: 20px;">
-                <!-- Header -->
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 18px; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
-                    <div>
-                        <div style="display: inline-flex; align-items: center; gap: 6px; background: #E0F2FE; color: #0284C7; font-size: 0.82rem; font-weight: 900; padding: 4px 12px; border-radius: 999px; text-transform: uppercase; margin-bottom: 8px;">
-                            AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB
-                        </div>
-                        <div style="font-size: 1.85rem; font-weight: 900; color: #0F172A; line-height: 1.2;">
-                            {t('cert_preview_title')}
-                        </div>
-                        <div style="font-size: 0.90rem; font-weight: 700; color: #64748B; margin-top: 4px;">
-                            CERTIFICATE-ID: BIO-2026-XAI-{cert_hash} • ResNet-18 + Grad-CAM XAI
-                        </div>
-                    </div>
-                    <div style="background: #ECFDF5; border: 2px solid #10B981; border-radius: 16px; padding: 10px 18px; text-align: right;">
-                        <div style="font-size: 0.78rem; font-weight: 900; color: #059669; text-transform: uppercase;">VERIFIED AI DECISION</div>
-                        <div style="font-size: 1.55rem; font-weight: 900; color: #065F46;">{confidence:.1f}% MATCH</div>
-                    </div>
-                </div>
-
-                <!-- Bottom Diagnostic Cards (High-Contrast, Large Readable Text) -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-top: 20px;">
-                    <!-- Card 1: Neuro-Visual Attention -->
-                    <div style="background: #F8FAFC; border: 2px solid #0284C7; border-radius: 18px; padding: 20px;">
-                        <div style="font-size: 1.05rem; font-weight: 900; color: #0284C7; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                            🔬 NEURO-VISUAL ATTENTION (GRAD-CAM)
-                        </div>
-                        <div style="font-size: 0.96rem; color: #0F172A; font-weight: 800; margin-bottom: 8px;">
-                            Gradient Hotspot Diagnostic:
-                        </div>
-                        <div style="font-size: 0.92rem; color: #334155; line-height: 1.55; margin-bottom: 14px; font-weight: 600;">
-                            {report_meta['xai_insight']}
-                        </div>
-                        <div style="font-size: 0.96rem; color: #0F172A; font-weight: 800; margin-bottom: 6px;">
-                            Diagnostic Wing Markers:
-                        </div>
-                        <div style="font-size: 0.92rem; color: #334155; line-height: 1.55; font-weight: 600;">
-                            {report_meta['appearance']}
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Taxonomy & Ecology -->
-                    <div style="background: #F0FDF4; border: 2px solid #10B981; border-radius: 18px; padding: 20px;">
-                        <div style="font-size: 1.05rem; font-weight: 900; color: #065F46; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                            🌿 TAXONOMIC & BIOGEOGRAPHIC PROFILE
-                        </div>
-                        <div style="font-size: 0.96rem; color: #065F46; font-weight: 800; margin-bottom: 8px;">
-                            Geographic Distribution:
-                        </div>
-                        <div style="font-size: 0.92rem; color: #1E293B; line-height: 1.55; margin-bottom: 14px; font-weight: 600;">
-                            {report_meta['distribution']}
-                        </div>
-                        <div style="font-size: 0.96rem; color: #065F46; font-weight: 800; margin-bottom: 6px;">
-                            Key Biological Adaptation:
-                        </div>
-                        <div style="font-size: 0.92rem; color: #1E293B; line-height: 1.55; font-weight: 600;">
-                            {report_meta['key_features']}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Footer Signature -->
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid #E2E8F0; padding-top: 16px; margin-top: 20px; flex-wrap: wrap; gap: 8px;">
-                    <div style="font-size: 0.86rem; font-weight: 700; color: #64748B;">
-                        AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture
-                    </div>
-                    <div style="font-size: 0.92rem; font-weight: 900; color: #0284C7;">
-                        Lead AI Architect & Engineer: Ohi
-                    </div>
-                </div>
-            </div>
-            """), unsafe_allow_html=True)
+            report_html = f"""<div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 24px; padding: 28px; box-shadow: 0 16px 40px rgba(2, 132, 199, 0.16); margin-bottom: 20px;">
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 18px; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+<div>
+<div style="display: inline-flex; align-items: center; gap: 6px; background: #E0F2FE; color: #0284C7; font-size: 0.82rem; font-weight: 900; padding: 4px 12px; border-radius: 999px; text-transform: uppercase; margin-bottom: 8px;">
+AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB
+</div>
+<div style="font-size: 1.85rem; font-weight: 900; color: #0F172A; line-height: 1.2;">
+{t('cert_preview_title')}
+</div>
+<div style="font-size: 0.90rem; font-weight: 700; color: #64748B; margin-top: 4px;">
+CERTIFICATE-ID: BIO-2026-XAI-{cert_hash} • ResNet-18 + Grad-CAM XAI
+</div>
+</div>
+<div style="background: #ECFDF5; border: 2px solid #10B981; border-radius: 16px; padding: 10px 18px; text-align: right;">
+<div style="font-size: 0.78rem; font-weight: 900; color: #059669; text-transform: uppercase;">VERIFIED AI DECISION</div>
+<div style="font-size: 1.55rem; font-weight: 900; color: #065F46;">{confidence:.1f}% MATCH</div>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-top: 20px;">
+<div style="background: #F8FAFC; border: 2px solid #0284C7; border-radius: 18px; padding: 20px;">
+<div style="font-size: 1.05rem; font-weight: 900; color: #0284C7; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+🔬 NEURO-VISUAL ATTENTION (GRAD-CAM)
+</div>
+<div style="font-size: 0.96rem; color: #0F172A; font-weight: 800; margin-bottom: 8px;">
+Gradient Hotspot Diagnostic:
+</div>
+<div style="font-size: 0.92rem; color: #334155; line-height: 1.55; margin-bottom: 14px; font-weight: 600;">
+{report_meta['xai_insight']}
+</div>
+<div style="font-size: 0.96rem; color: #0F172A; font-weight: 800; margin-bottom: 6px;">
+Diagnostic Wing Markers:
+</div>
+<div style="font-size: 0.92rem; color: #334155; line-height: 1.55; font-weight: 600;">
+{report_meta['appearance']}
+</div>
+</div>
+<div style="background: #F0FDF4; border: 2px solid #10B981; border-radius: 18px; padding: 20px;">
+<div style="font-size: 1.05rem; font-weight: 900; color: #065F46; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+🌿 TAXONOMIC & BIOGEOGRAPHIC PROFILE
+</div>
+<div style="font-size: 0.96rem; color: #065F46; font-weight: 800; margin-bottom: 8px;">
+Geographic Distribution:
+</div>
+<div style="font-size: 0.92rem; color: #1E293B; line-height: 1.55; margin-bottom: 14px; font-weight: 600;">
+{report_meta['distribution']}
+</div>
+<div style="font-size: 0.96rem; color: #065F46; font-weight: 800; margin-bottom: 6px;">
+Key Biological Adaptation:
+</div>
+<div style="font-size: 0.92rem; color: #1E293B; line-height: 1.55; font-weight: 600;">
+{report_meta['key_features']}
+</div>
+</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid #E2E8F0; padding-top: 16px; margin-top: 20px; flex-wrap: wrap; gap: 8px;">
+<div style="font-size: 0.86rem; font-weight: 700; color: #64748B;">
+AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture
+</div>
+<div style="font-size: 0.92rem; font-weight: 900; color: #0284C7;">
+Lead AI Architect & Engineer: Ohi
+</div>
+</div>
+</div>"""
+            st.markdown(report_html, unsafe_allow_html=True)
 
             action_c1, action_c2 = st.columns([1.5, 1])
             with action_c1:
