@@ -663,14 +663,135 @@ st.markdown("""
         z-index: 5;
     }
 
-    @keyframes wing-flap-left {
-        0% { transform: rotateY(0deg); }
-        100% { transform: rotateY(-68deg); }
+    /* ========================================================================= */
+    /* BLOOMING NECTAR WILDFLOWERS & RISING HONEY PARTICLES                      */
+    /* ========================================================================= */
+    .flower-habitat {
+        position: absolute;
+        bottom: 52px;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        pointer-events: none;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 25px;
+        z-index: 4;
     }
 
-    @keyframes wing-flap-right {
-        0% { transform: rotateY(0deg); }
-        100% { transform: rotateY(68deg); }
+    /* Pink Tropical Orchid */
+    .flower-orchid {
+        position: relative;
+        width: 46px;
+        height: 52px;
+        animation: flower-breathe 4s ease-in-out infinite alternate;
+        transform-origin: bottom center;
+    }
+    .orchid-bloom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 42px;
+        height: 42px;
+        background: radial-gradient(circle, #F472B6 20%, #DB2777 75%, #9D174D 100%);
+        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        box-shadow: 0 4px 14px rgba(219, 39, 119, 0.4);
+    }
+    .orchid-center {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        width: 14px;
+        height: 14px;
+        background: #FBBF24;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #F59E0B;
+    }
+    .flower-stem {
+        position: absolute;
+        bottom: -10px;
+        left: 20px;
+        width: 4px;
+        height: 22px;
+        background: #059669;
+        border-radius: 2px;
+    }
+
+    /* Golden Sunburst Blossom */
+    .flower-blossom {
+        position: relative;
+        width: 46px;
+        height: 52px;
+        animation: flower-breathe 4.8s ease-in-out infinite alternate-reverse;
+        transform-origin: bottom center;
+    }
+    .blossom-bloom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 42px;
+        height: 42px;
+        background: radial-gradient(circle, #FDE047 25%, #EAB308 70%, #B45309 100%);
+        border-radius: 50%;
+        box-shadow: 0 4px 14px rgba(234, 179, 8, 0.45);
+    }
+    .blossom-center {
+        position: absolute;
+        top: 13px;
+        left: 13px;
+        width: 16px;
+        height: 16px;
+        background: #78350F;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #D97706;
+    }
+
+    @keyframes flower-breathe {
+        0% { transform: rotate(-3deg) scale(0.96); }
+        100% { transform: rotate(3deg) scale(1.04); }
+    }
+
+    /* Rising Honey Nectar Sparkles */
+    .nectar-particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #FBBF24;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #F59E0B;
+        animation: nectar-float 3.5s ease-in-out infinite;
+    }
+    .p1 { bottom: 20px; left: 18px; animation-delay: 0s; }
+    .p2 { bottom: 35px; left: 28px; animation-delay: 1.2s; }
+    .p3 { bottom: 20px; right: 18px; animation-delay: 0.6s; }
+    .p4 { bottom: 35px; right: 28px; animation-delay: 1.8s; }
+
+    @keyframes nectar-float {
+        0% { transform: translateY(0) scale(0.6); opacity: 0; }
+        50% { opacity: 0.9; transform: translateY(-30px) scale(1.1); }
+        100% { transform: translateY(-60px) scale(0.4); opacity: 0; }
+    }
+
+    /* Interactive Hover Attraction (Butterflies swoop towards sweet nectar!) */
+    .sanctuary-terrarium:hover .monarch-carrier {
+        transform: translate3d(20px, 15px, 25px) scale(1.12) !important;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .sanctuary-terrarium:hover .adonis-carrier {
+        transform: translate3d(-25px, -15px, 20px) scale(1.18) !important;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .sanctuary-terrarium:hover .emerald-carrier {
+        transform: translate3d(35px, 22px, 18px) scale(1.15) !important;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .sanctuary-terrarium:hover .postman-carrier {
+        transform: translate3d(-10px, -20px, 22px) scale(1.14) !important;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .sanctuary-terrarium:hover .dogface-carrier {
+        transform: translate3d(-30px, 12px, 20px) scale(1.15) !important;
+        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     /* Terrarium Bottom Badge */
@@ -1112,10 +1233,29 @@ st.markdown("""
                         <div class="dogface-wing-right"></div>
                     </div>
                 </div>
+                <!-- Blooming Wildflowers & Rising Honey Nectar Habitat -->
+                <div class="flower-habitat">
+                    <!-- Pink Tropical Orchid -->
+                    <div class="flower-orchid">
+                        <div class="orchid-bloom"></div>
+                        <div class="orchid-center"></div>
+                        <div class="flower-stem"></div>
+                        <div class="nectar-particle p1"></div>
+                        <div class="nectar-particle p2"></div>
+                    </div>
+                    <!-- Golden Sunburst Blossom -->
+                    <div class="flower-blossom">
+                        <div class="blossom-bloom"></div>
+                        <div class="blossom-center"></div>
+                        <div class="flower-stem"></div>
+                        <div class="nectar-particle p3"></div>
+                        <div class="nectar-particle p4"></div>
+                    </div>
+                </div>
             </div>
             <div class="terrarium-footer">
-                <span class="terrarium-title">🌸 AI BIO-VISION TERRARIUM</span>
-                <span class="terrarium-live"><span class="live-dot"></span> NEURAL ENGINE LIVE</span>
+                <span class="terrarium-title">🌺 NECTAR & FLOWER SANCTUARY</span>
+                <span class="terrarium-live"><span class="live-dot"></span> 5 SPECIES ACTIVE</span>
             </div>
         </div>
     </div>
