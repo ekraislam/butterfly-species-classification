@@ -60,7 +60,7 @@ st.markdown("""
     }
     
     /* ------------------------------------------------------------- */
-    /* GUARANTEED CRYSTAL-CLEAR TABS (FIX FOR INVISIBLE UNSELECTED TABS) */
+    /* GUARANTEED CRYSTAL-CLEAR TABS */
     /* ------------------------------------------------------------- */
     div[data-testid="stTabs"] {
         background: transparent !important;
@@ -86,7 +86,7 @@ st.markdown("""
         transition: all 0.2s ease !important;
     }
     
-    /* Unselected Tabs: White Card, Dark Solid Border, Deep Black Text */
+    /* Unselected Tabs */
     div[data-testid="stTabs"] button[aria-selected="false"],
     button[data-baseweb="tab"][aria-selected="false"],
     .stTabs button[aria-selected="false"] {
@@ -103,7 +103,7 @@ st.markdown("""
         font-weight: 800 !important;
     }
     
-    /* Selected Tab: Vibrant Blue Card, White Text */
+    /* Selected Tab */
     div[data-testid="stTabs"] button[aria-selected="true"],
     button[data-baseweb="tab"][aria-selected="true"],
     .stTabs button[aria-selected="true"] {
@@ -118,6 +118,18 @@ st.markdown("""
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
+    }
+    
+    /* ------------------------------------------------------------- */
+    /* COMPACT & ELEGANT CAMERA VIEWFINDER (FIX HUGE CAMERA BOX) */
+    /* ------------------------------------------------------------- */
+    [data-testid="stCameraInput"] {
+        max-width: 520px !important;
+        margin: 0 auto !important;
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15) !important;
+        border: 2px solid #94A3B8 !important;
     }
     
     /* ------------------------------------------------------------- */
@@ -222,7 +234,7 @@ st.markdown("""
         border: 2px solid #64748B !important;
         border-radius: 14px !important;
         font-weight: 900 !important;
-        font-size: 1.1rem !important;
+        font-size: 1.05rem !important;
         transition: all 0.2s ease !important;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
         padding: 0.9rem 1.1rem !important;
@@ -541,14 +553,18 @@ with input_tab2:
             st.error(f"Error reading image: {e}")
 
 with input_tab3:
-    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Point your webcam or mobile camera directly at a butterfly specimen:</p>", unsafe_allow_html=True)
-    camera_photo = st.camera_input("Take a butterfly snapshot", label_visibility="collapsed")
-    if camera_photo is not None:
-        try:
-            st.session_state.selected_image = Image.open(camera_photo).convert("RGB")
-            st.session_state.selected_filename = "Live_Camera_Capture.jpg"
-        except Exception as e:
-            st.error(f"Error capturing camera snapshot: {e}")
+    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A; text-align: center;'>Point your webcam or mobile camera directly at a butterfly specimen:</p>", unsafe_allow_html=True)
+    
+    # Centered Compact Camera Frame
+    cam_col1, cam_col2, cam_col3 = st.columns([1, 2, 1])
+    with cam_col2:
+        camera_photo = st.camera_input("Take a butterfly snapshot", label_visibility="collapsed")
+        if camera_photo is not None:
+            try:
+                st.session_state.selected_image = Image.open(camera_photo).convert("RGB")
+                st.session_state.selected_filename = "Live_Camera_Capture.jpg"
+            except Exception as e:
+                st.error(f"Error capturing camera snapshot: {e}")
 
 # -----------------------------------------------------------------------------
 # 6. Analysis & Visual Diagnostic Suite (With Reset / Clear Button)
