@@ -47,7 +47,10 @@ Evaluated on an independent, stratified holdout test split (**72 test images**, 
 
 - **Real-Time Classification**: Instant top-1 prediction and top-3 ranked probabilities.
 - **Visual Explainability (Grad-CAM)**: Generates heatmaps localizing specific wing patterns driving neural activations.
-- **Dynamic Heatmap Overlay**: Adjustable transparency slider ($\alpha \in [0.2, 0.8]$) with multi-tab image inspection.
+- **Triple Input System**: 1-Click Benchmark Gallery, Drag & Drop Upload, and **Live Camera / Webcam Capture**.
+- **Dynamic Heatmap Overlay**: Adjustable transparency slider ($\alpha \in [0.2, 0.85]$) with 4-tab multi-view inspection (Overlay, Heatmap, Original, Split Comparison).
+- **Downloadable AI Report**: Generates and downloads high-res PNG inspection summary cards.
+- **Mobile & Edge Ready**: Includes TorchScript mobile exporter (`models/butterfly_resnet18_torchscript.pt`).
 - **Species Knowledge Base**: Factual biological reference cards for all 8 species.
 - **Lightweight CPU Deployment**: Zero GPU requirement; fast inference on standard hardware.
 
@@ -57,8 +60,8 @@ Evaluated on an independent, stratified holdout test split (**72 test images**, 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/<your-username>/Butterfly-Classification.git
-   cd Butterfly-Classification
+   git clone https://github.com/ekraislam/butterfly-species-classification.git
+   cd butterfly-species-classification
    ```
 
 2. **Install dependencies**:
