@@ -6,6 +6,8 @@ Designed & Developed by Ohi.
 
 import os
 import sys
+import base64
+from io import BytesIO
 from PIL import Image
 import streamlit as st
 import numpy as np
@@ -138,7 +140,7 @@ st.markdown("""
         border: none !important;
     }
     
-    /* UNSELECTED TABS: Solid white card, dark border, 100% black text */
+    /* UNSELECTED TABS */
     button[role="tab"][aria-selected="false"],
     div[role="tab"][aria-selected="false"],
     [data-baseweb="tab"][aria-selected="false"] {
@@ -159,7 +161,7 @@ st.markdown("""
         font-size: 1.05rem !important;
     }
     
-    /* SELECTED TAB: Royal blue gradient, crisp white text */
+    /* SELECTED TAB */
     button[role="tab"][aria-selected="true"],
     div[role="tab"][aria-selected="true"],
     [data-baseweb="tab"][aria-selected="true"] {
@@ -294,7 +296,7 @@ st.markdown("""
         box-shadow: 0 10px 28px rgba(2, 132, 199, 0.45) !important;
     }
 
-    /* Secondary Gallery Buttons (Large, Crisp, High-Contrast) */
+    /* Secondary Gallery Buttons */
     button[kind="secondary"] {
         background: #FFFFFF !important;
         color: #0F172A !important;
@@ -464,39 +466,86 @@ st.markdown("""
         margin-bottom: 6px;
     }
 
-    /* Supported Species Showcase Cards (100% Consistent Across All 8) */
-    .species-pod {
+    /* ========================================================================= */
+    /* MASTERPIECE PHOTOGRAPHIC SPECIES CARDS (MUSEUM GRADE)                     */
+    /* ========================================================================= */
+    .species-card-v2 {
         background: #FFFFFF !important;
         border: 2px solid #CBD5E1 !important;
-        border-radius: 18px !important;
-        padding: 22px 18px !important;
+        border-radius: 20px !important;
+        padding: 22px 14px !important;
         text-align: center !important;
         height: 100% !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
-        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
     }
-    .species-pod:hover {
-        transform: translateY(-4px) !important;
-        box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12) !important;
+    .species-card-v2:hover {
+        transform: translateY(-6px) !important;
+        box-shadow: 0 16px 32px rgba(2, 132, 199, 0.18) !important;
+        border-color: #0284C7 !important;
     }
-    .pod-name {
+    .species-num-badge {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        background: #F1F5F9;
+        color: #0369A1;
         font-weight: 900;
-        font-size: 1.2rem;
-        color: #0F172A;
-        margin-bottom: 6px;
+        font-size: 0.85rem;
+        padding: 3px 9px;
+        border-radius: 8px;
+        border: 1px solid #CBD5E1;
     }
-    .pod-sci {
-        font-size: 1.05rem;
-        font-weight: 700;
-        font-style: italic;
-        color: #0284C7;
-        margin-bottom: 6px;
+    .species-thumb-container {
+        width: 106px;
+        height: 106px;
+        border-radius: 50%;
+        padding: 4px;
+        background: #FFFFFF;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        margin: 6px auto 14px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
     }
-    .pod-fam {
-        font-size: 0.92rem;
-        font-weight: 800;
-        color: #334155;
+    .species-card-v2:hover .species-thumb-container {
+        transform: scale(1.08);
+    }
+    .species-thumb-img {
+        width: 98px;
+        height: 98px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .card-title-name {
+        font-size: 1.18rem !important;
+        font-weight: 900 !important;
+        color: #0F172A !important;
+        margin-bottom: 4px !important;
+        line-height: 1.2 !important;
+    }
+    .card-sci-name {
+        font-size: 0.98rem !important;
+        font-weight: 700 !important;
+        font-style: italic !important;
+        color: #0284C7 !important;
+        margin-bottom: 10px !important;
+    }
+    .card-fam-tag {
+        display: inline-block !important;
+        background: #F8FAFC !important;
+        border: 1.5px solid #E2E8F0 !important;
+        color: #475569 !important;
+        font-size: 0.84rem !important;
+        font-weight: 800 !important;
+        padding: 4px 14px !important;
+        border-radius: 999px !important;
+        letter-spacing: 0.02em !important;
     }
 
     /* Footer */
@@ -587,13 +636,24 @@ if "show_report_modal" not in st.session_state:
 
 test_dir = paths["test_data_dir"]
 benchmark_samples = {}
+species_b64_thumbnails = {}
+
 if os.path.exists(test_dir):
     for cls in predictor.class_names:
         cls_dir = os.path.join(test_dir, cls)
         if os.path.isdir(cls_dir):
             files = sorted(os.listdir(cls_dir))
             if files:
-                benchmark_samples[cls] = os.path.join(cls_dir, files[0])
+                fpath = os.path.join(cls_dir, files[0])
+                benchmark_samples[cls] = fpath
+                # Generate high-res base64 thumbnail for visual cards
+                try:
+                    t_img = Image.open(fpath).convert("RGB").resize((140, 140), Image.Resampling.LANCZOS)
+                    t_buf = BytesIO()
+                    t_img.save(t_buf, format="JPEG", quality=92)
+                    species_b64_thumbnails[cls] = base64.b64encode(t_buf.getvalue()).decode()
+                except Exception:
+                    species_b64_thumbnails[cls] = ""
 
 input_tab1, input_tab2, input_tab3 = st.tabs([
     "⚡ 1-Click Benchmark Gallery",
@@ -847,7 +907,7 @@ if active_image is not None:
         if st.session_state.get("show_report_modal", False):
             st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
             
-            # Generate Ultra-HD 1600x960 Report Graphic
+            # Generate Ultra-HD 2000x1250 Report Graphic
             report_bytes = generate_report_card(
                 original_image=display_img,
                 overlay_image=overlay_img,
@@ -898,36 +958,49 @@ else:
     st.info("💡 Choose a butterfly specimen above via 1-Click Gallery, Image Upload, or Live Camera to start AI analysis.")
 
 # -----------------------------------------------------------------------------
-# 7. Supported Butterfly Species Showcase (High-Contrast Pods)
+# 7. Supported Butterfly Species Showcase (Breathtaking Photographic Cards)
 # -----------------------------------------------------------------------------
 st.markdown("<div style='height: 45px;'></div>", unsafe_allow_html=True)
 st.markdown("## 🌿 Supported Butterfly Species Taxonomy (8 Classes)")
-st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The neural network is specialized to distinguish the following 8 butterfly species:</p>", unsafe_allow_html=True)
+st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>The neural network is specialized to distinguish the following 8 butterfly species with deep feature attention:</p>", unsafe_allow_html=True)
 
 species_items = list(SPECIES_METADATA.items())
+
+# Row 1: Classes 1 to 4
 row1_cols = st.columns(4)
 for i in range(4):
     name, s_meta = species_items[i]
+    b64_img = species_b64_thumbnails.get(name, "")
     with row1_cols[i]:
         st.markdown(f"""
-        <div class="species-pod" style="border-top: 5px solid {s_meta['color_primary']};">
-            <div class="pod-name">{i+1}. {name}</div>
-            <div class="pod-sci">{s_meta['scientific_name']}</div>
-            <div class="pod-fam">{s_meta['family'].split('(')[0].strip()}</div>
+        <div class="species-card-v2" style="border-top: 5px solid {s_meta['color_primary']} !important;">
+            <div class="species-num-badge">#{i+1}</div>
+            <div class="species-thumb-container" style="border: 2.5px solid {s_meta['color_primary']};">
+                <img src="data:image/jpeg;base64,{b64_img}" class="species-thumb-img" alt="{name}" />
+            </div>
+            <div class="card-title-name">{name}</div>
+            <div class="card-sci-name">{s_meta['scientific_name']}</div>
+            <div class="card-fam-tag">🦋 {s_meta['family'].split('(')[0].strip()}</div>
         </div>
         """, unsafe_allow_html=True)
 
-st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 
+# Row 2: Classes 5 to 8
 row2_cols = st.columns(4)
 for i in range(4, 8):
     name, s_meta = species_items[i]
+    b64_img = species_b64_thumbnails.get(name, "")
     with row2_cols[i - 4]:
         st.markdown(f"""
-        <div class="species-pod" style="border-top: 5px solid {s_meta['color_primary']};">
-            <div class="pod-name">{i+1}. {name}</div>
-            <div class="pod-sci">{s_meta['scientific_name']}</div>
-            <div class="pod-fam">{s_meta['family'].split('(')[0].strip()}</div>
+        <div class="species-card-v2" style="border-top: 5px solid {s_meta['color_primary']} !important;">
+            <div class="species-num-badge">#{i+1}</div>
+            <div class="species-thumb-container" style="border: 2.5px solid {s_meta['color_primary']};">
+                <img src="data:image/jpeg;base64,{b64_img}" class="species-thumb-img" alt="{name}" />
+            </div>
+            <div class="card-title-name">{name}</div>
+            <div class="card-sci-name">{s_meta['scientific_name']}</div>
+            <div class="card-fam-tag">🦋 {s_meta['family'].split('(')[0].strip()}</div>
         </div>
         """, unsafe_allow_html=True)
 
