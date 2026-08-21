@@ -8,6 +8,7 @@ import os
 import sys
 import base64
 import hashlib
+import textwrap
 from io import BytesIO
 from PIL import Image
 import streamlit as st
@@ -1677,7 +1678,7 @@ predictor = load_predictor()
 if hasattr(st, "dialog"):
     @st.dialog(t("install_modal_title"), width="large")
     def show_install_app_dialog():
-        st.markdown(f"""
+        st.markdown(textwrap.dedent(f"""
         <div style="padding: 4px 2px 14px 2px;">
             <p style="font-size: 1.05rem; font-weight: 700; color: #334155; margin-bottom: 20px; line-height: 1.5;">
                 {t('install_modal_sub')}
@@ -1713,7 +1714,7 @@ if hasattr(st, "dialog"):
                 ✨ {"হোমস্ক্রিন থেকে ওপেন করলে ব্রাউজারের কোনো বার ছাড়াই সরাসরি আসল অ্যাপের মতো ফুল-স্ক্রিন চলবে!" if st.session_state.app_lang == "BN" else "Opening from your Home Screen gives you an immersive, standalone full-screen native app experience!"}
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """), unsafe_allow_html=True)
         if st.button("✓ " + ("বুঝেছি / সম্পন্ন" if st.session_state.app_lang == "BN" else "Got It / Done"), key="btn_close_install_modal", type="primary", use_container_width=True):
             st.rerun()
 
@@ -3122,7 +3123,7 @@ if active_image is not None:
             )
 
             # Crystal Clear Interactive High-Contrast Native Web Report Dossier
-            st.markdown(f"""
+            st.markdown(textwrap.dedent(f"""
             <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 24px; padding: 28px; box-shadow: 0 16px 40px rgba(2, 132, 199, 0.16); margin-bottom: 20px;">
                 <!-- Header -->
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 18px; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
@@ -3194,7 +3195,7 @@ if active_image is not None:
                     </div>
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """), unsafe_allow_html=True)
 
             action_c1, action_c2 = st.columns([1.5, 1])
             with action_c1:
