@@ -1,6 +1,6 @@
 """
 AI Butterfly Vision: Streamlit Web Application
-An Ultra-Readable, Eye-Comfort & High-Contrast Interface for Butterfly Species Classification & Grad-CAM Explainable AI.
+An Ultra-High-Contrast, Crystal-Clear Typography & Eye-Comfort Interface for Butterfly Species Classification & Grad-CAM Explainable AI.
 Designed & Developed by Ohi.
 """
 
@@ -24,7 +24,7 @@ from gradcam import GradCAM
 from utils import SPECIES_METADATA, resolve_project_paths, generate_report_card
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Eye-Comfort High-Contrast Typography System
+# 1. Page Configuration & Ultra-Legible Typography System
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="AI Butterfly Vision • Explainable AI",
@@ -35,24 +35,21 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&family=Space+Grotesk:wght@700;800&display=swap');
     
-    /* Global Reset with Large, Crystal-Clear Typography */
+    /* Global Reset with Bold, Large Typography */
     html, body, [class*="css"], .stApp {
         font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-        font-size: 16px !important;
+        font-size: 17px !important;
     }
     
     code, pre, .stat-num, .gauge-val {
         font-family: 'Space Grotesk', monospace !important;
     }
     
-    /* Eye-Soothing Warm Paper Canvas (No Glare, 100% Contrast) */
+    /* Clean Soft Canvas */
     .stApp {
-        background-color: #F1F5F9 !important;
-        background-image: 
-            radial-gradient(at 50% 0%, rgba(2, 132, 199, 0.07) 0px, transparent 60%),
-            radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%) !important;
+        background-color: #EEF2F6 !important;
         color: #0F172A !important;
     }
     
@@ -62,7 +59,7 @@ st.markdown("""
         visibility: hidden !important;
     }
     
-    /* Hero Header (Bold, Large & Clear) */
+    /* Hero Header */
     .hero-container {
         text-align: center;
         padding: 2.5rem 1rem 1.5rem 1rem;
@@ -72,19 +69,19 @@ st.markdown("""
         align-items: center;
         gap: 8px;
         background: #E0F2FE;
-        border: 1.5px solid #0284C7;
+        border: 2px solid #0284C7;
         color: #0369A1;
-        font-size: 0.95rem;
-        font-weight: 800;
-        letter-spacing: 0.1em;
+        font-size: 1.0rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
         padding: 8px 24px;
         border-radius: 999px;
         margin-bottom: 1.2rem;
-        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15);
     }
     .hero-title {
-        font-size: 3.8rem;
+        font-size: 4.0rem;
         font-weight: 900;
         letter-spacing: -0.03em;
         line-height: 1.1;
@@ -92,15 +89,15 @@ st.markdown("""
         margin-bottom: 0.8rem;
     }
     .hero-subtitle {
-        font-size: 1.35rem;
-        color: #334155;
-        font-weight: 600;
-        max-width: 780px;
+        font-size: 1.4rem;
+        color: #1E293B;
+        font-weight: 700;
+        max-width: 820px;
         margin: 0 auto;
         line-height: 1.6;
     }
 
-    /* Large Performance Metric Cards */
+    /* Floating Metric Strip */
     .metric-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -109,45 +106,45 @@ st.markdown("""
     }
     .metric-card {
         background: #FFFFFF;
-        border: 1.5px solid #CBD5E1;
+        border: 2px solid #94A3B8;
         border-radius: 18px;
         padding: 22px 18px;
         text-align: center;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
         transition: all 0.25s ease;
     }
     .metric-card:hover {
         transform: translateY(-3px);
         border-color: #0284C7;
-        box-shadow: 0 12px 28px rgba(2, 132, 199, 0.15);
+        box-shadow: 0 12px 28px rgba(2, 132, 199, 0.2);
     }
     .metric-val {
-        font-size: 2.2rem;
+        font-size: 2.3rem;
         font-weight: 900;
         color: #0284C7;
         margin-bottom: 4px;
     }
     .metric-lbl {
-        font-size: 0.92rem;
-        font-weight: 800;
+        font-size: 1.0rem;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: #1E293B;
+        letter-spacing: 0.06em;
+        color: #0F172A;
     }
 
-    /* Primary Big Button */
+    /* Primary Action Button (Big & Bold) */
     button[kind="primary"] {
         background: #0284C7 !important;
         color: #FFFFFF !important;
-        font-weight: 800 !important;
+        font-weight: 900 !important;
         border: none !important;
         border-radius: 14px !important;
         box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35) !important;
         transition: all 0.25s ease !important;
         text-transform: uppercase;
         letter-spacing: 0.06em;
-        font-size: 1.05rem !important;
-        padding: 0.85rem 1.8rem !important;
+        font-size: 1.15rem !important;
+        padding: 0.9rem 2.0rem !important;
     }
     button[kind="primary"]:hover {
         background: #0369A1 !important;
@@ -155,55 +152,55 @@ st.markdown("""
         box-shadow: 0 10px 28px rgba(2, 132, 199, 0.45) !important;
     }
 
-    /* Secondary Gallery Buttons (Large, Bold Text) */
+    /* Secondary Gallery Buttons (Large, Crisp, High-Contrast) */
     button[kind="secondary"] {
         background: #FFFFFF !important;
         color: #0F172A !important;
-        border: 2px solid #CBD5E1 !important;
+        border: 2px solid #94A3B8 !important;
         border-radius: 14px !important;
-        font-weight: 800 !important;
-        font-size: 1.0rem !important;
+        font-weight: 900 !important;
+        font-size: 1.05rem !important;
         transition: all 0.2s ease !important;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04) !important;
-        padding: 0.75rem 1.0rem !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06) !important;
+        padding: 0.85rem 1.0rem !important;
     }
     button[kind="secondary"]:hover {
         border-color: #0284C7 !important;
         color: #0284C7 !important;
-        background: #F0F9FF !important;
-        box-shadow: 0 6px 16px rgba(2, 132, 199, 0.2) !important;
-        transform: translateY(-1px) !important;
+        background: #E0F2FE !important;
+        box-shadow: 0 6px 18px rgba(2, 132, 199, 0.25) !important;
+        transform: translateY(-2px) !important;
     }
 
     /* Download AI Report Button */
     .stDownloadButton > button {
         background: #FFFFFF !important;
         color: #0284C7 !important;
-        border: 2px solid #0284C7 !important;
-        font-weight: 800 !important;
+        border: 2.5px solid #0284C7 !important;
+        font-weight: 900 !important;
         border-radius: 14px !important;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15) !important;
+        box-shadow: 0 4px 16px rgba(2, 132, 199, 0.18) !important;
         transition: all 0.2s ease !important;
-        font-size: 1.02rem !important;
-        padding: 0.8rem 1.5rem !important;
+        font-size: 1.1rem !important;
+        padding: 0.85rem 1.6rem !important;
     }
     .stDownloadButton > button:hover {
-        background: #F0F9FF !important;
-        box-shadow: 0 8px 22px rgba(2, 132, 199, 0.25) !important;
+        background: #E0F2FE !important;
+        box-shadow: 0 8px 25px rgba(2, 132, 199, 0.3) !important;
         transform: translateY(-2px) !important;
     }
 
-    /* Prediction Result Capsule (High Contrast, Large Fonts) */
+    /* Prediction Result Capsule */
     .result-capsule {
         background: #FFFFFF;
-        border: 2px solid #CBD5E1;
-        border-radius: 22px;
-        padding: 26px;
-        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        border: 2.5px solid #94A3B8;
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
         margin-bottom: 1.4rem;
     }
     .result-tag {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         font-weight: 900;
         text-transform: uppercase;
         letter-spacing: 0.12em;
@@ -211,7 +208,7 @@ st.markdown("""
         margin-bottom: 6px;
     }
     .result-name {
-        font-size: 2.7rem;
+        font-size: 2.9rem;
         font-weight: 900;
         color: #0F172A;
         letter-spacing: -0.03em;
@@ -219,16 +216,16 @@ st.markdown("""
         margin-bottom: 6px;
     }
     .result-meta {
-        font-size: 1.25rem;
-        font-weight: 600;
+        font-size: 1.3rem;
+        font-weight: 700;
         font-style: italic;
-        color: #334155;
+        color: #1E293B;
     }
     
     /* High-Tech Circular Meter */
     .hud-gauge {
-        width: 96px;
-        height: 96px;
+        width: 102px;
+        height: 102px;
         border-radius: 50%;
         display: flex;
         flex-direction: column;
@@ -236,18 +233,18 @@ st.markdown("""
         justify-content: center;
         border: 5px solid #10B981;
         background: #ECFDF5;
-        box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+        box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
         text-align: center;
         flex-shrink: 0;
     }
     .gauge-val {
-        font-size: 1.45rem;
+        font-size: 1.55rem;
         font-weight: 900;
         color: #065F46;
         line-height: 1;
     }
     .gauge-lbl {
-        font-size: 0.72rem;
+        font-size: 0.76rem;
         text-transform: uppercase;
         color: #059669;
         font-weight: 900;
@@ -255,17 +252,17 @@ st.markdown("""
         margin-top: 3px;
     }
 
-    /* Top-3 Ranking Row (Large, Bold Text) */
+    /* Top-3 Ranking Row */
     .rank-capsule {
         display: flex;
         align-items: center;
         justify-content: space-between;
         background: #FFFFFF;
-        border: 1.5px solid #CBD5E1;
-        border-radius: 14px;
-        padding: 14px 18px;
-        margin-bottom: 10px;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+        border: 2px solid #CBD5E1;
+        border-radius: 16px;
+        padding: 16px 20px;
+        margin-bottom: 11px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         transition: all 0.2s ease;
     }
     .rank-capsule:hover {
@@ -276,103 +273,104 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         background: #E0F2FE;
         color: #0369A1;
         font-weight: 900;
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         border-radius: 8px;
-        margin-right: 14px;
+        margin-right: 16px;
     }
     .rank-title {
-        font-weight: 800;
-        font-size: 1.1rem;
+        font-weight: 900;
+        font-size: 1.2rem;
         color: #0F172A;
     }
     .rank-score {
         font-weight: 900;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
         color: #0284C7;
     }
 
-    /* XAI Diagnostic Callout (Clear, Large, Highly Readable) */
+    /* XAI Diagnostic Callout */
     .xai-callout {
-        background: #F0F9FF;
-        border-left: 5px solid #0284C7;
-        border-radius: 14px;
-        padding: 18px 20px;
+        background: #E0F2FE;
+        border-left: 6px solid #0284C7;
+        border-radius: 16px;
+        padding: 20px 22px;
         margin-top: 1.4rem;
-        font-size: 1.05rem;
-        font-weight: 500;
+        font-size: 1.12rem;
+        font-weight: 600;
         line-height: 1.65;
         color: #0F172A;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.08);
+        box-shadow: 0 4px 16px rgba(2, 132, 199, 0.1);
     }
     .xai-hdr {
         font-weight: 900;
         color: #0369A1;
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         margin-bottom: 6px;
     }
 
-    /* Tabs Styling (Large Text) */
+    /* High-Contrast Tabs (100% Readable) */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 10px;
-        background: #E2E8F0;
-        padding: 6px;
+        gap: 12px;
+        background: #CBD5E1;
+        padding: 8px;
         border-radius: 16px;
+        border: 2px solid #94A3B8;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: 12px;
-        color: #334155;
-        font-weight: 800;
-        font-size: 1.0rem;
-        padding: 10px 20px;
+        color: #0F172A !important;
+        font-weight: 900 !important;
+        font-size: 1.1rem !important;
+        padding: 12px 22px !important;
+        background: #F1F5F9;
         transition: all 0.2s ease;
     }
     .stTabs [aria-selected="true"] {
-        background: #FFFFFF !important;
-        color: #0284C7 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border: 1.5px solid #94A3B8 !important;
+        background: #0284C7 !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
     }
 
     /* Supported Species Showcase Cards */
     .species-pod {
         background: #FFFFFF;
-        border: 1.5px solid #CBD5E1;
-        border-radius: 16px;
-        padding: 20px 16px;
+        border: 2px solid #94A3B8;
+        border-radius: 18px;
+        padding: 22px 18px;
         text-align: center;
         height: 100%;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
         transition: all 0.25s ease;
     }
     .species-pod:hover {
         transform: translateY(-3px);
         border-color: #0284C7;
-        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.15);
+        box-shadow: 0 12px 28px rgba(2, 132, 199, 0.2);
     }
     .pod-name {
         font-weight: 900;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         color: #0F172A;
         margin-bottom: 6px;
     }
     .pod-sci {
-        font-size: 0.95rem;
-        font-weight: 600;
+        font-size: 1.05rem;
+        font-weight: 700;
         font-style: italic;
         color: #0284C7;
         margin-bottom: 6px;
     }
     .pod-fam {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #475569;
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: #334155;
     }
 
     /* Footer */
@@ -380,15 +378,15 @@ st.markdown("""
         text-align: center;
         padding: 3.5rem 1rem 2.2rem 1rem;
         margin-top: 4rem;
-        border-top: 2px solid #CBD5E1;
-        color: #475569;
-        font-size: 0.98rem;
-        font-weight: 600;
+        border-top: 2px solid #94A3B8;
+        color: #1E293B;
+        font-size: 1.05rem;
+        font-weight: 700;
     }
     .footer-author {
         color: #0284C7;
         font-weight: 900;
-        font-size: 1.15rem;
+        font-size: 1.25rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -570,7 +568,7 @@ if active_image is not None:
                     gauge_lbl = "HIGH" if confidence >= 80.0 else "MODERATE"
 
                     st.markdown(f"""
-                    <div class="result-capsule" style="border-top: 6px solid {meta['color_primary']};">
+                    <div class="result-capsule" style="border-top: 7px solid {meta['color_primary']};">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                             <div>
                                 <div class="result-tag">IDENTIFIED SPECIES</div>
@@ -582,7 +580,7 @@ if active_image is not None:
                                 <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
                             </div>
                         </div>
-                        <div style="background: #E2E8F0; height: 10px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
+                        <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
                             <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
                         </div>
                     </div>
@@ -707,7 +705,7 @@ for i in range(4):
     name, s_meta = species_items[i]
     with row1_cols[i]:
         st.markdown(f"""
-        <div class="species-pod" style="border-top: 4px solid {s_meta['color_primary']};">
+        <div class="species-pod" style="border-top: 5px solid {s_meta['color_primary']};">
             <div class="pod-name">{i+1}. {name}</div>
             <div class="pod-sci">{s_meta['scientific_name']}</div>
             <div class="pod-fam">{s_meta['family'].split('(')[0].strip()}</div>
@@ -721,7 +719,7 @@ for i in range(4, 8):
     name, s_meta = species_items[i]
     with row2_cols[i - 4]:
         st.markdown(f"""
-        <div class="species-pod" style="border-top: 4px solid {s_meta['color_primary']};">
+        <div class="species-pod" style="border-top: 5px solid {s_meta['color_primary']};">
             <div class="pod-name">{i+1}. {name}</div>
             <div class="pod-sci">{s_meta['scientific_name']}</div>
             <div class="pod-fam">{s_meta['family'].split('(')[0].strip()}</div>
@@ -734,7 +732,7 @@ for i in range(4, 8):
 st.markdown("""
 <div class="app-footer">
     <div>Designed & Developed by <span class="footer-author">Ohi</span></div>
-    <div style="margin-top: 8px; font-size: 0.95rem; color: #475569; font-weight: 600;">
+    <div style="margin-top: 8px; font-size: 1.05rem; color: #1E293B; font-weight: 700;">
         Deep Transfer Learning (ResNet-18) • Native PyTorch Grad-CAM • TorchScript Mobile & Edge Architecture
     </div>
 </div>
