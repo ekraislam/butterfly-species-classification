@@ -512,7 +512,7 @@ with input_tab3:
             st.error(f"Error capturing camera snapshot: {e}")
 
 # -----------------------------------------------------------------------------
-# 6. Analysis & Visual Diagnostic Suite
+# 6. Analysis & Visual Diagnostic Suite (With Reset / Clear Button)
 # -----------------------------------------------------------------------------
 active_image = st.session_state.selected_image
 active_filename = st.session_state.selected_filename
@@ -528,7 +528,15 @@ if active_image is not None:
     with cmd_col2:
         st.markdown("### Ready for Neural Diagnostics")
         st.write("Extract deep convolutional feature maps with ResNet-18 and backpropagate gradients via layer4 Grad-CAM hooks.")
-        run_analysis = st.button("✨ Run Neural Analysis & Explainability", type="primary", use_container_width=True)
+        
+        btn_c1, btn_c2 = st.columns([2.4, 1])
+        with btn_c1:
+            run_analysis = st.button("✨ Run Neural Analysis", type="primary", use_container_width=True)
+        with btn_c2:
+            if st.button("🔄 Reset / Clear", use_container_width=True, help="Clear active specimen and start fresh"):
+                st.session_state.selected_image = None
+                st.session_state.selected_filename = None
+                st.rerun()
 
     if run_analysis or st.session_state.get("auto_run", True):
         with st.spinner("Executing neural feature mapping and gradient backpropagation..."):
