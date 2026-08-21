@@ -37,6 +37,10 @@ UI_TEXT = {
         "upload_help": "Upload a clear photo of a butterfly for neural analysis",
         "camera_prompt": "Point your webcam or mobile camera directly at the butterfly specimen:",
         "camera_label": "Take a photo of the butterfly",
+        "cam_ready_title": "Live Field Lens Ready",
+        "cam_ready_sub": "Activate your device camera to capture live butterfly specimens directly in the field",
+        "btn_activate_cam": "📸 Activate Live Camera",
+        "btn_deactivate_cam": "🛑 Turn Off Camera",
         
         # Specimen Command Bar
         "active_specimen": "📸 Active Specimen",
@@ -129,6 +133,10 @@ UI_TEXT = {
         "upload_help": "যেকোনো স্পষ্ট প্রজাপতির ছবি সরাসরি এই বক্সে ছেড়ে দিন অথবা মেমোরি থেকে বেছে নিন",
         "camera_prompt": "আপনার মোবাইল বা ল্যাপটপের ক্যামেরা প্রজাপতির দিকে তাক করে ছবি তুলুন:",
         "camera_label": "📸 ক্যামেরার বোতাম চেপে ছবি তুলুন",
+        "cam_ready_title": "লাইভ ক্যামেরা লেন্স প্রস্তুত",
+        "cam_ready_sub": "আপনার ডিভাইসের ক্যামেরা দিয়ে সরাসরি জীবন্ত প্রজাপতির ছবি তুলতে নিচের বাটনে চাপ দিন",
+        "btn_activate_cam": "📸 ক্যামেরা চালু করুন",
+        "btn_deactivate_cam": "🛑 ক্যামেরা বন্ধ করুন",
         
         # Specimen Command Bar
         "active_specimen": "📸 নির্বাচিত প্রজাপতি",

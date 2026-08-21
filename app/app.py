@@ -2762,22 +2762,50 @@ with input_tab2:
                 st.error(f"Error reading uploaded image: {e}")
 
 with input_tab3:
-    st.markdown(f"<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A; text-align: center;'>{t('camera_prompt')}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 14px;'>{t('camera_prompt')}</p>", unsafe_allow_html=True)
+    
+    if "camera_active" not in st.session_state:
+        st.session_state.camera_active = False
+
     cam_col1, cam_col2, cam_col3 = st.columns([1, 2, 1])
     with cam_col2:
-        camera_photo = st.camera_input(t("camera_label"), label_visibility="collapsed")
-        if camera_photo is not None:
-            photo_bytes = camera_photo.getvalue()
-            src_id = f"cam_{hashlib.md5(photo_bytes).hexdigest()[:12]}"
-            if st.session_state.get("active_source_id") != src_id:
-                try:
-                    st.session_state.selected_image = Image.open(BytesIO(photo_bytes)).convert("RGB")
-                    st.session_state.selected_filename = "Live_Camera_Capture.jpg"
-                    st.session_state.active_source_id = src_id
-                    st.session_state.analysis_cache = None
-                    st.session_state.show_report_modal = False
-                except Exception as e:
-                    st.error(f"Error capturing camera snapshot: {e}")
+        if not st.session_state.camera_active:
+            st.markdown(f"""
+            <div style="text-align: center; padding: 28px 20px; background: #F8FAFC; border: 2.5px dashed #94A3B8; border-radius: 24px; margin-bottom: 14px; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);">
+                <div style="font-size: 2.6rem; margin-bottom: 10px;">📸</div>
+                <div style="font-size: 1.18rem; font-weight: 900; color: #0F172A; margin-bottom: 6px;">
+                    {t('cam_ready_title')}
+                </div>
+                <div style="font-size: 0.90rem; color: #64748B; font-weight: 700; line-height: 1.4; margin-bottom: 18px;">
+                    {t('cam_ready_sub')}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button(t("btn_activate_cam"), key="btn_activate_cam", type="primary", use_container_width=True):
+                st.session_state.camera_active = True
+                st.rerun()
+        else:
+            top_cam_c1, top_cam_c2 = st.columns([2.5, 1.5], vertical_alignment="center")
+            with top_cam_c1:
+                st.markdown(f"<div style='font-weight: 800; font-size: 0.95rem; color: #059669;'>● {t('cam_ready_title')}</div>", unsafe_allow_html=True)
+            with top_cam_c2:
+                if st.button(t("btn_deactivate_cam"), key="btn_stop_cam", use_container_width=True):
+                    st.session_state.camera_active = False
+                    st.rerun()
+
+            camera_photo = st.camera_input(t("camera_label"), label_visibility="collapsed")
+            if camera_photo is not None:
+                photo_bytes = camera_photo.getvalue()
+                src_id = f"cam_{hashlib.md5(photo_bytes).hexdigest()[:12]}"
+                if st.session_state.get("active_source_id") != src_id:
+                    try:
+                        st.session_state.selected_image = Image.open(BytesIO(photo_bytes)).convert("RGB")
+                        st.session_state.selected_filename = "Live_Camera_Capture.jpg"
+                        st.session_state.active_source_id = src_id
+                        st.session_state.analysis_cache = None
+                        st.session_state.show_report_modal = False
+                    except Exception as e:
+                        st.error(f"Error capturing camera snapshot: {e}")
 
 # -----------------------------------------------------------------------------
 # 6. Analysis & Visual Diagnostic Suite (With On-Demand Report Inspector)
