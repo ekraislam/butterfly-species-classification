@@ -96,7 +96,7 @@ st.markdown("""
         height: 22px !important;
     }
 
-    /* Slider Track (Replace default red line with royal blue & emerald gradient) */
+    /* Slider Track */
     div[data-testid="stSlider"] div[data-baseweb="slider"] > div > div:first-child {
         background: linear-gradient(90deg, #0284C7, #0D9488) !important;
         height: 8px !important;
@@ -321,19 +321,21 @@ st.markdown("""
 
     /* Download AI Report Button */
     .stDownloadButton > button {
-        background: #FFFFFF !important;
-        color: #0284C7 !important;
-        border: 2.5px solid #0284C7 !important;
+        background: #0284C7 !important;
+        color: #FFFFFF !important;
+        border: none !important;
         font-weight: 900 !important;
         border-radius: 14px !important;
-        box-shadow: 0 4px 16px rgba(2, 132, 199, 0.18) !important;
+        box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35) !important;
         transition: all 0.2s ease !important;
-        font-size: 1.1rem !important;
-        padding: 0.85rem 1.6rem !important;
+        font-size: 1.15rem !important;
+        padding: 0.9rem 1.8rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
     }
     .stDownloadButton > button:hover {
-        background: #E0F2FE !important;
-        box-shadow: 0 8px 25px rgba(2, 132, 199, 0.3) !important;
+        background: #0369A1 !important;
+        box-shadow: 0 10px 28px rgba(2, 132, 199, 0.45) !important;
         transform: translateY(-2px) !important;
     }
 
@@ -720,20 +722,20 @@ if active_image is not None:
             st.markdown(f"""
             <div class="result-capsule" style="border-top: 7px solid {meta['color_primary']};">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <div>
-                        <div class="result-tag">IDENTIFIED SPECIES</div>
-                        <div class="result-name">{pred_class}</div>
-                        <div class="result-meta">{meta['scientific_name']} • {meta['family']}</div>
+                            <div>
+                                <div class="result-tag">IDENTIFIED SPECIES</div>
+                                <div class="result-name">{pred_class}</div>
+                                <div class="result-meta">{meta['scientific_name']} • {meta['family']}</div>
+                            </div>
+                            <div class="hud-gauge" style="border-color: {gauge_color};">
+                                <div class="gauge-val">{confidence:.1f}%</div>
+                                <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
+                            </div>
+                        </div>
+                        <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
+                            <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
+                        </div>
                     </div>
-                    <div class="hud-gauge" style="border-color: {gauge_color};">
-                        <div class="gauge-val">{confidence:.1f}%</div>
-                        <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
-                    </div>
-                </div>
-                <div style="background: #CBD5E1; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 16px;">
-                    <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
-                </div>
-            </div>
             """, unsafe_allow_html=True)
 
             # Top-3 Probabilities
@@ -782,7 +784,6 @@ if active_image is not None:
             )
 
             # DYNAMIC SENSITIVITY TRANSFORMATION: Modulates both Thermal Heatmap contrast and Overlay blend
-            # When slider increases: thermal hotspots become richer and more concentrated
             gamma_exponent = 1.0 + (0.55 - blend_alpha) * 1.4
             modulated_heatmap = np.clip(np.power(raw_heatmap, gamma_exponent), 0.0, 1.0)
 
@@ -825,8 +826,14 @@ if active_image is not None:
                 with comp_col2:
                     st.image(overlay_img, caption=f"Dynamic Grad-CAM Overlay (α = {blend_alpha:.2f})", use_container_width=True)
 
-            # Export / Downloadable Inspection Report Card
-            st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+            # -------------------------------------------------------------
+            # AI INSPECTION REPORT CARD: LIVE PREVIEW & DOWNLOAD SUITE
+            # -------------------------------------------------------------
+            st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+            st.markdown("### 📄 AI Inspection Certificate Card")
+            st.markdown("<p style='font-size: 1.05rem; font-weight: 700; color: #334155;'>Preview your official AI Inspection Report below before downloading as high-resolution PNG:</p>", unsafe_allow_html=True)
+
+            # Generate Report Card Graphic
             report_bytes = generate_report_card(
                 original_image=display_img,
                 overlay_image=overlay_img,
@@ -834,13 +841,26 @@ if active_image is not None:
                 confidence=confidence,
                 top_k=top_k
             )
+
+            # Live Inline Preview of the Report Card
+            with st.expander("👁️ Live Preview Inspection Report Card (Click to View Full Certificate)", expanded=True):
+                st.image(
+                    report_bytes,
+                    caption=f"Official AI Inspection Certificate Card • Specimen: {pred_class} (ResNet-18 + Grad-CAM)",
+                    use_container_width=True
+                )
+
+            # High-Resolution PNG Download Button
             st.download_button(
-                label="📥 Download AI Inspection Report Card (PNG)",
+                label="📥 Download Official AI Report Card (High-Res PNG)",
                 data=report_bytes,
                 file_name=f"Butterfly_AI_Report_{pred_class.replace(' ', '_')}.png",
                 mime="image/png",
                 use_container_width=True
             )
+
+            st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+
     else:
         st.info("👆 Click **✨ Run Neural Analysis** above to identify species and generate Grad-CAM explanation.")
 
