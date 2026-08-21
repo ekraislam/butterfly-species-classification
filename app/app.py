@@ -3181,71 +3181,76 @@ def show_species_dossier_modal(cls_name):
     lifespan_val = dossier.get(f'lifespan_{lang.lower()}', 'N/A')
     precision_val = dossier.get('model_precision', '95%')
 
-    dossier_html = f"""<div style="background:#FFFFFF;border-top:6px solid {color_p};border-radius:18px;padding:22px;box-shadow:0 10px 30px rgba(15,23,42,0.08);margin-bottom:18px;">
-<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
-<div style="width:125px;height:125px;border-radius:50%;overflow:hidden;border:3.5px solid {color_p};flex-shrink:0;box-shadow:0 6px 18px rgba(0,0,0,0.12);">
+    dossier_html = f"""<div style="background:#FFFFFF;border-top:5px solid {color_p};border-radius:16px;padding:14px 16px;box-shadow:0 8px 24px rgba(15,23,42,0.06);margin-bottom:12px;">
+<div style="display:flex;gap:14px;align-items:center;margin-bottom:10px;">
+<div style="width:68px;height:68px;border-radius:50%;overflow:hidden;border:3px solid {color_p};flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.10);">
 <img src="data:image/jpeg;base64,{b64_img}" style="width:100%;height:100%;object-fit:cover;" alt="{disp_name}" />
 </div>
-<div style="flex:1;min-width:240px;">
-<div style="font-size:0.82rem;font-weight:900;color:{color_p};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px;">
+<div style="flex:1;min-width:200px;">
+<div style="font-size:0.72rem;font-weight:900;color:{color_p};text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1px;">
 {t("dossier_modal_tag")}
 </div>
-<div style="font-size:1.85rem;font-weight:900;color:#0F172A;line-height:1.15;margin-bottom:4px;">
+<div style="font-size:1.40rem;font-weight:900;color:#0F172A;line-height:1.15;margin-bottom:2px;">
 {disp_name}
 </div>
-<div style="font-size:1.10rem;font-style:italic;color:#0284C7;font-weight:700;margin-bottom:6px;">
-{sci_name}
-</div>
-<div style="display:inline-block;background:#F1F5F9;color:#334155;font-size:0.85rem;font-weight:800;padding:3px 10px;border-radius:8px;border:1px solid #CBD5E1;">
-🌿 {fam_name}
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+<span style="font-size:0.92rem;font-style:italic;color:#0284C7;font-weight:700;">{sci_name}</span>
+<span style="background:#F1F5F9;color:#334155;font-size:0.74rem;font-weight:800;padding:2px 7px;border-radius:6px;border:1px solid #CBD5E1;">🌿 {fam_name}</span>
 </div>
 </div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:18px;padding-top:16px;border-top:1.5px dashed #E2E8F0;">
-<div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:10px;text-align:center;">
-<div style="font-size:0.76rem;font-weight:800;color:#64748B;text-transform:uppercase;">{t("dossier_stat_wingspan")}</div>
-<div style="font-size:1.05rem;font-weight:900;color:#0F172A;margin-top:2px;">{wingspan_val}</div>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 0;border-top:1.5px dashed #E2E8F0;border-bottom:1.5px dashed #E2E8F0;margin-bottom:10px;">
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:5px 6px;text-align:center;">
+<div style="font-size:0.66rem;font-weight:800;color:#64748B;text-transform:uppercase;">{t("dossier_stat_wingspan")}</div>
+<div style="font-size:0.86rem;font-weight:900;color:#0F172A;margin-top:1px;">{wingspan_val}</div>
 </div>
-<div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:10px;text-align:center;">
-<div style="font-size:0.76rem;font-weight:800;color:#64748B;text-transform:uppercase;">{t("dossier_stat_lifespan")}</div>
-<div style="font-size:1.05rem;font-weight:900;color:#0F172A;margin-top:2px;">{lifespan_val}</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:5px 6px;text-align:center;">
+<div style="font-size:0.66rem;font-weight:800;color:#64748B;text-transform:uppercase;">{t("dossier_stat_lifespan")}</div>
+<div style="font-size:0.86rem;font-weight:900;color:#0F172A;margin-top:1px;">{lifespan_val}</div>
 </div>
-<div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:12px;padding:10px;text-align:center;">
-<div style="font-size:0.76rem;font-weight:800;color:#64748B;text-transform:uppercase;">{t("dossier_stat_precision")}</div>
-<div style="font-size:1.05rem;font-weight:900;color:#059669;margin-top:2px;">⚡ {precision_val}</div>
+<div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:5px 6px;text-align:center;">
+<div style="font-size:0.66rem;font-weight:800;color:#64748B;text-transform:uppercase;">{t("dossier_stat_precision")}</div>
+<div style="font-size:0.86rem;font-weight:900;color:#059669;margin-top:1px;">⚡ {precision_val}</div>
 </div>
 </div>
-</div>
-<div style="background:#FFFFFF;border:1.5px solid #CBD5E1;border-radius:16px;padding:18px 20px;margin-bottom:14px;box-shadow:0 4px 12px rgba(15,23,42,0.04);">
-<div style="font-size:1.05rem;font-weight:900;color:#0F172A;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;">
+<div style="background:#F8FAFC;border:1.5px solid #CBD5E1;border-radius:10px;padding:8px 10px;">
+<div style="font-size:0.78rem;font-weight:900;color:#0F172A;margin-bottom:2px;display:flex;align-items:center;gap:4px;">
 {t('dossier_habitat')}
 </div>
-<div style="font-size:1.0rem;line-height:1.6;color:#334155;font-weight:600;">
+<div style="font-size:0.78rem;line-height:1.40;color:#334155;font-weight:600;">
 {habitat_val}
 </div>
 </div>
-<div style="background:#FFFFFF;border:1.5px solid #CBD5E1;border-radius:16px;padding:18px 20px;margin-bottom:14px;box-shadow:0 4px 12px rgba(15,23,42,0.04);">
-<div style="font-size:1.05rem;font-weight:900;color:#0F172A;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+
+<div style="background:#F8FAFC;border:1.5px solid #CBD5E1;border-radius:10px;padding:8px 10px;">
+<div style="font-size:0.78rem;font-weight:900;color:#0F172A;margin-bottom:2px;display:flex;align-items:center;gap:4px;">
 {t('dossier_appearance')}
 </div>
-<div style="font-size:1.0rem;line-height:1.6;color:#334155;font-weight:600;">
+<div style="font-size:0.78rem;line-height:1.40;color:#334155;font-weight:600;">
 {appearance_val}
 </div>
 </div>
-<div style="background:#FFFBEB;border:2px solid #FCD34D;border-left:6px solid #F59E0B;border-radius:16px;padding:18px 20px;margin-bottom:14px;box-shadow:0 4px 12px rgba(245,158,11,0.08);">
-<div style="font-size:1.05rem;font-weight:900;color:#92400E;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+
+<div style="background:#FFFBEB;border:1.5px solid #FCD34D;border-left:4px solid #F59E0B;border-radius:10px;padding:8px 10px;">
+<div style="font-size:0.78rem;font-weight:900;color:#92400E;margin-bottom:2px;display:flex;align-items:center;gap:4px;">
 {t('dossier_superpower')}
 </div>
-<div style="font-size:1.0rem;line-height:1.6;color:#78350F;font-weight:700;">
+<div style="font-size:0.78rem;line-height:1.40;color:#78350F;font-weight:700;">
 {superpower_val}
 </div>
 </div>
-<div style="background:#F0F9FF;border:2px solid #BAE6FD;border-left:6px solid #0284C7;border-radius:16px;padding:18px 20px;margin-bottom:20px;box-shadow:0 4px 12px rgba(2,132,199,0.08);">
-<div style="font-size:1.05rem;font-weight:900;color:#075985;margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+
+<div style="background:#F0F9FF;border:1.5px solid #BAE6FD;border-left:4px solid #0284C7;border-radius:10px;padding:8px 10px;">
+<div style="font-size:0.78rem;font-weight:900;color:#075985;margin-bottom:2px;display:flex;align-items:center;gap:4px;">
 {t('dossier_xai')}
 </div>
-<div style="font-size:1.0rem;line-height:1.6;color:#0369A1;font-weight:700;">
+<div style="font-size:0.78rem;line-height:1.40;color:#0369A1;font-weight:700;">
 {ai_attention_val}
+</div>
+</div>
 </div>
 </div>"""
 
