@@ -664,134 +664,81 @@ st.markdown("""
     }
 
     /* ========================================================================= */
-    /* BLOOMING NECTAR WILDFLOWERS & RISING HONEY PARTICLES                      */
+    /* MASTERPIECE BOTANICAL WILDFLOWERS & INTERACTIVE NECTAR ATTRACTION         */
     /* ========================================================================= */
     .flower-habitat {
         position: absolute;
-        bottom: 52px;
+        bottom: 45px;
         left: 0;
         width: 100%;
-        height: 60px;
+        height: 75px;
         pointer-events: none;
         display: flex;
         justify-content: space-between;
-        padding: 0 25px;
+        padding: 0 15px;
         z-index: 4;
     }
 
-    /* Pink Tropical Orchid */
-    .flower-orchid {
-        position: relative;
-        width: 46px;
-        height: 52px;
-        animation: flower-breathe 4s ease-in-out infinite alternate;
+    /* Botanical Flower Containers */
+    .botanical-flower {
+        width: 68px;
+        height: 75px;
+        animation: flower-breathe 4.5s ease-in-out infinite alternate;
         transform-origin: bottom center;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
     }
-    .orchid-bloom {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 42px;
-        height: 42px;
-        background: radial-gradient(circle, #F472B6 20%, #DB2777 75%, #9D174D 100%);
-        border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-        box-shadow: 0 4px 14px rgba(219, 39, 119, 0.4);
-    }
-    .orchid-center {
-        position: absolute;
-        top: 14px;
-        left: 14px;
-        width: 14px;
-        height: 14px;
-        background: #FBBF24;
-        border-radius: 50%;
-        box-shadow: 0 0 10px #F59E0B;
-    }
-    .flower-stem {
-        position: absolute;
-        bottom: -10px;
-        left: 20px;
-        width: 4px;
-        height: 22px;
-        background: #059669;
-        border-radius: 2px;
-    }
-
-    /* Golden Sunburst Blossom */
-    .flower-blossom {
-        position: relative;
-        width: 46px;
-        height: 52px;
-        animation: flower-breathe 4.8s ease-in-out infinite alternate-reverse;
-        transform-origin: bottom center;
-    }
-    .blossom-bloom {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 42px;
-        height: 42px;
-        background: radial-gradient(circle, #FDE047 25%, #EAB308 70%, #B45309 100%);
-        border-radius: 50%;
-        box-shadow: 0 4px 14px rgba(234, 179, 8, 0.45);
-    }
-    .blossom-center {
-        position: absolute;
-        top: 13px;
-        left: 13px;
-        width: 16px;
-        height: 16px;
-        background: #78350F;
-        border-radius: 50%;
-        box-shadow: 0 0 8px #D97706;
+    .flower-alt {
+        animation-delay: -2.2s;
+        animation-duration: 5.2s;
     }
 
     @keyframes flower-breathe {
-        0% { transform: rotate(-3deg) scale(0.96); }
-        100% { transform: rotate(3deg) scale(1.04); }
+        0% { transform: rotate(-4deg) scale(0.96); }
+        100% { transform: rotate(4deg) scale(1.04); }
     }
 
     /* Rising Honey Nectar Sparkles */
     .nectar-particle {
         position: absolute;
-        width: 6px;
-        height: 6px;
+        width: 7px;
+        height: 7px;
         background: #FBBF24;
         border-radius: 50%;
-        box-shadow: 0 0 8px #F59E0B;
-        animation: nectar-float 3.5s ease-in-out infinite;
+        box-shadow: 0 0 10px #F59E0B;
+        animation: nectar-float 3.2s ease-in-out infinite;
     }
-    .p1 { bottom: 20px; left: 18px; animation-delay: 0s; }
-    .p2 { bottom: 35px; left: 28px; animation-delay: 1.2s; }
-    .p3 { bottom: 20px; right: 18px; animation-delay: 0.6s; }
-    .p4 { bottom: 35px; right: 28px; animation-delay: 1.8s; }
+    .p1 { bottom: 30px; left: 35px; animation-delay: 0s; }
+    .p2 { bottom: 50px; left: 48px; animation-delay: 1.1s; }
+    .p3 { bottom: 30px; right: 35px; animation-delay: 0.5s; }
+    .p4 { bottom: 50px; right: 48px; animation-delay: 1.7s; }
 
     @keyframes nectar-float {
-        0% { transform: translateY(0) scale(0.6); opacity: 0; }
-        50% { opacity: 0.9; transform: translateY(-30px) scale(1.1); }
-        100% { transform: translateY(-60px) scale(0.4); opacity: 0; }
+        0% { transform: translateY(0) scale(0.5); opacity: 0; }
+        50% { opacity: 0.95; transform: translateY(-35px) scale(1.2); }
+        100% { transform: translateY(-70px) scale(0.3); opacity: 0; }
     }
 
-    /* Interactive Hover Attraction (Butterflies swoop towards sweet nectar!) */
-    .sanctuary-terrarium:hover .monarch-carrier {
-        transform: translate3d(20px, 15px, 25px) scale(1.12) !important;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    /* Dynamic Cursor Honey Nectar Droplet */
+    #cursor-nectar {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #FDE047 15%, #F59E0B 70%, #D97706 100%);
+        box-shadow: 0 0 18px #F59E0B, 0 0 30px rgba(245, 158, 11, 0.6);
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+        transition: opacity 0.3s ease, transform 0.2s ease;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
     }
-    .sanctuary-terrarium:hover .adonis-carrier {
-        transform: translate3d(-25px, -15px, 20px) scale(1.18) !important;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .sanctuary-terrarium:hover .emerald-carrier {
-        transform: translate3d(35px, 22px, 18px) scale(1.15) !important;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .sanctuary-terrarium:hover .postman-carrier {
-        transform: translate3d(-10px, -20px, 22px) scale(1.14) !important;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .sanctuary-terrarium:hover .dogface-carrier {
-        transform: translate3d(-30px, 12px, 20px) scale(1.15) !important;
-        transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    .sanctuary-terrarium:hover #cursor-nectar {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
 
     /* Terrarium Bottom Badge */
@@ -799,7 +746,7 @@ st.markdown("""
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: rgba(255, 255, 255, 0.85);
+        background: rgba(255, 255, 255, 0.88);
         backdrop-filter: blur(8px);
         border: 1.5px solid #CBD5E1;
         border-radius: 14px;
@@ -1233,21 +1180,73 @@ st.markdown("""
                         <div class="dogface-wing-right"></div>
                     </div>
                 </div>
-                <!-- Blooming Wildflowers & Rising Honey Nectar Habitat -->
+                <!-- Dynamic Cursor Honey Nectar Particle -->
+                <div id="cursor-nectar">🍯</div>
+                <!-- Botanical Wildflowers & Rising Honey Nectar Habitat -->
                 <div class="flower-habitat">
-                    <!-- Pink Tropical Orchid -->
-                    <div class="flower-orchid">
-                        <div class="orchid-bloom"></div>
-                        <div class="orchid-center"></div>
-                        <div class="flower-stem"></div>
+                    <!-- Botanical Pink Tropical Orchid -->
+                    <div class="botanical-flower">
+                        <svg viewBox="0 0 100 110" width="68" height="75">
+                            <defs>
+                                <radialGradient id="orchidGrad" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#F472B6" />
+                                    <stop offset="60%" stop-color="#DB2777" />
+                                    <stop offset="100%" stop-color="#831843" />
+                                </radialGradient>
+                                <radialGradient id="orchidGold" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#FEF08A" />
+                                    <stop offset="80%" stop-color="#EAB308" />
+                                </radialGradient>
+                            </defs>
+                            <!-- Stem and Leaf -->
+                            <path d="M50,75 Q50,95 50,110" stroke="#059669" stroke-width="4" fill="none" />
+                            <path d="M50,85 Q65,80 70,88 Q58,95 50,90" fill="#10B981" />
+                            <!-- Orchid Petals -->
+                            <ellipse cx="50" cy="30" rx="16" ry="24" fill="url(#orchidGrad)" transform="rotate(-30 50 30)" opacity="0.95" />
+                            <ellipse cx="50" cy="30" rx="16" ry="24" fill="url(#orchidGrad)" transform="rotate(30 50 30)" opacity="0.95" />
+                            <ellipse cx="30" cy="55" rx="18" ry="14" fill="url(#orchidGrad)" />
+                            <ellipse cx="70" cy="55" rx="18" ry="14" fill="url(#orchidGrad)" />
+                            <ellipse cx="50" cy="62" rx="20" ry="16" fill="#BE185D" />
+                            <!-- Golden Nectar Center -->
+                            <circle cx="50" cy="48" r="8" fill="url(#orchidGold)" filter="drop-shadow(0 0 6px #F59E0B)" />
+                        </svg>
                         <div class="nectar-particle p1"></div>
                         <div class="nectar-particle p2"></div>
                     </div>
-                    <!-- Golden Sunburst Blossom -->
-                    <div class="flower-blossom">
-                        <div class="blossom-bloom"></div>
-                        <div class="blossom-center"></div>
-                        <div class="flower-stem"></div>
+                    <!-- Botanical Golden Sunburst Blossom -->
+                    <div class="botanical-flower flower-alt">
+                        <svg viewBox="0 0 100 110" width="68" height="75">
+                            <defs>
+                                <radialGradient id="sunPetal" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#FEF08A" />
+                                    <stop offset="65%" stop-color="#F59E0B" />
+                                    <stop offset="100%" stop-color="#B45309" />
+                                </radialGradient>
+                                <radialGradient id="sunCenter" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#78350F" />
+                                    <stop offset="90%" stop-color="#451A03" />
+                                </radialGradient>
+                            </defs>
+                            <!-- Stem and Leaf -->
+                            <path d="M50,75 Q50,95 50,110" stroke="#059669" stroke-width="4" fill="none" />
+                            <path d="M50,85 Q35,80 30,88 Q42,95 50,90" fill="#10B981" />
+                            <!-- Sunburst Petals (10 Petals) -->
+                            <g transform="translate(50,45)">
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(36)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(72)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(108)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(144)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(180)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(216)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(252)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(288)" />
+                                <ellipse cx="0" cy="-24" rx="7" ry="14" fill="url(#sunPetal)" transform="rotate(324)" />
+                                <!-- Seed Center with Nectar Glow -->
+                                <circle cx="0" cy="0" r="14" fill="url(#sunCenter)" filter="drop-shadow(0 0 6px #F59E0B)" />
+                                <circle cx="0" cy="0" r="5" fill="#FBBF24" opacity="0.8" />
+                            </g>
+                        </svg>
                         <div class="nectar-particle p3"></div>
                         <div class="nectar-particle p4"></div>
                     </div>
@@ -1260,6 +1259,58 @@ st.markdown("""
         </div>
     </div>
 </div>
+
+<script>
+(function() {
+    function initButterflyTracker() {
+        const terrarium = document.querySelector('.sanctuary-terrarium');
+        const nectar = document.getElementById('cursor-nectar');
+        if (!terrarium || !nectar) return;
+
+        const carriers = [
+            document.querySelector('.monarch-carrier'),
+            document.querySelector('.adonis-carrier'),
+            document.querySelector('.emerald-carrier'),
+            document.querySelector('.postman-carrier'),
+            document.querySelector('.dogface-carrier')
+        ].filter(Boolean);
+
+        terrarium.addEventListener('mousemove', function(e) {
+            const rect = terrarium.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            nectar.style.left = mouseX + 'px';
+            nectar.style.top = mouseY + 'px';
+            nectar.style.opacity = '1';
+
+            carriers.forEach((c, idx) => {
+                const cRect = c.getBoundingClientRect();
+                const curX = cRect.left - rect.left + cRect.width / 2;
+                const curY = cRect.top - rect.top + cRect.height / 2;
+                const dx = (mouseX - curX) * 0.45;
+                const dy = (mouseY - curY) * 0.45;
+                c.style.transform = 'translate3d(' + dx + 'px, ' + dy + 'px, 30px) scale(1.15)';
+                c.style.transition = 'transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            });
+        });
+
+        terrarium.addEventListener('mouseleave', function() {
+            nectar.style.opacity = '0';
+            carriers.forEach(c => {
+                c.style.transform = '';
+                c.style.transition = 'transform 0.8s ease-out';
+            });
+        });
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(initButterflyTracker, 300);
+    } else {
+        document.addEventListener('DOMContentLoaded', initButterflyTracker);
+    }
+})();
+</script>
 """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
