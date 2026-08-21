@@ -3102,6 +3102,17 @@ if active_image is not None:
         if st.session_state.get("show_report_modal", False):
             st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
             
+            report_meta = SPECIES_METADATA.get(pred_class, {
+                "scientific_name": "Unknown species",
+                "family": "Insecta • Lepidoptera",
+                "appearance": "Distinct biological visual wing markings.",
+                "distribution": "Global biodiversity habitat.",
+                "key_features": "Diagnostic taxonomic wing venation pattern.",
+                "xai_insight": "Model neural attention concentrated on discriminative visual wing patterns."
+            })
+            
+            cert_hash = hashlib.md5(f"{pred_class}_{confidence}".encode()).hexdigest()[:8].upper()
+            
             report_bytes = generate_report_card(
                 original_image=display_img,
                 overlay_image=overlay_img,
@@ -3110,35 +3121,92 @@ if active_image is not None:
                 top_k=top_k
             )
 
+            # Crystal Clear Interactive High-Contrast Native Web Report Dossier
             st.markdown(f"""
-            <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 20px; padding: 24px; box-shadow: 0 15px 35px rgba(2, 132, 199, 0.15); margin-bottom: 25px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 24px; padding: 28px; box-shadow: 0 16px 40px rgba(2, 132, 199, 0.16); margin-bottom: 20px;">
+                <!-- Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 18px; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
                     <div>
-                        <div style="font-size: 0.95rem; font-weight: 900; color: #0284C7; text-transform: uppercase; letter-spacing: 0.08em;">{t('cert_inspection_tag')}</div>
-                        <div style="font-size: 1.85rem; font-weight: 900; color: #0F172A;">{t('cert_preview_title')}</div>
+                        <div style="display: inline-flex; align-items: center; gap: 6px; background: #E0F2FE; color: #0284C7; font-size: 0.82rem; font-weight: 900; padding: 4px 12px; border-radius: 999px; text-transform: uppercase; margin-bottom: 8px;">
+                            AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB
+                        </div>
+                        <div style="font-size: 1.85rem; font-weight: 900; color: #0F172A; line-height: 1.2;">
+                            {t('cert_preview_title')}
+                        </div>
+                        <div style="font-size: 0.90rem; font-weight: 700; color: #64748B; margin-top: 4px;">
+                            CERTIFICATE-ID: BIO-2026-XAI-{cert_hash} • ResNet-18 + Grad-CAM XAI
+                        </div>
+                    </div>
+                    <div style="background: #ECFDF5; border: 2px solid #10B981; border-radius: 16px; padding: 10px 18px; text-align: right;">
+                        <div style="font-size: 0.78rem; font-weight: 900; color: #059669; text-transform: uppercase;">VERIFIED AI DECISION</div>
+                        <div style="font-size: 1.55rem; font-weight: 900; color: #065F46;">{confidence:.1f}% MATCH</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Diagnostic Cards (High-Contrast, Large Readable Text) -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; margin-top: 20px;">
+                    <!-- Card 1: Neuro-Visual Attention -->
+                    <div style="background: #F8FAFC; border: 2px solid #0284C7; border-radius: 18px; padding: 20px;">
+                        <div style="font-size: 1.05rem; font-weight: 900; color: #0284C7; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            🔬 NEURO-VISUAL ATTENTION (GRAD-CAM)
+                        </div>
+                        <div style="font-size: 0.96rem; color: #0F172A; font-weight: 800; margin-bottom: 8px;">
+                            Gradient Hotspot Diagnostic:
+                        </div>
+                        <div style="font-size: 0.92rem; color: #334155; line-height: 1.55; margin-bottom: 14px; font-weight: 600;">
+                            {report_meta['xai_insight']}
+                        </div>
+                        <div style="font-size: 0.96rem; color: #0F172A; font-weight: 800; margin-bottom: 6px;">
+                            Diagnostic Wing Markers:
+                        </div>
+                        <div style="font-size: 0.92rem; color: #334155; line-height: 1.55; font-weight: 600;">
+                            {report_meta['appearance']}
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Taxonomy & Ecology -->
+                    <div style="background: #F0FDF4; border: 2px solid #10B981; border-radius: 18px; padding: 20px;">
+                        <div style="font-size: 1.05rem; font-weight: 900; color: #065F46; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            🌿 TAXONOMIC & BIOGEOGRAPHIC PROFILE
+                        </div>
+                        <div style="font-size: 0.96rem; color: #065F46; font-weight: 800; margin-bottom: 8px;">
+                            Geographic Distribution:
+                        </div>
+                        <div style="font-size: 0.92rem; color: #1E293B; line-height: 1.55; margin-bottom: 14px; font-weight: 600;">
+                            {report_meta['distribution']}
+                        </div>
+                        <div style="font-size: 0.96rem; color: #065F46; font-weight: 800; margin-bottom: 6px;">
+                            Key Biological Adaptation:
+                        </div>
+                        <div style="font-size: 0.92rem; color: #1E293B; line-height: 1.55; font-weight: 600;">
+                            {report_meta['key_features']}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Signature -->
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1.5px solid #E2E8F0; padding-top: 16px; margin-top: 20px; flex-wrap: wrap; gap: 8px;">
+                    <div style="font-size: 0.86rem; font-weight: 700; color: #64748B;">
+                        AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture
+                    </div>
+                    <div style="font-size: 0.92rem; font-weight: 900; color: #0284C7;">
+                        Lead AI Architect & Engineer: Ohi
                     </div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-            st.image(
-                report_bytes,
-                caption=t("cert_caption").format(species=pred_class),
-                use_container_width=True
-            )
-
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
             action_c1, action_c2 = st.columns([1.5, 1])
             with action_c1:
                 st.download_button(
-                    label=t("btn_download_cert"),
+                    label="📥 " + ("অফিশিয়াল ৪K সার্টিফিকেট ডাউনলোড করুন (High-Res PNG)" if st.session_state.app_lang == "BN" else "Download Official 4K Certificate (High-Res PNG)"),
                     data=report_bytes,
                     file_name=f"Butterfly_AI_Report_{pred_class.replace(' ', '_')}.png",
                     mime="image/png",
                     use_container_width=True
                 )
             with action_c2:
-                if st.button(t("btn_close_cert"), use_container_width=True):
+                if st.button("❌ " + ("রিপোর্ট ভিউ বন্ধ করুন" if st.session_state.app_lang == "BN" else "Close Report View"), use_container_width=True):
                     st.session_state.show_report_modal = False
                     st.rerun()
 
