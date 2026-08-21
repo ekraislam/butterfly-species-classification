@@ -1,6 +1,6 @@
 """
-AI Butterfly Vision: Ultra-Premium Next-Gen Interface
-A Breathtaking, Award-Winning Dark Cyber-Glass AI Showcase for Butterfly Species Classification & Grad-CAM Explainable AI.
+AI Butterfly Vision: Streamlit Web Application
+A Masterpiece Deep Obsidian Minimalist Interface for Butterfly Species Classification & Grad-CAM Explainable AI.
 Designed & Developed by Ohi.
 """
 
@@ -24,10 +24,10 @@ from gradcam import GradCAM
 from utils import SPECIES_METADATA, resolve_project_paths, generate_report_card
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Masterpiece Custom CSS (Luxury Dark Glassmorphism)
+# 1. Page Configuration & Deep Obsidian Minimalist Design System (Apple / Linear Pro)
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="AI Butterfly Vision • Next-Gen Explainable AI",
+    page_title="AI Butterfly Vision • Explainable AI",
     page_icon="🦋",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -35,30 +35,26 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap');
     
     /* Global Reset & Typography */
     html, body, [class*="css"], .stApp {
-        font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
     
     code, pre, .stat-num, .gauge-val {
         font-family: 'Space Grotesk', monospace !important;
     }
     
-    /* Dynamic Cosmic Mesh Background */
+    /* Deep Obsidian Clean Canvas (Zero Distractions, Pure High-End Aesthetic) */
     .stApp {
-        background-color: #030712 !important;
-        background-image: 
-            radial-gradient(at 50% 0%, rgba(56, 189, 248, 0.18) 0px, transparent 60%),
-            radial-gradient(at 100% 30%, rgba(139, 92, 246, 0.12) 0px, transparent 50%),
-            radial-gradient(at 0% 70%, rgba(16, 185, 129, 0.10) 0px, transparent 50%),
-            radial-gradient(at 80% 90%, rgba(244, 63, 94, 0.08) 0px, transparent 50%) !important;
+        background-color: #080C14 !important;
+        background-image: radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.08) 0%, rgba(8, 12, 20, 0.98) 70%, #05080E 100%) !important;
         background-attachment: fixed !important;
         color: #F8FAFC !important;
     }
     
-    /* Hide Default Streamlit Clutter */
+    /* Hide Default Streamlit Elements */
     #MainMenu, footer, header, .stDeployButton, [data-testid="stDeployButton"], [data-testid="stToolbar"], [data-testid="stDecoration"] {
         display: none !important;
         visibility: hidden !important;
@@ -74,35 +70,33 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(139, 92, 246, 0.15));
-        border: 1px solid rgba(56, 189, 248, 0.4);
+        background: rgba(56, 189, 248, 0.08);
+        border: 1px solid rgba(56, 189, 248, 0.3);
         color: #38BDF8;
-        font-size: 0.82rem;
+        font-size: 0.8rem;
         font-weight: 700;
-        letter-spacing: 0.15em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        padding: 7px 22px;
+        padding: 6px 20px;
         border-radius: 999px;
         margin-bottom: 1.2rem;
-        box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
-        backdrop-filter: blur(10px);
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
     }
     .hero-title {
-        font-size: 3.8rem;
+        font-size: 3.6rem;
         font-weight: 900;
         letter-spacing: -0.04em;
-        line-height: 1.08;
-        background: linear-gradient(135deg, #FFFFFF 20%, #CBD5E1 55%, #38BDF8 95%);
+        line-height: 1.1;
+        background: linear-gradient(180deg, #FFFFFF 30%, #94A3B8 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.8rem;
-        text-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .hero-subtitle {
-        font-size: 1.22rem;
+        font-size: 1.18rem;
         color: #94A3B8;
         font-weight: 400;
-        max-width: 720px;
+        max-width: 700px;
         margin: 0 auto;
         line-height: 1.6;
     }
@@ -115,31 +109,23 @@ st.markdown("""
         margin: 1.8rem 0 2.5rem 0;
     }
     .metric-card {
-        background: rgba(15, 23, 42, 0.55);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 16px;
         padding: 18px 16px;
         text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-    }
-    .metric-card::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; right: 0; height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        transition: all 0.25s ease;
     }
     .metric-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(56, 189, 248, 0.45);
-        box-shadow: 0 15px 35px rgba(56, 189, 248, 0.15);
+        transform: translateY(-3px);
+        border-color: rgba(56, 189, 248, 0.4);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
     }
     .metric-val {
-        font-size: 1.85rem;
+        font-size: 1.8rem;
         font-weight: 800;
         background: linear-gradient(135deg, #38BDF8 0%, #34D399 100%);
         -webkit-background-clip: text;
@@ -147,91 +133,91 @@ st.markdown("""
         margin-bottom: 2px;
     }
     .metric-lbl {
-        font-size: 0.74rem;
+        font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.1em;
         color: #94A3B8;
     }
 
-    /* Main Action Button (Luminous Gradient with Glow) */
+    /* Primary Action Button (Sleek Cyan to Emerald) */
     button[kind="primary"] {
-        background: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #10B981 100%) !important;
+        background: linear-gradient(135deg, #0284C7 0%, #06B6D4 50%, #10B981 100%) !important;
         color: #FFFFFF !important;
         font-weight: 800 !important;
-        border: 1px solid rgba(56, 189, 248, 0.6) !important;
-        border-radius: 14px !important;
-        box-shadow: 0 6px 25px rgba(14, 165, 233, 0.45) !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        border: 1px solid rgba(56, 189, 248, 0.5) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35) !important;
+        transition: all 0.25s ease !important;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        font-size: 0.96rem !important;
-        padding: 0.75rem 1.6rem !important;
+        font-size: 0.95rem !important;
+        padding: 0.7rem 1.5rem !important;
     }
     button[kind="primary"]:hover {
-        transform: translateY(-2px) scale(1.01) !important;
-        box-shadow: 0 10px 35px rgba(16, 185, 129, 0.6) !important;
-        border-color: rgba(52, 211, 153, 0.9) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 28px rgba(16, 185, 129, 0.5) !important;
+        border-color: rgba(52, 211, 153, 0.8) !important;
     }
 
-    /* Secondary Gallery Buttons (Glass Glow Chips) */
+    /* Secondary Gallery Buttons (Clean Dark Glass) */
     button[kind="secondary"] {
-        background: rgba(22, 32, 54, 0.55) !important;
+        background: rgba(18, 26, 42, 0.6) !important;
         color: #E2E8F0 !important;
-        border: 1px solid rgba(255, 255, 255, 0.09) !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
         border-radius: 12px !important;
         font-weight: 700 !important;
         font-size: 0.88rem !important;
-        transition: all 0.25s ease !important;
+        transition: all 0.2s ease !important;
         padding: 0.6rem 0.9rem !important;
     }
     button[kind="secondary"]:hover {
         border-color: #38BDF8 !important;
-        color: #FFFFFF !important;
-        background: rgba(56, 189, 248, 0.18) !important;
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3) !important;
-        transform: translateY(-2px) !important;
+        color: #38BDF8 !important;
+        background: rgba(56, 189, 248, 0.12) !important;
+        box-shadow: 0 0 16px rgba(56, 189, 248, 0.2) !important;
+        transform: translateY(-1px) !important;
     }
 
-    /* Download AI Report Button */
+    /* Download Button */
     .stDownloadButton > button {
-        background: linear-gradient(135deg, rgba(20, 30, 50, 0.9), rgba(10, 15, 28, 0.95)) !important;
+        background: linear-gradient(135deg, rgba(20, 30, 48, 0.9), rgba(12, 18, 30, 0.95)) !important;
         color: #38BDF8 !important;
-        border: 1px solid rgba(56, 189, 248, 0.45) !important;
+        border: 1px solid rgba(56, 189, 248, 0.4) !important;
         font-weight: 800 !important;
-        border-radius: 14px !important;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
-        transition: all 0.25s ease !important;
-        font-size: 0.95rem !important;
-        padding: 0.75rem 1.4rem !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        transition: all 0.2s ease !important;
+        font-size: 0.94rem !important;
+        padding: 0.7rem 1.3rem !important;
     }
     .stDownloadButton > button:hover {
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(16, 185, 129, 0.25)) !important;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(16, 185, 129, 0.2)) !important;
         border-color: #38BDF8 !important;
         color: #FFFFFF !important;
-        box-shadow: 0 0 30px rgba(56, 189, 248, 0.5) !important;
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.4) !important;
         transform: translateY(-2px) !important;
     }
 
     /* Prediction Result Capsule */
     .result-capsule {
-        background: linear-gradient(145deg, rgba(20, 30, 52, 0.75), rgba(10, 16, 30, 0.85));
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
         padding: 22px 24px;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         margin-bottom: 1.2rem;
     }
     .result-tag {
         font-size: 0.74rem;
         font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.14em;
         color: #38BDF8;
         margin-bottom: 4px;
     }
     .result-name {
-        font-size: 2.4rem;
+        font-size: 2.35rem;
         font-weight: 900;
         color: #FFFFFF;
         letter-spacing: -0.03em;
@@ -239,28 +225,28 @@ st.markdown("""
         margin-bottom: 4px;
     }
     .result-meta {
-        font-size: 1.08rem;
+        font-size: 1.05rem;
         font-style: italic;
         color: #94A3B8;
     }
     
     /* High-Tech Circular Meter */
     .hud-gauge {
-        width: 86px;
-        height: 86px;
+        width: 84px;
+        height: 84px;
         border-radius: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         border: 4px solid #10B981;
-        background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(10, 15, 25, 0.8) 100%);
-        box-shadow: 0 0 25px rgba(16, 185, 129, 0.35);
+        background: rgba(16, 185, 129, 0.12);
+        box-shadow: 0 0 22px rgba(16, 185, 129, 0.25);
         text-align: center;
         flex-shrink: 0;
     }
     .gauge-val {
-        font-size: 1.22rem;
+        font-size: 1.2rem;
         font-weight: 900;
         color: #FFFFFF;
         line-height: 1;
@@ -270,7 +256,7 @@ st.markdown("""
         text-transform: uppercase;
         color: #34D399;
         font-weight: 800;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         margin-top: 3px;
     }
 
@@ -279,118 +265,115 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(22, 32, 54, 0.4);
+        background: rgba(18, 26, 42, 0.45);
         border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: 14px;
-        padding: 12px 16px;
-        margin-bottom: 10px;
+        border-radius: 12px;
+        padding: 11px 16px;
+        margin-bottom: 9px;
         transition: all 0.2s ease;
     }
     .rank-capsule:hover {
-        background: rgba(22, 32, 54, 0.65);
+        background: rgba(18, 26, 42, 0.7);
         border-color: rgba(56, 189, 248, 0.3);
     }
     .rank-badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 26px;
-        height: 26px;
+        width: 24px;
+        height: 24px;
         background: rgba(56, 189, 248, 0.15);
         color: #38BDF8;
         font-weight: 800;
-        font-size: 0.82rem;
-        border-radius: 8px;
+        font-size: 0.8rem;
+        border-radius: 6px;
         margin-right: 12px;
     }
     .rank-title {
         font-weight: 700;
-        font-size: 0.98rem;
+        font-size: 0.96rem;
         color: #F1F5F9;
     }
     .rank-score {
         font-weight: 800;
-        font-size: 0.98rem;
+        font-size: 0.96rem;
         color: #38BDF8;
     }
 
     /* XAI Diagnostic Callout */
     .xai-callout {
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(20, 30, 52, 0.5));
+        background: rgba(15, 23, 42, 0.65);
         border-left: 4px solid #38BDF8;
-        border-radius: 14px;
-        padding: 16px 20px;
+        border-radius: 12px;
+        padding: 16px 18px;
         margin-top: 1.2rem;
-        font-size: 0.94rem;
-        line-height: 1.6;
+        font-size: 0.92rem;
+        line-height: 1.55;
         color: #CBD5E1;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
     .xai-hdr {
         font-weight: 800;
         color: #38BDF8;
         font-size: 0.82rem;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-bottom: 6px;
+        letter-spacing: 0.08em;
+        margin-bottom: 5px;
     }
 
     /* Custom Styled Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
-        background: rgba(15, 23, 42, 0.75);
+        background: rgba(15, 23, 42, 0.65);
         padding: 6px;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 12px;
+        border-radius: 10px;
         color: #94A3B8;
         font-weight: 700;
-        font-size: 0.9rem;
-        padding: 9px 18px;
+        font-size: 0.88rem;
+        padding: 8px 16px;
         transition: all 0.2s ease;
     }
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(139, 92, 246, 0.2)) !important;
+        background: rgba(56, 189, 248, 0.15) !important;
         color: #38BDF8 !important;
-        border: 1px solid rgba(56, 189, 248, 0.4) !important;
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        border: 1px solid rgba(56, 189, 248, 0.35) !important;
     }
 
-    /* Supported Species Showcase Cards (Luminous Pods) */
+    /* Supported Species Showcase Cards */
     .species-pod {
-        background: rgba(18, 26, 44, 0.55);
-        backdrop-filter: blur(14px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        padding: 18px 14px;
+        background: rgba(15, 23, 42, 0.55);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 14px;
+        padding: 16px 14px;
         text-align: center;
         height: 100%;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
+        transition: all 0.25s ease;
     }
     .species-pod:hover {
-        transform: translateY(-4px);
-        border-color: rgba(56, 189, 248, 0.5);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-        background: rgba(22, 34, 58, 0.8);
+        transform: translateY(-3px);
+        border-color: rgba(56, 189, 248, 0.45);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        background: rgba(18, 28, 48, 0.75);
     }
     .pod-name {
         font-weight: 800;
-        font-size: 1.0rem;
+        font-size: 0.96rem;
         color: #FFFFFF;
         margin-bottom: 4px;
     }
     .pod-sci {
-        font-size: 0.84rem;
+        font-size: 0.82rem;
         font-style: italic;
         color: #38BDF8;
         margin-bottom: 4px;
     }
     .pod-fam {
-        font-size: 0.76rem;
+        font-size: 0.74rem;
         font-weight: 600;
         color: #94A3B8;
     }
@@ -398,18 +381,16 @@ st.markdown("""
     /* Footer Signature */
     .app-footer {
         text-align: center;
-        padding: 3.5rem 1rem 2.2rem 1rem;
-        margin-top: 4rem;
+        padding: 3.2rem 1rem 2rem 1rem;
+        margin-top: 3.8rem;
         border-top: 1px solid rgba(255, 255, 255, 0.08);
         color: #64748B;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
     }
     .footer-author {
-        background: linear-gradient(135deg, #38BDF8, #34D399);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #38BDF8;
         font-weight: 800;
-        font-size: 1.05rem;
+        font-size: 1.0rem;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -436,7 +417,7 @@ st.markdown("""
 <div class="hero-container">
     <div class="hero-badge">🦋 ResNet18 • Deep Transfer Learning • Grad-CAM XAI</div>
     <div class="hero-title">AI Butterfly Vision</div>
-    <div class="hero-subtitle">World-Class Butterfly Species Recognition with Real-Time Spatial Neural Gradient Explanations</div>
+    <div class="hero-subtitle">High-Precision Butterfly Species Classification with Real-Time Explainable AI (XAI) Diagnostics</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -534,7 +515,7 @@ active_image = st.session_state.selected_image
 active_filename = st.session_state.selected_filename
 
 if active_image is not None:
-    st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
     
     # Image Command Bar
     cmd_col1, cmd_col2 = st.columns([1, 2.2])
@@ -563,7 +544,7 @@ if active_image is not None:
                         pred_res['predicted_idx']
                     )
 
-                st.markdown("<div style='height: 22px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
 
                 # Two-Column Results Suite
                 col_left, col_right = st.columns([1.15, 1.35], gap="large")
