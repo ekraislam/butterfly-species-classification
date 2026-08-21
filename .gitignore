@@ -51,10 +51,12 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Datasets (large files / raw data excluded from git)
+# Datasets (large files / raw data excluded from git, test samples kept for cloud demo)
 dataset/
 archive*/
-prepared_dataset/
+prepared_dataset/train/
+prepared_dataset/val/
+!prepared_dataset/test/
 
 # Streamlit config / cache
 .streamlit/
