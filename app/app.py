@@ -1734,37 +1734,37 @@ body {{
 .hero-split-grid {{
     display: grid;
     grid-template-columns: 1.06fr 1fr;
-    gap: 18px;
+    gap: 16px;
     align-items: stretch;
     width: 100%;
-    height: 290px;
+    height: 195px;
     box-sizing: border-box;
 }}
 @media (max-width: 860px) {{
     .hero-split-grid {{
         grid-template-columns: 1fr !important;
         height: auto !important;
-        gap: 14px !important;
+        gap: 12px !important;
     }}
     .hero-left-card {{
         height: auto !important;
-        min-height: 210px !important;
-        padding: 18px 16px !important;
+        min-height: 190px !important;
+        padding: 16px 16px !important;
     }}
     .hero-title {{
-        font-size: 1.65rem !important;
+        font-size: 1.55rem !important;
     }}
     .sanctuary-terrarium {{
-        height: 260px !important;
+        height: 200px !important;
     }}
 }}
 
 .hero-left-card {{
     background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 60%, #E0F2FE 100%);
-    border: 2.5px solid #94A3B8;
-    border-radius: 24px;
-    padding: 20px 22px;
-    box-shadow: 0 14px 32px rgba(2, 132, 199, 0.10), inset 0 0 20px rgba(255, 255, 255, 0.8);
+    border: 2px solid #94A3B8;
+    border-radius: 20px;
+    padding: 15px 18px;
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.08), inset 0 0 16px rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1774,38 +1774,38 @@ body {{
 .hero-badge {{
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     background: #0284C7;
     color: #FFFFFF;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 900;
-    padding: 4px 12px;
+    padding: 2px 10px;
     border-radius: 999px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     width: fit-content;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
 }}
 .hero-title {{
     font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
-    font-size: 2.05rem;
+    font-size: 1.72rem;
     font-weight: 900;
     color: #0F172A;
-    line-height: 1.15;
-    margin: 3px 0 5px 0;
+    line-height: 1.12;
+    margin: 2px 0 3px 0;
     letter-spacing: -0.02em;
 }}
 .hero-subtitle {{
-    font-size: 0.90rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #334155;
-    line-height: 1.38;
-    margin-bottom: 8px;
+    line-height: 1.30;
+    margin-bottom: 0px;
 }}
 .hero-tag-strip {{
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 6px;
     margin-top: auto;
 }}
 .hero-tag {{
@@ -1814,22 +1814,22 @@ body {{
     background: #FFFFFF;
     border: 1.5px solid #94A3B8;
     color: #0F172A;
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    padding: 4px 11px;
+    padding: 3px 9px;
     border-radius: 999px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
 }}
 
 .sanctuary-terrarium {{
     background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 40%, #E0F2FE 100%);
-    border: 2.5px solid #94A3B8;
-    border-radius: 24px;
-    padding: 16px 20px;
+    border: 2px solid #94A3B8;
+    border-radius: 20px;
+    padding: 10px 14px;
     height: 100%;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 14px 32px rgba(2, 132, 199, 0.10), inset 0 0 20px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 24px rgba(2, 132, 199, 0.08), inset 0 0 16px rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1845,15 +1845,15 @@ body {{
 
 .sanctuary-theme-toggle {{
     position: absolute;
-    top: 14px;
-    right: 16px;
+    top: 8px;
+    right: 10px;
     z-index: 50;
     background: rgba(255, 255, 255, 0.94);
     border: 1.5px solid #CBD5E1;
     color: #0F172A;
     font-size: 0.76rem;
     font-weight: 800;
-    padding: 4px 12px;
+    padding: 2px 9px;
     border-radius: 999px;
     cursor: pointer;
     box-shadow: 0 3px 8px rgba(0,0,0,0.06);
@@ -1919,7 +1919,7 @@ body {{
 .butterfly-stage {{
     position: relative;
     width: 100%;
-    height: 165px;
+    height: 110px;
     perspective: 800px;
 }}
 .carrier-group {{
@@ -1965,20 +1965,20 @@ body {{
 /* Lush 4-Flower Botanical Garden Layer */
 .flower-habitat {{
     position: absolute;
-    bottom: 38px;
+    bottom: 20px;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 52px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 0 18px;
+    padding: 0 12px;
     z-index: 6;
     pointer-events: none;
 }}
 .botanical-flower {{
-    width: 58px;
-    height: 72px;
+    width: 40px;
+    height: 48px;
     animation: flower-sway 4.8s ease-in-out infinite alternate;
     transform-origin: bottom center;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
@@ -2626,7 +2626,7 @@ body {{
 </html>
 """
 
-components.html(master_hero_html, height=296, scrolling=False)
+components.html(master_hero_html, height=202, scrolling=False)
 
 # -----------------------------------------------------------------------------
 # 4. Floating Performance Metric Strip
