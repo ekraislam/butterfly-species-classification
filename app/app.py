@@ -1,6 +1,6 @@
 """
 AI Butterfly Vision: Streamlit Web Application
-A Masterpiece Deep Obsidian Minimalist Interface for Butterfly Species Classification & Grad-CAM Explainable AI.
+A Breathtaking Luxury Light Porcelain & Nature Research Interface for Butterfly Species Classification & Grad-CAM Explainable AI.
 Designed & Developed by Ohi.
 """
 
@@ -24,7 +24,7 @@ from gradcam import GradCAM
 from utils import SPECIES_METADATA, resolve_project_paths, generate_report_card
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Deep Obsidian Minimalist Design System (Apple / Linear Pro)
+# 1. Page Configuration & Masterpiece Luxury Light Theme (Apple / Nature Bio-Lab)
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="AI Butterfly Vision • Explainable AI",
@@ -46,15 +46,18 @@ st.markdown("""
         font-family: 'Space Grotesk', monospace !important;
     }
     
-    /* Deep Obsidian Clean Canvas (Zero Distractions, Pure High-End Aesthetic) */
+    /* Fresh Clean Porcelain Canvas (Modern Light Mode) */
     .stApp {
-        background-color: #080C14 !important;
-        background-image: radial-gradient(circle at 50% -10%, rgba(56, 189, 248, 0.08) 0%, rgba(8, 12, 20, 0.98) 70%, #05080E 100%) !important;
+        background-color: #F8FAFC !important;
+        background-image: 
+            radial-gradient(at 50% 0%, rgba(2, 132, 199, 0.08) 0px, transparent 60%),
+            radial-gradient(at 100% 40%, rgba(16, 185, 129, 0.06) 0px, transparent 50%),
+            radial-gradient(at 0% 80%, rgba(99, 102, 241, 0.05) 0px, transparent 50%) !important;
         background-attachment: fixed !important;
-        color: #F8FAFC !important;
+        color: #0F172A !important;
     }
     
-    /* Hide Default Streamlit Elements */
+    /* Hide Default Streamlit Chrome */
     #MainMenu, footer, header, .stDeployButton, [data-testid="stDeployButton"], [data-testid="stToolbar"], [data-testid="stDecoration"] {
         display: none !important;
         visibility: hidden !important;
@@ -70,38 +73,38 @@ st.markdown("""
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        background: rgba(56, 189, 248, 0.08);
-        border: 1px solid rgba(56, 189, 248, 0.3);
-        color: #38BDF8;
-        font-size: 0.8rem;
+        background: rgba(2, 132, 199, 0.08);
+        border: 1px solid rgba(2, 132, 199, 0.25);
+        color: #0284C7;
+        font-size: 0.82rem;
         font-weight: 700;
         letter-spacing: 0.12em;
         text-transform: uppercase;
         padding: 6px 20px;
         border-radius: 999px;
         margin-bottom: 1.2rem;
-        box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+        box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
     }
     .hero-title {
         font-size: 3.6rem;
         font-weight: 900;
         letter-spacing: -0.04em;
         line-height: 1.1;
-        background: linear-gradient(180deg, #FFFFFF 30%, #94A3B8 100%);
+        background: linear-gradient(135deg, #0F172A 30%, #0369A1 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 0.8rem;
     }
     .hero-subtitle {
-        font-size: 1.18rem;
-        color: #94A3B8;
+        font-size: 1.2rem;
+        color: #475569;
         font-weight: 400;
         max-width: 700px;
         margin: 0 auto;
         line-height: 1.6;
     }
 
-    /* Floating Metric Strip */
+    /* Floating Metric Strip (Crisp White Frosted Cards) */
     .metric-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -109,103 +112,102 @@ st.markdown("""
         margin: 1.8rem 0 2.5rem 0;
     }
     .metric-card {
-        background: rgba(15, 23, 42, 0.6);
+        background: rgba(255, 255, 255, 0.85);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 16px;
-        padding: 18px 16px;
+        border: 1px solid rgba(226, 232, 240, 0.85);
+        border-radius: 18px;
+        padding: 20px 16px;
         text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
         transition: all 0.25s ease;
     }
     .metric-card:hover {
         transform: translateY(-3px);
-        border-color: rgba(56, 189, 248, 0.4);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+        border-color: rgba(2, 132, 199, 0.4);
+        box-shadow: 0 15px 30px rgba(2, 132, 199, 0.12);
     }
     .metric-val {
-        font-size: 1.8rem;
+        font-size: 1.9rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #38BDF8 0%, #34D399 100%);
+        background: linear-gradient(135deg, #0284C7 0%, #0D9488 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 2px;
     }
     .metric-lbl {
-        font-size: 0.72rem;
+        font-size: 0.74rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        color: #94A3B8;
+        color: #64748B;
     }
 
-    /* Primary Action Button (Sleek Cyan to Emerald) */
+    /* Primary Action Button (Vibrant Royal Cyan to Teal) */
     button[kind="primary"] {
-        background: linear-gradient(135deg, #0284C7 0%, #06B6D4 50%, #10B981 100%) !important;
+        background: linear-gradient(135deg, #0284C7 0%, #0D9488 100%) !important;
         color: #FFFFFF !important;
         font-weight: 800 !important;
-        border: 1px solid rgba(56, 189, 248, 0.5) !important;
+        border: none !important;
         border-radius: 12px !important;
-        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35) !important;
+        box-shadow: 0 4px 20px rgba(2, 132, 199, 0.35) !important;
         transition: all 0.25s ease !important;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         font-size: 0.95rem !important;
-        padding: 0.7rem 1.5rem !important;
+        padding: 0.75rem 1.6rem !important;
     }
     button[kind="primary"]:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 28px rgba(16, 185, 129, 0.5) !important;
-        border-color: rgba(52, 211, 153, 0.8) !important;
+        box-shadow: 0 8px 25px rgba(13, 148, 136, 0.45) !important;
     }
 
-    /* Secondary Gallery Buttons (Clean Dark Glass) */
+    /* Secondary Gallery Buttons (Clean Light Mode Pills) */
     button[kind="secondary"] {
-        background: rgba(18, 26, 42, 0.6) !important;
-        color: #E2E8F0 !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: #FFFFFF !important;
+        color: #1E293B !important;
+        border: 1px solid #E2E8F0 !important;
         border-radius: 12px !important;
         font-weight: 700 !important;
         font-size: 0.88rem !important;
         transition: all 0.2s ease !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
         padding: 0.6rem 0.9rem !important;
     }
     button[kind="secondary"]:hover {
-        border-color: #38BDF8 !important;
-        color: #38BDF8 !important;
-        background: rgba(56, 189, 248, 0.12) !important;
-        box-shadow: 0 0 16px rgba(56, 189, 248, 0.2) !important;
+        border-color: #0284C7 !important;
+        color: #0284C7 !important;
+        background: #F0F9FF !important;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15) !important;
         transform: translateY(-1px) !important;
     }
 
-    /* Download Button */
+    /* Download AI Report Button */
     .stDownloadButton > button {
-        background: linear-gradient(135deg, rgba(20, 30, 48, 0.9), rgba(12, 18, 30, 0.95)) !important;
-        color: #38BDF8 !important;
-        border: 1px solid rgba(56, 189, 248, 0.4) !important;
+        background: #FFFFFF !important;
+        color: #0284C7 !important;
+        border: 1px solid #BAE6FD !important;
         font-weight: 800 !important;
         border-radius: 12px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.1) !important;
         transition: all 0.2s ease !important;
         font-size: 0.94rem !important;
         padding: 0.7rem 1.3rem !important;
     }
     .stDownloadButton > button:hover {
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(16, 185, 129, 0.2)) !important;
-        border-color: #38BDF8 !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 0 25px rgba(56, 189, 248, 0.4) !important;
+        background: #F0F9FF !important;
+        border-color: #0284C7 !important;
+        box-shadow: 0 6px 20px rgba(2, 132, 199, 0.2) !important;
         transform: translateY(-2px) !important;
     }
 
-    /* Prediction Result Capsule */
+    /* Prediction Result Capsule (Pure White Glass Card) */
     .result-capsule {
-        background: rgba(15, 23, 42, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        padding: 22px 24px;
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 15px 35px rgba(15, 23, 42, 0.06);
         margin-bottom: 1.2rem;
     }
     .result-tag {
@@ -213,13 +215,13 @@ st.markdown("""
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.14em;
-        color: #38BDF8;
+        color: #0284C7;
         margin-bottom: 4px;
     }
     .result-name {
         font-size: 2.35rem;
         font-weight: 900;
-        color: #FFFFFF;
+        color: #0F172A;
         letter-spacing: -0.03em;
         line-height: 1.05;
         margin-bottom: 4px;
@@ -227,54 +229,55 @@ st.markdown("""
     .result-meta {
         font-size: 1.05rem;
         font-style: italic;
-        color: #94A3B8;
+        color: #64748B;
     }
     
     /* High-Tech Circular Meter */
     .hud-gauge {
-        width: 84px;
-        height: 84px;
+        width: 86px;
+        height: 86px;
         border-radius: 50%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         border: 4px solid #10B981;
-        background: rgba(16, 185, 129, 0.12);
-        box-shadow: 0 0 22px rgba(16, 185, 129, 0.25);
+        background: #ECFDF5;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         text-align: center;
         flex-shrink: 0;
     }
     .gauge-val {
-        font-size: 1.2rem;
+        font-size: 1.22rem;
         font-weight: 900;
-        color: #FFFFFF;
+        color: #065F46;
         line-height: 1;
     }
     .gauge-lbl {
         font-size: 0.62rem;
         text-transform: uppercase;
-        color: #34D399;
+        color: #059669;
         font-weight: 800;
         letter-spacing: 0.06em;
         margin-top: 3px;
     }
 
-    /* Top-3 Ranking Row */
+    /* Top-3 Ranking Row (Clean Floating Pill) */
     .rank-capsule {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(18, 26, 42, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
         border-radius: 12px;
-        padding: 11px 16px;
+        padding: 12px 16px;
         margin-bottom: 9px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
         transition: all 0.2s ease;
     }
     .rank-capsule:hover {
-        background: rgba(18, 26, 42, 0.7);
-        border-color: rgba(56, 189, 248, 0.3);
+        border-color: #0284C7;
+        background: #F8FAFC;
     }
     .rank-badge {
         display: inline-flex;
@@ -282,8 +285,8 @@ st.markdown("""
         justify-content: center;
         width: 24px;
         height: 24px;
-        background: rgba(56, 189, 248, 0.15);
-        color: #38BDF8;
+        background: #E0F2FE;
+        color: #0369A1;
         font-weight: 800;
         font-size: 0.8rem;
         border-radius: 6px;
@@ -292,29 +295,29 @@ st.markdown("""
     .rank-title {
         font-weight: 700;
         font-size: 0.96rem;
-        color: #F1F5F9;
+        color: #1E293B;
     }
     .rank-score {
         font-weight: 800;
         font-size: 0.96rem;
-        color: #38BDF8;
+        color: #0284C7;
     }
 
     /* XAI Diagnostic Callout */
     .xai-callout {
-        background: rgba(15, 23, 42, 0.65);
-        border-left: 4px solid #38BDF8;
+        background: #F0F9FF;
+        border-left: 4px solid #0284C7;
         border-radius: 12px;
         padding: 16px 18px;
         margin-top: 1.2rem;
         font-size: 0.92rem;
         line-height: 1.55;
-        color: #CBD5E1;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        color: #1E293B;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.06);
     }
     .xai-hdr {
         font-weight: 800;
-        color: #38BDF8;
+        color: #0369A1;
         font-size: 0.82rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
@@ -324,58 +327,58 @@ st.markdown("""
     /* Custom Styled Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
-        background: rgba(15, 23, 42, 0.65);
+        background: #F1F5F9;
         padding: 6px;
         border-radius: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border: 1px solid #E2E8F0;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: 10px;
-        color: #94A3B8;
+        color: #64748B;
         font-weight: 700;
         font-size: 0.88rem;
         padding: 8px 16px;
         transition: all 0.2s ease;
     }
     .stTabs [aria-selected="true"] {
-        background: rgba(56, 189, 248, 0.15) !important;
-        color: #38BDF8 !important;
-        border: 1px solid rgba(56, 189, 248, 0.35) !important;
+        background: #FFFFFF !important;
+        color: #0284C7 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        border: 1px solid #CBD5E1 !important;
     }
 
     /* Supported Species Showcase Cards */
     .species-pod {
-        background: rgba(15, 23, 42, 0.55);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 14px;
-        padding: 16px 14px;
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        padding: 18px 14px;
         text-align: center;
         height: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         transition: all 0.25s ease;
     }
     .species-pod:hover {
         transform: translateY(-3px);
-        border-color: rgba(56, 189, 248, 0.45);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        background: rgba(18, 28, 48, 0.75);
+        border-color: #0284C7;
+        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.12);
     }
     .pod-name {
         font-weight: 800;
         font-size: 0.96rem;
-        color: #FFFFFF;
+        color: #0F172A;
         margin-bottom: 4px;
     }
     .pod-sci {
         font-size: 0.82rem;
         font-style: italic;
-        color: #38BDF8;
+        color: #0284C7;
         margin-bottom: 4px;
     }
     .pod-fam {
         font-size: 0.74rem;
         font-weight: 600;
-        color: #94A3B8;
+        color: #64748B;
     }
 
     /* Footer Signature */
@@ -383,12 +386,12 @@ st.markdown("""
         text-align: center;
         padding: 3.2rem 1rem 2rem 1rem;
         margin-top: 3.8rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid #E2E8F0;
         color: #64748B;
         font-size: 0.88rem;
     }
     .footer-author {
-        color: #38BDF8;
+        color: #0284C7;
         font-weight: 800;
         font-size: 1.0rem;
     }
@@ -556,7 +559,7 @@ if active_image is not None:
                     meta = SPECIES_METADATA.get(pred_class, {
                         "scientific_name": "Unknown",
                         "family": "Insecta",
-                        "color_primary": "#38BDF8",
+                        "color_primary": "#0284C7",
                         "xai_insight": "Model focused on discriminative visual wing patterns."
                     })
 
@@ -576,8 +579,8 @@ if active_image is not None:
                                 <div class="gauge-lbl" style="color: {gauge_color};">{gauge_lbl}</div>
                             </div>
                         </div>
-                        <div style="background: rgba(255,255,255,0.08); height: 8px; border-radius: 999px; overflow: hidden; margin-top: 14px;">
-                            <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #38BDF8, {meta['color_primary']});"></div>
+                        <div style="background: #E2E8F0; height: 8px; border-radius: 999px; overflow: hidden; margin-top: 14px;">
+                            <div style="width: {min(confidence, 100.0):.1f}%; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #0284C7, {meta['color_primary']});"></div>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
@@ -728,7 +731,7 @@ for i in range(4, 8):
 st.markdown("""
 <div class="app-footer">
     <div>Designed & Developed by <span class="footer-author">Ohi</span></div>
-    <div style="margin-top: 8px; font-size: 0.84rem; color: #94A3B8;">
+    <div style="margin-top: 8px; font-size: 0.84rem; color: #64748B;">
         Deep Transfer Learning (ResNet-18) • Native PyTorch Grad-CAM • TorchScript Mobile & Edge Architecture
     </div>
 </div>
