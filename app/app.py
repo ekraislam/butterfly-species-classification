@@ -24,7 +24,7 @@ from gradcam import GradCAM
 from utils import SPECIES_METADATA, resolve_project_paths, generate_report_card
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Ultra-High Contrast CSS (100% Guaranteed Legibility)
+# 1. Page Configuration & Ultra-High Contrast CSS
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="AI Butterfly Vision • Explainable AI",
@@ -60,7 +60,7 @@ st.markdown("""
     }
     
     /* ------------------------------------------------------------- */
-    /* GUARANTEED CRYSTAL-CLEAR TABS */
+    /* 100% VISIBLE & ROBUST TABS STYLING */
     /* ------------------------------------------------------------- */
     div[data-testid="stTabs"] {
         background: transparent !important;
@@ -69,7 +69,7 @@ st.markdown("""
     
     div[data-testid="stTabs"] [data-baseweb="tab-list"] {
         gap: 12px !important;
-        background: #E2E8F0 !important;
+        background: #CBD5E1 !important;
         padding: 8px !important;
         border-radius: 16px !important;
         border: 2px solid #94A3B8 !important;
@@ -80,19 +80,19 @@ st.markdown("""
     button[data-baseweb="tab"],
     .stTabs button {
         border-radius: 12px !important;
-        padding: 10px 22px !important;
-        font-size: 1.1rem !important;
+        padding: 12px 24px !important;
+        font-size: 1.15rem !important;
         font-weight: 900 !important;
         transition: all 0.2s ease !important;
     }
     
-    /* Unselected Tabs */
+    /* Unselected Tabs: White Card, Dark Solid Border, Deep Black Text */
     div[data-testid="stTabs"] button[aria-selected="false"],
     button[data-baseweb="tab"][aria-selected="false"],
     .stTabs button[aria-selected="false"] {
         background-color: #FFFFFF !important;
-        border: 2px solid #94A3B8 !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important;
+        border: 2px solid #64748B !important;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08) !important;
     }
     
     div[data-testid="stTabs"] button[aria-selected="false"] *,
@@ -100,16 +100,17 @@ st.markdown("""
     .stTabs button[aria-selected="false"] * {
         color: #0F172A !important;
         -webkit-text-fill-color: #0F172A !important;
-        font-weight: 800 !important;
+        font-weight: 900 !important;
+        font-size: 1.15rem !important;
     }
     
-    /* Selected Tab */
+    /* Selected Tab: Vibrant Royal Blue Card, White Text */
     div[data-testid="stTabs"] button[aria-selected="true"],
     button[data-baseweb="tab"][aria-selected="true"],
     .stTabs button[aria-selected="true"] {
         background-color: #0284C7 !important;
         border: 2px solid #0369A1 !important;
-        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35) !important;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4) !important;
     }
     
     div[data-testid="stTabs"] button[aria-selected="true"] *,
@@ -118,11 +119,10 @@ st.markdown("""
         color: #FFFFFF !important;
         -webkit-text-fill-color: #FFFFFF !important;
         font-weight: 900 !important;
+        font-size: 1.15rem !important;
     }
     
-    /* ------------------------------------------------------------- */
-    /* COMPACT & ELEGANT CAMERA VIEWFINDER (FIX HUGE CAMERA BOX) */
-    /* ------------------------------------------------------------- */
+    /* Compact Camera Box */
     [data-testid="stCameraInput"] {
         max-width: 520px !important;
         margin: 0 auto !important;
@@ -132,9 +132,7 @@ st.markdown("""
         border: 2px solid #94A3B8 !important;
     }
     
-    /* ------------------------------------------------------------- */
     /* Hero Header */
-    /* ------------------------------------------------------------- */
     .hero-container {
         text-align: center;
         padding: 2.5rem 1rem 1.5rem 1rem;
@@ -511,6 +509,8 @@ if "selected_image" not in st.session_state:
     st.session_state.selected_image = None
 if "selected_filename" not in st.session_state:
     st.session_state.selected_filename = None
+if "has_analyzed" not in st.session_state:
+    st.session_state.has_analyzed = False
 
 test_dir = paths["test_data_dir"]
 benchmark_samples = {}
@@ -529,7 +529,7 @@ input_tab1, input_tab2, input_tab3 = st.tabs([
 ])
 
 with input_tab1:
-    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Click any butterfly card below to instantly classify and view explanation maps:</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Click any butterfly card below to select specimen:</p>", unsafe_allow_html=True)
     sample_cols = st.columns(4)
     for idx, (cls_name, fpath) in enumerate(benchmark_samples.items()):
         col_target = sample_cols[idx % 4]
@@ -537,6 +537,7 @@ with input_tab1:
             if st.button(f"🦋 {cls_name}", key=f"btn_sample_{idx}", use_container_width=True):
                 st.session_state.selected_image = Image.open(fpath).convert("RGB")
                 st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
+                st.session_state.has_analyzed = False
 
 with input_tab2:
     st.markdown("<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A;'>Drop or browse an image from your computer:</p>", unsafe_allow_html=True)
@@ -549,6 +550,7 @@ with input_tab2:
         try:
             st.session_state.selected_image = Image.open(uploaded_file).convert("RGB")
             st.session_state.selected_filename = uploaded_file.name
+            st.session_state.has_analyzed = False
         except Exception as e:
             st.error(f"Error reading image: {e}")
 
@@ -563,6 +565,7 @@ with input_tab3:
             try:
                 st.session_state.selected_image = Image.open(camera_photo).convert("RGB")
                 st.session_state.selected_filename = "Live_Camera_Capture.jpg"
+                st.session_state.has_analyzed = False
             except Exception as e:
                 st.error(f"Error capturing camera snapshot: {e}")
 
@@ -587,13 +590,17 @@ if active_image is not None:
         btn_c1, btn_c2 = st.columns([2.2, 1.2])
         with btn_c1:
             run_analysis = st.button("✨ Run Neural Analysis", type="primary", use_container_width=True)
+            if run_analysis:
+                st.session_state.has_analyzed = True
         with btn_c2:
             if st.button("🔄 Reset / Clear", use_container_width=True, help="Clear active specimen and start fresh"):
                 st.session_state.selected_image = None
                 st.session_state.selected_filename = None
+                st.session_state.has_analyzed = False
                 st.rerun()
 
-    if run_analysis or st.session_state.get("auto_run", True):
+    # ONLY RUN AND DISPLAY INFERENCE RESULTS AFTER CLICKING RUN
+    if st.session_state.has_analyzed:
         with st.spinner("Executing neural feature mapping and gradient backpropagation..."):
             try:
                 # 1. Inference
@@ -750,6 +757,8 @@ if active_image is not None:
 
             except Exception as e:
                 st.error(f"Error during AI analysis: {e}")
+    else:
+        st.info("👆 Click **✨ Run Neural Analysis** above to identify species and generate Grad-CAM explanation.")
 
 else:
     st.info("💡 Choose a butterfly specimen above via 1-Click Gallery, Image Upload, or Live Camera to start AI analysis.")
