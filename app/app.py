@@ -529,8 +529,8 @@ st.markdown("""
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 295px;
-        height: 295px;
+        min-height: 305px;
+        height: 305px;
         box-sizing: border-box;
     }
     .hero-badge {
@@ -1779,8 +1779,8 @@ body {{
     background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 40%, #E0F2FE 100%);
     border: 2.5px solid #94A3B8;
     border-radius: 28px;
-    padding: 20px 24px;
-    height: 285px;
+    padding: 18px 22px;
+    height: 305px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
@@ -1820,6 +1820,10 @@ body {{
     border-color: #0284C7;
 }}
 .sanctuary-night .sanctuary-theme-toggle {{
+    background: rgba(15, 23, 42, 0.92) !important;
+    border-color: #10B981 !important;
+    color: #F8FAFC !important;
+}}
 .sanctuary-glow {{
     position: absolute;
     top: -30px;
@@ -2576,7 +2580,7 @@ with hero_col1:
     </div>
     """, unsafe_allow_html=True)
 with hero_col2:
-    components.html(vivarium_iframe_html, height=295, scrolling=False)
+    components.html(vivarium_iframe_html, height=315, scrolling=False)
 
 # -----------------------------------------------------------------------------
 # 4. Floating Performance Metric Strip
