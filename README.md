@@ -90,8 +90,22 @@ Evaluated on an independent, stratified holdout test split (**72 test images**, 
 
 ---
 
+## 🌐 Live Web Application Demo
+
+Experience the live application globally in your browser (Desktop & Mobile):
+👉 **[https://ai-butterfly-vision.streamlit.app](https://ai-butterfly-vision.streamlit.app)**
+
+---
+
 ## ⚠️ Limitations & Disclaimer
 
 - **Class Scope**: The classifier is specialized strictly for the 8 trained butterfly species. Non-butterfly images or unsupported species will be mapped to the closest visual match among the 8 classes.
 - **Image Quality**: Extreme blur, partial occlusions, or poor lighting may reduce prediction certainty.
 - **Educational / Research Purpose**: Designed as an academic prototype for Explainable AI and transfer learning demonstration.
+
+---
+
+## 📜 License & Author
+
+- **Author & Architect**: Ekra Islam (Ohi)
+- **License**: Released under the [MIT License](LICENSE). Free for academic, educational, and open-source research use.
