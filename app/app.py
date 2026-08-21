@@ -523,14 +523,14 @@ st.markdown("""
     .hero-left-card {
         background: linear-gradient(135deg, #FFFFFF 0%, #F0F9FF 60%, #E0F2FE 100%);
         border: 2.5px solid #94A3B8;
-        border-radius: 28px;
-        padding: 22px 26px;
-        box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
+        border-radius: 24px;
+        padding: 20px 22px;
+        box-shadow: 0 14px 32px rgba(2, 132, 199, 0.10), inset 0 0 20px rgba(255, 255, 255, 0.8);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 305px;
-        height: 305px;
+        min-height: 290px;
+        height: 290px;
         box-sizing: border-box;
     }
     .hero-badge {
@@ -539,9 +539,9 @@ st.markdown("""
         gap: 6px;
         background: #0284C7;
         color: #FFFFFF;
-        font-size: 0.80rem;
+        font-size: 0.78rem;
         font-weight: 900;
-        padding: 5px 14px;
+        padding: 4px 12px;
         border-radius: 999px;
         letter-spacing: 0.04em;
         text-transform: uppercase;
@@ -550,19 +550,19 @@ st.markdown("""
     }
     .hero-title {
         font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
-        font-size: 2.15rem;
+        font-size: 2.05rem;
         font-weight: 900;
         color: #0F172A;
         line-height: 1.15;
-        margin: 4px 0 6px 0;
+        margin: 3px 0 5px 0;
         letter-spacing: -0.02em;
     }
     .hero-subtitle {
-        font-size: 0.94rem;
+        font-size: 0.90rem;
         font-weight: 700;
         color: #334155;
-        line-height: 1.4;
-        margin-bottom: 10px;
+        line-height: 1.38;
+        margin-bottom: 8px;
     }
     .hero-tag-strip {
         display: flex;
@@ -1717,34 +1717,36 @@ if hasattr(st, "dialog"):
         if st.button("✓ " + ("বুঝেছি / সম্পন্ন" if st.session_state.app_lang == "BN" else "Got It / Done"), key="btn_close_install_modal", type="primary", use_container_width=True):
             st.rerun()
 
-top_c1, top_c2, top_c3 = st.columns([2.3, 0.95, 1.25], vertical_alignment="center")
+top_c1, top_c2 = st.columns([1.6, 1.25], vertical_alignment="center")
 with top_c1:
     st.markdown("""
-    <div style="display: flex; align-items: center; gap: 12px; padding: 4px 0;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 2px 0;">
         <span style="font-size: 1.5rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));">🦋</span>
-        <span style="font-size: 1.2rem; font-weight: 900; color: #0F172A; letter-spacing: -0.02em;">AI Butterfly Vision Lab</span>
-        <span style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); color: #059669; font-weight: 800; font-size: 0.76rem; padding: 3px 10px; border-radius: 999px; border: 1.5px solid #10B981; box-shadow: 0 2px 6px rgba(16,185,129,0.15);">● LIVE XAI v2.4</span>
+        <span style="font-size: 1.25rem; font-weight: 900; color: #0F172A; letter-spacing: -0.02em;">AI Butterfly Vision Lab</span>
+        <span style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); color: #059669; font-weight: 800; font-size: 0.74rem; padding: 3px 10px; border-radius: 999px; border: 1.5px solid #10B981; box-shadow: 0 2px 6px rgba(16,185,129,0.15);">● LIVE XAI v2.4</span>
     </div>
     """, unsafe_allow_html=True)
 with top_c2:
-    if st.button(t("btn_install_app"), key="btn_top_install_app", use_container_width=True):
-        if hasattr(st, "dialog"):
-            show_install_app_dialog()
-with top_c3:
-    lang_options = ["🇬🇧 English", "🇧🇩 বাংলা"]
-    current_idx = 0 if st.session_state.app_lang == "EN" else 1
-    selected_lang_str = st.radio(
-        "Language Selector",
-        options=lang_options,
-        index=current_idx,
-        horizontal=True,
-        label_visibility="collapsed",
-        key="lang_switcher_radio"
-    )
-    target_lang = "BN" if "বাংলা" in selected_lang_str else "EN"
-    if target_lang != st.session_state.app_lang:
-        st.session_state.app_lang = target_lang
-        st.rerun()
+    top_sub1, top_sub2 = st.columns([0.9, 1.1], vertical_alignment="center")
+    with top_sub1:
+        if st.button(t("btn_install_app"), key="btn_top_install_app", use_container_width=True):
+            if hasattr(st, "dialog"):
+                show_install_app_dialog()
+    with top_sub2:
+        lang_options = ["🇬🇧 English", "🇧🇩 বাংলা"]
+        current_idx = 0 if st.session_state.app_lang == "EN" else 1
+        selected_lang_str = st.radio(
+            "Language Selector",
+            options=lang_options,
+            index=current_idx,
+            horizontal=True,
+            label_visibility="collapsed",
+            key="lang_switcher_radio"
+        )
+        target_lang = "BN" if "বাংলা" in selected_lang_str else "EN"
+        if target_lang != st.session_state.app_lang:
+            st.session_state.app_lang = target_lang
+            st.rerun()
 
 # -----------------------------------------------------------------------------
 # 3. Hero Header (Masterpiece Split Layout & 3D Botanical Vivarium)
@@ -1773,21 +1775,23 @@ body {{
     font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     background: transparent;
     overflow: hidden;
-    padding: 2px;
+    padding: 0;
+    margin: 0;
 }}
 .sanctuary-terrarium {{
     background: linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 40%, #E0F2FE 100%);
     border: 2.5px solid #94A3B8;
-    border-radius: 28px;
-    padding: 18px 22px;
-    height: 305px;
+    border-radius: 24px;
+    padding: 16px 20px;
+    height: 290px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 16px 36px rgba(2, 132, 199, 0.12), inset 0 0 20px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 14px 32px rgba(2, 132, 199, 0.10), inset 0 0 20px rgba(255, 255, 255, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     cursor: crosshair;
+    box-sizing: border-box;
     transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
 }}
 .sanctuary-terrarium.sanctuary-night {{
@@ -2562,7 +2566,7 @@ body {{
 </html>
 """
 
-hero_col1, hero_col2 = st.columns([1.16, 1.0], vertical_alignment="center")
+hero_col1, hero_col2 = st.columns([1, 1], gap="medium", vertical_alignment="center")
 with hero_col1:
     st.markdown(f"""
     <div class="hero-left-card">
@@ -2580,7 +2584,7 @@ with hero_col1:
     </div>
     """, unsafe_allow_html=True)
 with hero_col2:
-    components.html(vivarium_iframe_html, height=315, scrolling=False)
+    components.html(vivarium_iframe_html, height=290, scrolling=False)
 
 # -----------------------------------------------------------------------------
 # 4. Floating Performance Metric Strip
