@@ -1977,7 +1977,6 @@ body {{
     align-items: center;
     transform-style: preserve-3d;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
-}}
 .wing-left-svg {{
     transform-origin: 100% 50%;
     animation: wing-flap-left 0.22s ease-in-out infinite alternate;
@@ -1995,41 +1994,61 @@ body {{
     100% {{ transform: rotateY(65deg); }}
 }}
 
-/* Lush 4-Flower Botanical Garden Layer */
-.flower-habitat {{
+/* Lush Layered Meadow Grass Bed & Botanical Wildflower Garden */
+.meadow-grass-bed {{
     position: absolute;
-    bottom: 20px;
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: 52px;
+    height: 38px;
+    z-index: 4;
+    pointer-events: none;
+    transition: filter 0.6s ease;
+}}
+.sanctuary-night .meadow-grass-bed {{
+    filter: drop-shadow(0 -2px 14px rgba(16, 185, 129, 0.45));
+}}
+.meadow-grass-svg {{
+    width: 100%;
+    height: 100%;
+    display: block;
+}}
+
+.flower-habitat {{
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    height: 46px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: flex-end;
-    padding: 0 12px;
-    z-index: 6;
+    padding: 0 16px;
+    z-index: 7;
     pointer-events: none;
 }}
 .botanical-flower {{
-    width: 40px;
-    height: 48px;
-    animation: flower-sway 4.8s ease-in-out infinite alternate;
+    width: 34px;
+    height: 42px;
+    animation: flower-sway 4.5s ease-in-out infinite alternate;
     transform-origin: bottom center;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12));
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.12));
     cursor: pointer;
     pointer-events: auto;
-    transition: transform 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }}
 .botanical-flower:hover {{
-    transform: scale(1.18) rotate(6deg);
+    transform: translateY(-5px) scale(1.22);
 }}
 .fl-orchid {{ animation-delay: 0s; }}
-.fl-lotus {{ animation-delay: -1.8s; }}
-.fl-sunburst {{ animation-delay: -3.2s; }}
-.fl-hibiscus {{ animation-delay: -0.9s; }}
+.fl-lotus {{ animation-delay: -1.5s; }}
+.fl-sunburst {{ animation-delay: -3.0s; }}
+.fl-lavender {{ animation-delay: -2.2s; }}
+.fl-hibiscus {{ animation-delay: -0.8s; }}
 
 @keyframes flower-sway {{
-    0% {{ transform: rotate(-4.5deg) scale(0.96); }}
-    100% {{ transform: rotate(4.5deg) scale(1.04); }}
+    0% {{ transform: rotate(-3.5deg) scale(0.97); }}
+    100% {{ transform: rotate(3.5deg) scale(1.03); }}
 }}
 
 /* Fairy Dust Particle Engine */
@@ -2330,102 +2349,131 @@ body {{
 
                 <div id="cursor-nectar">🍯</div>
 
+                <!-- Lush Botanical Grass Bed -->
+                <div class="meadow-grass-bed">
+                    <svg viewBox="0 0 500 40" preserveAspectRatio="none" class="meadow-grass-svg">
+                        <defs>
+                            <linearGradient id="grassGradDay1" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#34D399" stop-opacity="0.75" />
+                                <stop offset="60%" stop-color="#10B981" stop-opacity="0.9" />
+                                <stop offset="100%" stop-color="#047857" stop-opacity="1" />
+                            </linearGradient>
+                            <linearGradient id="grassGradDay2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#6EE7B7" stop-opacity="0.5" />
+                                <stop offset="100%" stop-color="#059669" stop-opacity="0.8" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M0,20 Q60,6 120,18 Q190,4 260,16 Q340,6 420,16 Q470,10 500,18 L500,40 L0,40 Z" fill="url(#grassGradDay2)" />
+                        <path d="M0,24 Q45,12 100,22 Q160,8 220,20 Q290,10 360,22 Q430,12 500,22 L500,40 L0,40 Z" fill="url(#grassGradDay1)" />
+                    </svg>
+                </div>
+
                 <div class="flower-habitat">
-                    <!-- Flower 1: Pink Tropical Orchid -->
-                    <div class="botanical-flower fl-orchid" title="Click to release Orchid Pollen!">
-                        <svg viewBox="0 0 100 110" width="58" height="72">
+                    <!-- Flower 1: Pink Wild Orchid -->
+                    <div class="botanical-flower fl-orchid" title="Pink Wild Orchid • Click for pollen!">
+                        <svg viewBox="0 0 80 90" width="34" height="42">
                             <defs>
-                                <radialGradient id="orchidGrad" cx="50%" cy="50%" r="50%">
+                                <radialGradient id="orchidPetal" cx="50%" cy="50%" r="50%">
                                     <stop offset="0%" stop-color="#F472B6" />
-                                    <stop offset="60%" stop-color="#DB2777" />
-                                    <stop offset="100%" stop-color="#831843" />
-                                </radialGradient>
-                                <radialGradient id="orchidGold" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="#FEF08A" />
-                                    <stop offset="80%" stop-color="#EAB308" />
+                                    <stop offset="70%" stop-color="#DB2777" />
+                                    <stop offset="100%" stop-color="#9D174D" />
                                 </radialGradient>
                             </defs>
-                            <path d="M50,75 Q50,95 50,110" stroke="#059669" stroke-width="4" fill="none" />
-                            <path d="M50,85 Q65,80 70,88 Q58,95 50,90" fill="#10B981" />
-                            <ellipse cx="50" cy="30" rx="15" ry="22" fill="url(#orchidGrad)" transform="rotate(-30 50 30)" opacity="0.95" />
-                            <ellipse cx="50" cy="30" rx="15" ry="22" fill="url(#orchidGrad)" transform="rotate(30 50 30)" opacity="0.95" />
-                            <ellipse cx="32" cy="55" rx="16" ry="13" fill="url(#orchidGrad)" />
-                            <ellipse cx="68" cy="55" rx="16" ry="13" fill="url(#orchidGrad)" />
-                            <ellipse cx="50" cy="62" rx="18" ry="15" fill="#BE185D" />
-                            <circle cx="50" cy="48" r="7" fill="url(#orchidGold)" filter="drop-shadow(0 0 6px #F59E0B)" />
+                            <path d="M40,55 Q40,75 40,90" stroke="#059669" stroke-width="3" fill="none" />
+                            <path d="M40,65 Q52,60 56,66 Q46,72 40,70" fill="#10B981" />
+                            <ellipse cx="40" cy="24" rx="12" ry="18" fill="url(#orchidPetal)" />
+                            <ellipse cx="25" cy="36" rx="13" ry="14" fill="url(#orchidPetal)" transform="rotate(-30 25 36)" />
+                            <ellipse cx="55" cy="36" rx="13" ry="14" fill="url(#orchidPetal)" transform="rotate(30 55 36)" />
+                            <ellipse cx="40" cy="48" rx="14" ry="12" fill="#BE185D" />
+                            <circle cx="40" cy="36" r="5" fill="#FEF08A" filter="drop-shadow(0 0 4px #F59E0B)" />
                         </svg>
                     </div>
 
-                    <!-- Flower 2: Mystic Blue Lotus -->
-                    <div class="botanical-flower fl-lotus" title="Click to release Lotus Pollen!">
-                        <svg viewBox="0 0 100 110" width="58" height="72">
+                    <!-- Flower 2: Azure Sky Lotus -->
+                    <div class="botanical-flower fl-lotus" title="Azure Sky Lotus • Click for pollen!">
+                        <svg viewBox="0 0 80 90" width="34" height="42">
                             <defs>
-                                <radialGradient id="lotusGrad" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="#67E8F9" />
-                                    <stop offset="60%" stop-color="#0284C7" />
-                                    <stop offset="100%" stop-color="#0F172A" />
+                                <radialGradient id="lotusPetal" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#7DD3FC" />
+                                    <stop offset="70%" stop-color="#0284C7" />
+                                    <stop offset="100%" stop-color="#075985" />
                                 </radialGradient>
                             </defs>
-                            <path d="M50,75 Q50,95 50,110" stroke="#059669" stroke-width="4" fill="none" />
-                            <path d="M50,85 Q35,80 30,88 Q42,95 50,90" fill="#10B981" />
-                            <ellipse cx="50" cy="32" rx="12" ry="26" fill="url(#lotusGrad)" opacity="0.95" />
-                            <ellipse cx="50" cy="32" rx="12" ry="26" fill="url(#lotusGrad)" transform="rotate(-35 50 32)" opacity="0.9" />
-                            <ellipse cx="50" cy="32" rx="12" ry="26" fill="url(#lotusGrad)" transform="rotate(35 50 32)" opacity="0.9" />
-                            <ellipse cx="32" cy="56" rx="15" ry="12" fill="url(#lotusGrad)" />
-                            <ellipse cx="68" cy="56" rx="15" ry="12" fill="url(#lotusGrad)" />
-                            <circle cx="50" cy="48" r="6" fill="#38BDF8" filter="drop-shadow(0 0 8px #38BDF8)" />
+                            <path d="M40,55 Q40,75 40,90" stroke="#059669" stroke-width="3" fill="none" />
+                            <path d="M40,68 Q28,62 24,70 Q34,75 40,72" fill="#10B981" />
+                            <ellipse cx="40" cy="26" rx="10" ry="20" fill="url(#lotusPetal)" />
+                            <ellipse cx="40" cy="26" rx="10" ry="20" fill="url(#lotusPetal)" transform="rotate(-35 40 26)" opacity="0.9" />
+                            <ellipse cx="40" cy="26" rx="10" ry="20" fill="url(#lotusPetal)" transform="rotate(35 40 26)" opacity="0.9" />
+                            <circle cx="40" cy="38" r="4.5" fill="#BAE6FD" filter="drop-shadow(0 0 6px #38BDF8)" />
                         </svg>
                     </div>
 
-                    <!-- Flower 3: Golden Sunburst Blossom -->
-                    <div class="botanical-flower fl-sunburst" title="Click to release Sunburst Pollen!">
-                        <svg viewBox="0 0 100 110" width="58" height="72">
+                    <!-- Flower 3: Golden Sunburst Daisy -->
+                    <div class="botanical-flower fl-sunburst" title="Golden Sunburst Daisy • Click for pollen!">
+                        <svg viewBox="0 0 80 90" width="34" height="42">
                             <defs>
                                 <radialGradient id="sunPetal" cx="50%" cy="50%" r="50%">
                                     <stop offset="0%" stop-color="#FEF08A" />
-                                    <stop offset="65%" stop-color="#F59E0B" />
+                                    <stop offset="70%" stop-color="#F59E0B" />
                                     <stop offset="100%" stop-color="#B45309" />
                                 </radialGradient>
-                                <radialGradient id="sunCenter" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="#78350F" />
-                                    <stop offset="90%" stop-color="#451A03" />
-                                </radialGradient>
                             </defs>
-                            <path d="M50,75 Q50,95 50,110" stroke="#059669" stroke-width="4" fill="none" />
-                            <path d="M50,85 Q65,80 70,88 Q58,95 50,90" fill="#10B981" />
-                            <g transform="translate(50,42)">
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(45)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(90)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(135)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(180)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(225)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(270)" />
-                                <ellipse cx="0" cy="-22" rx="6.5" ry="13" fill="url(#sunPetal)" transform="rotate(315)" />
-                                <circle cx="0" cy="0" r="12" fill="url(#sunCenter)" filter="drop-shadow(0 0 6px #F59E0B)" />
-                                <circle cx="0" cy="0" r="4.5" fill="#FBBF24" opacity="0.85" />
+                            <path d="M40,55 Q40,75 40,90" stroke="#059669" stroke-width="3" fill="none" />
+                            <path d="M40,65 Q54,60 58,66 Q48,72 40,70" fill="#10B981" />
+                            <g transform="translate(40,32)">
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(45)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(90)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(135)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(180)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(225)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(270)" />
+                                <ellipse cx="0" cy="-14" rx="4.5" ry="9" fill="url(#sunPetal)" transform="rotate(315)" />
+                                <circle cx="0" cy="0" r="8" fill="#78350F" filter="drop-shadow(0 0 4px #F59E0B)" />
+                                <circle cx="0" cy="0" r="3" fill="#FDE047" />
                             </g>
                         </svg>
                     </div>
 
-                    <!-- Flower 4: Ruby Red Hibiscus -->
-                    <div class="botanical-flower fl-hibiscus" title="Click to release Hibiscus Pollen!">
-                        <svg viewBox="0 0 100 110" width="58" height="72">
+                    <!-- Flower 4: Royal Lavender Wildflower -->
+                    <div class="botanical-flower fl-lavender" title="Royal Violet Wildflower • Click for pollen!">
+                        <svg viewBox="0 0 80 90" width="34" height="42">
                             <defs>
-                                <radialGradient id="hibiscusGrad" cx="50%" cy="50%" r="50%">
+                                <radialGradient id="lavPetal" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#C084FC" />
+                                    <stop offset="70%" stop-color="#9333EA" />
+                                    <stop offset="100%" stop-color="#581C87" />
+                                </radialGradient>
+                            </defs>
+                            <path d="M40,50 Q40,75 40,90" stroke="#059669" stroke-width="3" fill="none" />
+                            <path d="M40,65 Q26,60 22,68 Q32,74 40,70" fill="#10B981" />
+                            <ellipse cx="40" cy="20" rx="6" ry="8" fill="url(#lavPetal)" />
+                            <ellipse cx="34" cy="28" rx="6" ry="7" fill="url(#lavPetal)" />
+                            <ellipse cx="46" cy="28" rx="6" ry="7" fill="url(#lavPetal)" />
+                            <ellipse cx="32" cy="38" rx="7" ry="8" fill="url(#lavPetal)" />
+                            <ellipse cx="48" cy="38" rx="7" ry="8" fill="url(#lavPetal)" />
+                            <circle cx="40" cy="24" r="3" fill="#FDE047" />
+                        </svg>
+                    </div>
+
+                    <!-- Flower 5: Ruby Crimson Hibiscus -->
+                    <div class="botanical-flower fl-hibiscus" title="Ruby Red Hibiscus • Click for pollen!">
+                        <svg viewBox="0 0 80 90" width="34" height="42">
+                            <defs>
+                                <radialGradient id="hibPetal" cx="50%" cy="50%" r="50%">
                                     <stop offset="0%" stop-color="#F87171" />
-                                    <stop offset="60%" stop-color="#DC2626" />
+                                    <stop offset="70%" stop-color="#DC2626" />
                                     <stop offset="100%" stop-color="#7F1D1D" />
                                 </radialGradient>
                             </defs>
-                            <path d="M50,75 Q50,95 50,110" stroke="#059669" stroke-width="4" fill="none" />
-                            <path d="M50,85 Q35,80 30,88 Q42,95 50,90" fill="#10B981" />
-                            <ellipse cx="50" cy="28" rx="14" ry="20" fill="url(#hibiscusGrad)" />
-                            <ellipse cx="28" cy="42" rx="14" ry="18" fill="url(#hibiscusGrad)" transform="rotate(-30 28 42)" />
-                            <ellipse cx="72" cy="42" rx="14" ry="18" fill="url(#hibiscusGrad)" transform="rotate(30 72 42)" />
-                            <ellipse cx="38" cy="62" rx="13" ry="16" fill="url(#hibiscusGrad)" />
-                            <ellipse cx="62" cy="62" rx="13" ry="16" fill="url(#hibiscusGrad)" />
-                            <circle cx="50" cy="48" r="6.5" fill="#FDE047" filter="drop-shadow(0 0 6px #EF4444)" />
+                            <path d="M40,55 Q40,75 40,90" stroke="#059669" stroke-width="3" fill="none" />
+                            <path d="M40,68 Q52,62 56,70 Q46,75 40,72" fill="#10B981" />
+                            <ellipse cx="40" cy="22" rx="10" ry="15" fill="url(#hibPetal)" />
+                            <ellipse cx="26" cy="32" rx="11" ry="14" fill="url(#hibPetal)" transform="rotate(-30 26 32)" />
+                            <ellipse cx="54" cy="32" rx="11" ry="14" fill="url(#hibPetal)" transform="rotate(30 54 32)" />
+                            <ellipse cx="32" cy="46" rx="10" ry="12" fill="url(#hibPetal)" />
+                            <ellipse cx="48" cy="46" rx="10" ry="12" fill="url(#hibPetal)" />
+                            <circle cx="40" cy="36" r="4.5" fill="#FDE047" filter="drop-shadow(0 0 5px #EF4444)" />
                         </svg>
                     </div>
                 </div>
