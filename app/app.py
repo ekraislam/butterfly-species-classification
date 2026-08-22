@@ -16,6 +16,17 @@ import streamlit.components.v1 as components
 import numpy as np
 import cv2
 
+try:
+    import pillow_heif
+    pillow_heif.register_heif_opener()
+except Exception:
+    pass
+
+try:
+    import pillow_avif
+except Exception:
+    pass
+
 # Ensure project root and src/ are discoverable
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
@@ -2951,7 +2962,7 @@ with input_tab2:
     uploader_key = f"uploader_{st.session_state.get('uploader_counter', 0)}"
     st.file_uploader(
         "Upload Image File",
-        type=["jpg", "jpeg", "png"],
+        type=["jpg", "jpeg", "png", "webp", "avif", "heic", "heif", "bmp", "jfif"],
         key=uploader_key,
         on_change=handle_file_upload,
         label_visibility="collapsed",

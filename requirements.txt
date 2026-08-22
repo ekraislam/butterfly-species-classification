@@ -2,6 +2,8 @@
 torch
 torchvision
 Pillow
+pillow-heif
+pillow-avif-plugin
 opencv-python-headless
 
 # Scientific Computing & Data Processing
