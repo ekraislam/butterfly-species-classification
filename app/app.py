@@ -2758,12 +2758,135 @@ if "selected_image" not in st.session_state:
     st.session_state.selected_image = None
 if "selected_filename" not in st.session_state:
     st.session_state.selected_filename = None
+if "active_source_type" not in st.session_state:
+    st.session_state.active_source_type = None
 if "active_source_id" not in st.session_state:
     st.session_state.active_source_id = None
+if "last_uploaded_id" not in st.session_state:
+    st.session_state.last_uploaded_id = None
+if "last_camera_id" not in st.session_state:
+    st.session_state.last_camera_id = None
+if "uploader_counter" not in st.session_state:
+    st.session_state.uploader_counter = 0
+if "camera_counter" not in st.session_state:
+    st.session_state.camera_counter = 0
 if "analysis_cache" not in st.session_state:
     st.session_state.analysis_cache = None
 if "show_report_modal" not in st.session_state:
     st.session_state.show_report_modal = False
+if "camera_active" not in st.session_state:
+    st.session_state.camera_active = False
+
+def handle_file_upload():
+    curr_key = f"uploader_{st.session_state.get('uploader_counter', 0)}"
+    file = st.session_state.get(curr_key)
+    if file is not None:
+        try:
+            st.session_state.selected_image = Image.open(file).convert("RGB")
+            st.session_state.selected_filename = file.name
+            st.session_state.active_source_type = "upload"
+            st.session_state.active_source_id = f"upload_{file.name}_{file.size}"
+            st.session_state.analysis_cache = None
+            st.session_state.show_report_modal = False
+        except Exception as e:
+            st.session_state.selected_image = None
+            st.session_state.selected_filename = None
+            st.session_state.active_source_type = None
+            st.session_state.active_source_id = None
+    else:
+        if st.session_state.get("active_source_type") == "upload":
+            st.session_state.selected_image = None
+            st.session_state.selected_filename = None
+            st.session_state.active_source_type = None
+            st.session_state.active_source_id = None
+            st.session_state.analysis_cache = None
+            st.session_state.show_report_modal = False
+
+def handle_camera_input():
+    curr_key = f"camera_input_{st.session_state.get('camera_counter', 0)}"
+    photo = st.session_state.get(curr_key)
+    if photo is not None:
+        try:
+            photo_bytes = photo.getvalue()
+            st.session_state.selected_image = Image.open(BytesIO(photo_bytes)).convert("RGB")
+            st.session_state.selected_filename = "Live_Camera_Capture.jpg"
+            st.session_state.active_source_type = "camera"
+            st.session_state.active_source_id = f"cam_{hashlib.md5(photo_bytes).hexdigest()[:12]}"
+            st.session_state.analysis_cache = None
+            st.session_state.show_report_modal = False
+        except Exception as e:
+            st.session_state.selected_image = None
+            st.session_state.selected_filename = None
+            st.session_state.active_source_type = None
+            st.session_state.active_source_id = None
+    else:
+        if st.session_state.get("active_source_type") == "camera":
+            st.session_state.selected_image = None
+            st.session_state.selected_filename = None
+            st.session_state.active_source_type = None
+            st.session_state.active_source_id = None
+            st.session_state.analysis_cache = None
+            st.session_state.show_report_modal = False
+
+def handle_gallery_selection(cls_name, fpath):
+    st.session_state.selected_image = Image.open(fpath).convert("RGB")
+    st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
+    st.session_state.active_source_type = "gallery"
+    st.session_state.active_source_id = f"gallery_{cls_name}_{os.path.basename(fpath)}"
+    st.session_state.analysis_cache = None
+    st.session_state.show_report_modal = False
+
+def handle_dossier_selection(cls_name, fpath):
+    st.session_state.selected_image = Image.open(fpath).convert("RGB")
+    st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
+    st.session_state.active_source_type = "dossier"
+    st.session_state.active_source_id = f"dossier_{cls_name}_{os.path.basename(fpath)}"
+    st.session_state.analysis_cache = None
+    st.session_state.show_report_modal = False
+
+def deep_reset_specimen_state():
+    curr_uploader_key = f"uploader_{st.session_state.get('uploader_counter', 0)}"
+    if curr_uploader_key in st.session_state:
+        st.session_state[curr_uploader_key] = None
+        try:
+            del st.session_state[curr_uploader_key]
+        except Exception:
+            pass
+
+    curr_cam_key = f"camera_input_{st.session_state.get('camera_counter', 0)}"
+    if curr_cam_key in st.session_state:
+        st.session_state[curr_cam_key] = None
+        try:
+            del st.session_state[curr_cam_key]
+        except Exception:
+            pass
+
+    st.session_state.uploader_counter = st.session_state.get("uploader_counter", 0) + 1
+    st.session_state.camera_counter = st.session_state.get("camera_counter", 0) + 1
+
+    new_uploader_key = f"uploader_{st.session_state.uploader_counter}"
+    new_cam_key = f"camera_input_{st.session_state.camera_counter}"
+    if new_uploader_key in st.session_state:
+        del st.session_state[new_uploader_key]
+    if new_cam_key in st.session_state:
+        del st.session_state[new_cam_key]
+
+    st.session_state.selected_image = None
+    st.session_state.selected_filename = None
+    st.session_state.active_source_type = None
+    st.session_state.active_source_id = None
+    st.session_state.last_uploaded_id = None
+    st.session_state.last_camera_id = None
+    st.session_state.analysis_cache = None
+    st.session_state.show_report_modal = False
+    st.session_state.camera_active = False
+
+    for k in ["gradcam_alpha_slider", "gradcam_focus_slider", "gradcam_cmap_select"]:
+        if k in st.session_state:
+            try:
+                del st.session_state[k]
+            except Exception:
+                pass
 
 test_dir = paths["test_data_dir"]
 benchmark_samples = {}
@@ -2801,14 +2924,7 @@ with input_tab1:
         cls_name, fpath = sample_items[idx]
         with g_row1[idx]:
             disp_label = SPECIES_DOSSIER.get(cls_name, {}).get(f"name_{st.session_state.app_lang.lower()}", cls_name)
-            if st.button(f"🦋 {disp_label}", key=f"btn_sample_{idx}", use_container_width=True):
-                src_id = f"gallery_{cls_name}_{os.path.basename(fpath)}"
-                if st.session_state.get("active_source_id") != src_id:
-                    st.session_state.selected_image = Image.open(fpath).convert("RGB")
-                    st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
-                    st.session_state.active_source_id = src_id
-                    st.session_state.analysis_cache = None
-                    st.session_state.show_report_modal = False
+            st.button(f"🦋 {disp_label}", key=f"btn_sample_{idx}", on_click=handle_gallery_selection, args=(cls_name, fpath), use_container_width=True)
 
     st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
     
@@ -2818,14 +2934,7 @@ with input_tab1:
         cls_name, fpath = sample_items[idx]
         with g_row2[idx - 4]:
             disp_label = SPECIES_DOSSIER.get(cls_name, {}).get(f"name_{st.session_state.app_lang.lower()}", cls_name)
-            if st.button(f"🦋 {disp_label}", key=f"btn_sample_{idx}", use_container_width=True):
-                src_id = f"gallery_{cls_name}_{os.path.basename(fpath)}"
-                if st.session_state.get("active_source_id") != src_id:
-                    st.session_state.selected_image = Image.open(fpath).convert("RGB")
-                    st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
-                    st.session_state.active_source_id = src_id
-                    st.session_state.analysis_cache = None
-                    st.session_state.show_report_modal = False
+            st.button(f"🦋 {disp_label}", key=f"btn_sample_{idx}", on_click=handle_gallery_selection, args=(cls_name, fpath), use_container_width=True)
 
 with input_tab2:
     st.markdown(f"""
@@ -2839,30 +2948,19 @@ with input_tab2:
     </div>
     """, unsafe_allow_html=True)
     
-    uploaded_file = st.file_uploader(
+    uploader_key = f"uploader_{st.session_state.get('uploader_counter', 0)}"
+    st.file_uploader(
         "Upload Image File",
         type=["jpg", "jpeg", "png"],
+        key=uploader_key,
+        on_change=handle_file_upload,
         label_visibility="collapsed",
         help=t("upload_help")
     )
-    if uploaded_file is not None:
-        src_id = f"upload_{uploaded_file.name}_{uploaded_file.size}"
-        if st.session_state.get("active_source_id") != src_id:
-            try:
-                st.session_state.selected_image = Image.open(uploaded_file).convert("RGB")
-                st.session_state.selected_filename = uploaded_file.name
-                st.session_state.active_source_id = src_id
-                st.session_state.analysis_cache = None
-                st.session_state.show_report_modal = False
-            except Exception as e:
-                st.error(f"Error reading uploaded image: {e}")
 
 with input_tab3:
     st.markdown(f"<p style='font-size: 1.15rem; font-weight: 800; color: #0F172A; text-align: center; margin-bottom: 14px;'>{t('camera_prompt')}</p>", unsafe_allow_html=True)
     
-    if "camera_active" not in st.session_state:
-        st.session_state.camera_active = False
-
     cam_col1, cam_col2, cam_col3 = st.columns([1, 2, 1])
     with cam_col2:
         if not st.session_state.camera_active:
@@ -2887,21 +2985,22 @@ with input_tab3:
             with top_cam_c2:
                 if st.button(t("btn_deactivate_cam"), key="btn_stop_cam", use_container_width=True):
                     st.session_state.camera_active = False
+                    st.session_state.camera_counter = st.session_state.get("camera_counter", 0) + 1
+                    if st.session_state.get("active_source_type") == "camera":
+                        st.session_state.selected_image = None
+                        st.session_state.selected_filename = None
+                        st.session_state.active_source_type = None
+                        st.session_state.active_source_id = None
+                        st.session_state.analysis_cache = None
                     st.rerun()
 
-            camera_photo = st.camera_input(t("camera_label"), label_visibility="collapsed")
-            if camera_photo is not None:
-                photo_bytes = camera_photo.getvalue()
-                src_id = f"cam_{hashlib.md5(photo_bytes).hexdigest()[:12]}"
-                if st.session_state.get("active_source_id") != src_id:
-                    try:
-                        st.session_state.selected_image = Image.open(BytesIO(photo_bytes)).convert("RGB")
-                        st.session_state.selected_filename = "Live_Camera_Capture.jpg"
-                        st.session_state.active_source_id = src_id
-                        st.session_state.analysis_cache = None
-                        st.session_state.show_report_modal = False
-                    except Exception as e:
-                        st.error(f"Error capturing camera snapshot: {e}")
+            cam_key = f"camera_input_{st.session_state.get('camera_counter', 0)}"
+            st.camera_input(
+                t("camera_label"),
+                key=cam_key,
+                on_change=handle_camera_input,
+                label_visibility="collapsed"
+            )
 
 # -----------------------------------------------------------------------------
 # 6. Analysis & Visual Diagnostic Suite (With On-Demand Report Inspector)
@@ -2962,13 +3061,7 @@ if active_image is not None:
         with btn_c1:
             run_analysis = st.button(t("btn_run_analysis"), type="primary", use_container_width=True)
         with btn_c2:
-            if st.button(t("btn_reset"), use_container_width=True, help=t("btn_reset_help")):
-                st.session_state.selected_image = None
-                st.session_state.selected_filename = None
-                st.session_state.active_source_id = None
-                st.session_state.analysis_cache = None
-                st.session_state.show_report_modal = False
-                st.rerun()
+            st.button(t("btn_reset"), key="btn_specimen_reset", on_click=deep_reset_specimen_state, use_container_width=True, help=t("btn_reset_help"))
 
     if run_analysis:
         with st.spinner(t("spinner_msg")):
@@ -3142,8 +3235,12 @@ if active_image is not None:
                     st.image(overlay_img, caption=overlay_caption, use_container_width=True)
 
             st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
-            if st.button(t("btn_inspect_report"), type="primary", use_container_width=True):
-                st.session_state.show_report_modal = True
+            res_btn1, res_btn2 = st.columns([1.8, 1.2])
+            with res_btn1:
+                if st.button(t("btn_inspect_report"), type="primary", use_container_width=True):
+                    st.session_state.show_report_modal = True
+            with res_btn2:
+                st.button(t("btn_reset"), key="btn_results_reset", on_click=deep_reset_specimen_state, use_container_width=True, help=t("btn_reset_help"))
 
         if st.session_state.get("show_report_modal", False):
             st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
@@ -3447,11 +3544,7 @@ def show_species_dossier_modal(cls_name):
         if st.button(t("btn_test_species"), type="primary", use_container_width=True):
             fpath = benchmark_samples.get(cls_name)
             if fpath and os.path.exists(fpath):
-                st.session_state.selected_image = Image.open(fpath).convert("RGB")
-                st.session_state.selected_filename = f"{cls_name} ({os.path.basename(fpath)})"
-                st.session_state.active_source_id = f"dossier_{cls_name}_{os.path.basename(fpath)}"
-                st.session_state.analysis_cache = None
-                st.session_state.show_report_modal = False
+                handle_dossier_selection(cls_name, fpath)
                 st.rerun()
     with action_c2:
         if st.button(t("btn_close_cert"), use_container_width=True):
