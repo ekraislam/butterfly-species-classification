@@ -3160,7 +3160,11 @@ if active_image is not None:
             
             cert_hash = hashlib.md5(f"{pred_class}_{confidence}".encode()).hexdigest()[:8].upper()
             
-            report_bytes = generate_report_card(
+            import importlib
+            import utils
+            importlib.reload(utils)
+            
+            report_bytes = utils.generate_report_card(
                 original_image=display_img,
                 overlay_image=overlay_img,
                 pred_class=pred_class,
