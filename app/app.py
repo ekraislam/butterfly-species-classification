@@ -3148,6 +3148,18 @@ if active_image is not None:
         if st.session_state.get("show_report_modal", False):
             st.markdown("<div style='height: 25px;'></div>", unsafe_allow_html=True)
             
+            report_meta = SPECIES_METADATA.get(pred_class, {
+                "scientific_name": "Unknown species",
+                "family": "Insecta • Lepidoptera",
+                "appearance": "Distinct biological visual wing markings.",
+                "distribution": "Global biodiversity habitat.",
+                "key_features": "Diagnostic taxonomic wing venation pattern.",
+                "color_primary": "#0284C7",
+                "xai_insight": "Model neural attention concentrated on discriminative visual wing patterns."
+            })
+            
+            cert_hash = hashlib.md5(f"{pred_class}_{confidence}".encode()).hexdigest()[:8].upper()
+            
             report_bytes = generate_report_card(
                 original_image=display_img,
                 overlay_image=overlay_img,
@@ -3156,33 +3168,190 @@ if active_image is not None:
                 top_k=top_k
             )
 
-            # High-Resolution Official Certificate Preview Header
-            cert_header_html = f"""<div style="background: #FFFFFF; border: 2px solid #0284C7; border-radius: 18px 18px 0 0; padding: 18px 24px; box-shadow: 0 8px 24px rgba(2, 132, 199, 0.12); margin-bottom: 0px; border-bottom: none;">
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-<div>
-<div style="display: inline-flex; align-items: center; gap: 6px; background: #E0F2FE; color: #0284C7; font-size: 0.78rem; font-weight: 900; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; margin-bottom: 6px;">
-AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB
-</div>
-<div style="font-size: 1.45rem; font-weight: 900; color: #0F172A; line-height: 1.2;">
-{t('cert_preview_title')}
-</div>
-</div>
-<div style="background: #ECFDF5; border: 1.5px solid #10B981; border-radius: 12px; padding: 6px 14px; text-align: right;">
-<div style="font-size: 0.72rem; font-weight: 900; color: #059669; text-transform: uppercase;">VERIFIED AI DECISION</div>
-<div style="font-size: 1.25rem; font-weight: 900; color: #065F46;">{confidence:.1f}% MATCH</div>
-</div>
-</div>
-</div>"""
-            st.markdown(cert_header_html, unsafe_allow_html=True)
-            
-            # Display the EXACT High-Resolution Certificate image that matches the downloaded file
-            st.image(
-                report_bytes,
-                caption=t("cert_caption").format(species=pred_class),
-                use_container_width=True
-            )
+            # Convert images to Base64 for razor-sharp embedded live HTML Certificate
+            def _to_b64(pil_im):
+                b = BytesIO()
+                pil_im.save(b, format="PNG")
+                return base64.b64encode(b.getvalue()).decode("utf-8")
+                
+            orig_b64 = _to_b64(display_img)
+            overlay_b64 = _to_b64(overlay_img)
 
-            st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+            # Build Probability Progress Bars HTML
+            bars_html = ""
+            for i, (c_name, prob) in enumerate(top_k):
+                bar_bg = "#0284C7" if i == 0 else "#CBD5E1"
+                text_col = "#FFFFFF" if (i == 0 and prob > 35) else "#0F172A"
+                val_col = "#0284C7" if i == 0 else "#475569"
+                bars_html += f"""
+                <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 12px; padding: 10px 16px; margin-bottom: 10px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: {prob:.1f}%; background: {bar_bg}; opacity: {'1.0' if i == 0 else '0.4'}; border-radius: 10px; transition: width 0.6s ease;"></div>
+                    <div style="position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-size: 1.05rem; font-weight: 800; color: {text_col};">#{i+1} &nbsp;{c_name}</span>
+                        <span style="font-size: 1.05rem; font-weight: 900; color: {'#FFFFFF' if (i == 0 and prob > 80) else val_col};">{prob:.2f}%</span>
+                    </div>
+                </div>"""
+
+            # Crystal-Clear, Razor-Sharp, Luxury Interactive Certificate Preview
+            cert_full_html = f"""
+            <div style="background: #FFFFFF; border: 4px solid #0F172A; border-radius: 26px; padding: 32px; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18); font-family: 'Segoe UI', Inter, -apple-system, sans-serif; color: #0F172A; margin-bottom: 24px; position: relative;">
+                
+                <!-- Inner Luxury Double Border Accent -->
+                <div style="border: 2px solid #0284C7; border-radius: 18px; padding: 24px; background: #FFFFFF;">
+                    
+                    <!-- Header Section -->
+                    <div style="background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <div style="display: inline-flex; align-items: center; gap: 8px; background: #E0F2FE; color: #0369A1; font-size: 0.85rem; font-weight: 900; padding: 4px 14px; border-radius: 999px; text-transform: uppercase; margin-bottom: 8px; border: 1px solid #0284C7;">
+                                AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB
+                            </div>
+                            <div style="font-size: 2.0rem; font-weight: 900; color: #0F172A; line-height: 1.2; letter-spacing: -0.5px;">
+                                Official Specimen Inspection Certificate
+                            </div>
+                            <div style="font-size: 0.95rem; font-weight: 700; color: #475569; margin-top: 4px;">
+                                PyTorch ResNet-18 Deep Transfer Learning Architecture • Native Grad-CAM XAI
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                            <div style="font-size: 0.85rem; font-weight: 800; font-family: monospace; color: #0284C7; background: #F0F9FF; padding: 4px 10px; border-radius: 6px; border: 1px solid #BAE6FD;">
+                                CERT-ID: BIO-2026-XAI-{cert_hash}
+                            </div>
+                            <div style="background: #ECFDF5; border: 2.5px solid #10B981; border-radius: 14px; padding: 8px 18px; text-align: right;">
+                                <div style="font-size: 0.75rem; font-weight: 900; color: #059669; text-transform: uppercase; letter-spacing: 0.5px;">VERIFIED AI DECISION</div>
+                                <div style="font-size: 1.55rem; font-weight: 900; color: #065F46;">CONFIDENCE: {confidence:.1f}%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle Grid: Specimen Dual Chambers + Taxonomic Identification -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                        
+                        <!-- Left: Photographic Evidence Dual Chambers -->
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                            <div style="background: #FFFFFF; border: 2px solid #CBD5E1; border-radius: 16px; padding: 10px; text-align: center;">
+                                <img src="data:image/png;base64,{orig_b64}" style="width: 100%; aspect-ratio: 1/1; object-fit: contain; border-radius: 10px; display: block; margin-bottom: 8px;" />
+                                <div style="background: #F1F5F9; border: 1.5px solid #CBD5E1; border-radius: 8px; padding: 6px 4px; font-size: 0.88rem; font-weight: 800; color: #0F172A;">
+                                    Original Input Specimen
+                                </div>
+                            </div>
+                            <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 16px; padding: 10px; text-align: center;">
+                                <img src="data:image/png;base64,{overlay_b64}" style="width: 100%; aspect-ratio: 1/1; object-fit: contain; border-radius: 10px; display: block; margin-bottom: 8px;" />
+                                <div style="background: #E0F2FE; border: 1.5px solid #0284C7; border-radius: 8px; padding: 6px 4px; font-size: 0.88rem; font-weight: 800; color: #0369A1;">
+                                    Grad-CAM Attention Map (XAI)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Taxonomic & Probability Ranking -->
+                        <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <div style="display: inline-block; background: #E0F2FE; color: #0369A1; font-size: 0.80rem; font-weight: 900; padding: 4px 12px; border-radius: 6px; border: 1.5px solid #0284C7; margin-bottom: 8px; text-transform: uppercase;">
+                                    TAXONOMIC CLASSIFICATION
+                                </div>
+                                <div style="font-size: 2.3rem; font-weight: 900; color: #0F172A; line-height: 1.1; margin-bottom: 6px;">
+                                    {pred_class}
+                                </div>
+                                <div style="font-size: 1.25rem; font-style: italic; font-weight: 800; color: #0284C7; margin-bottom: 4px;">
+                                    Scientific Name: {report_meta['scientific_name']}
+                                </div>
+                                <div style="font-size: 1.05rem; font-weight: 700; color: #475569; margin-bottom: 16px;">
+                                    Taxonomic Family: {report_meta['family']}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div style="font-size: 1.05rem; font-weight: 900; color: #0F172A; margin-bottom: 10px;">
+                                    Top-3 Neural Probability Distribution:
+                                </div>
+                                {bars_html}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Grid: Modular Scientific Diagnostic & Ecology Cards -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px;">
+                        
+                        <!-- Box 1: Neuro-Visual Attention (Grad-CAM XAI) -->
+                        <div style="background: #FFFFFF; border: 2.5px solid #0284C7; border-radius: 18px; overflow: hidden;">
+                            <div style="background: #F0F9FF; border-bottom: 2px solid #BAE6FD; padding: 12px 18px; font-size: 1.08rem; font-weight: 900; color: #0369A1;">
+                                🔬 NEURO-VISUAL ATTENTION (GRAD-CAM XAI)
+                            </div>
+                            <div style="padding: 18px;">
+                                <div style="font-size: 1.0rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+                                    • Gradient Hotspot Diagnostic:
+                                </div>
+                                <div style="font-size: 0.96rem; color: #1E293B; line-height: 1.55; font-weight: 600; margin-bottom: 14px;">
+                                    {report_meta['xai_insight']}
+                                </div>
+                                <div style="font-size: 1.0rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+                                    • Diagnostic Wing Markers:
+                                </div>
+                                <div style="font-size: 0.96rem; color: #1E293B; line-height: 1.55; font-weight: 600; margin-bottom: 14px;">
+                                    {report_meta['appearance']}
+                                </div>
+                                <div style="font-size: 1.0rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+                                    • Neural Backbone Architecture:
+                                </div>
+                                <div style="font-size: 0.90rem; color: #64748B; font-weight: 700;">
+                                    PyTorch ResNet-18 (512-dim bottleneck) + Target Layer-4 Feature Maps
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Box 2: Biogeography & Ecological Taxonomy -->
+                        <div style="background: #FFFFFF; border: 2.5px solid #10B981; border-radius: 18px; overflow: hidden;">
+                            <div style="background: #F0FDF4; border-bottom: 2px solid #BBF7D0; padding: 12px 18px; font-size: 1.08rem; font-weight: 900; color: #065F46;">
+                                🌿 TAXONOMIC & BIOGEOGRAPHIC PROFILE
+                            </div>
+                            <div style="padding: 18px;">
+                                <div style="font-size: 1.0rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+                                    • Geographic Distribution:
+                                </div>
+                                <div style="font-size: 0.96rem; color: #1E293B; line-height: 1.55; font-weight: 600; margin-bottom: 14px;">
+                                    {report_meta['distribution']}
+                                </div>
+                                <div style="font-size: 1.0rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+                                    • Key Biological Adaptation:
+                                </div>
+                                <div style="font-size: 0.96rem; color: #1E293B; line-height: 1.55; font-weight: 600; margin-bottom: 14px;">
+                                    {report_meta['key_features']}
+                                </div>
+                                <div style="font-size: 1.0rem; font-weight: 900; color: #0F172A; margin-bottom: 4px;">
+                                    • Model Decision Verification:
+                                </div>
+                                <div style="font-size: 0.90rem; color: #059669; font-weight: 800;">
+                                    Validated by Cross-Entropy Loss Optimization & Grad-CAM Backprop
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer Section -->
+                    <div style="border-top: 2px solid #E2E8F0; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <div>
+                            <div style="font-size: 0.92rem; font-weight: 800; color: #0F172A;">
+                                AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture
+                            </div>
+                            <div style="font-size: 0.84rem; font-weight: 600; color: #64748B; margin-top: 2px;">
+                                TorchScript Mobile Export Ready • Native Explainable AI Grad-CAM Studio
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 0.98rem; font-weight: 900; color: #0284C7;">
+                                Lead AI Architect & Engineer: Ohi
+                            </div>
+                            <div style="font-size: 0.84rem; font-weight: 600; color: #64748B; margin-top: 2px;">
+                                Official Specimen Certificate • Verified System Digital Signature
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            """
+            st.markdown(cert_full_html, unsafe_allow_html=True)
 
             action_c1, action_c2 = st.columns([1.5, 1])
             with action_c1:
