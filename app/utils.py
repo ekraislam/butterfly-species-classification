@@ -99,7 +99,7 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
     """
     meta = SPECIES_METADATA.get(pred_class, {
         "scientific_name": "Unknown species",
-        "family": "Insecta • Lepidoptera",
+        "family": "Insecta | Lepidoptera",
         "appearance": "Distinct biological visual wing markings.",
         "distribution": "Global biodiversity habitat.",
         "key_features": "Diagnostic taxonomic wing venation pattern.",
@@ -107,25 +107,33 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
         "xai_insight": "Model neural attention concentrated on discriminative visual wing patterns."
     })
 
-    # Canvas: 1500 x 1120 for punchy, large, super-legible proportions
     card_w, card_h = 1500, 1120
     img_canvas = Image.new("RGB", (card_w, card_h), color=(255, 255, 255))
     draw = ImageDraw.Draw(img_canvas)
 
     win_fonts = os.path.join(os.environ.get("WINDIR", "C:\\Windows"), "Fonts")
+    fonts_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
     
     def _get_font(font_file, size, fallback_file="arialbd.ttf"):
-        for fname in [font_file, fallback_file, "arial.ttf"]:
-            fpath = os.path.join(win_fonts, fname)
-            if os.path.exists(fpath):
+        search_paths = [
+            os.path.join(fonts_dir, font_file),
+            os.path.join(fonts_dir, fallback_file),
+            os.path.join(fonts_dir, "arialbd.ttf"),
+            os.path.join(fonts_dir, "arial.ttf"),
+            os.path.join(win_fonts, font_file),
+            os.path.join(win_fonts, fallback_file),
+            font_file,
+            fallback_file,
+        ]
+        for p in search_paths:
+            if os.path.exists(p):
                 try:
-                    return ImageFont.truetype(fpath, size)
+                    font = ImageFont.truetype(p, size)
+                    bbox = font.getbbox("TEST")
+                    if bbox[2] > bbox[0]:
+                        return font
                 except Exception:
                     pass
-            try:
-                return ImageFont.truetype(fname, size)
-            except Exception:
-                pass
         return ImageFont.load_default()
 
     font_brand = _get_font("segoeuib.ttf", 18, "arialbd.ttf")
@@ -187,11 +195,11 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
 
     # Brand Pill
     draw.rounded_rectangle([68, header_y + 14, 510, header_y + 46], radius=8, fill=(224, 242, 254), outline=(2, 132, 199), width=1)
-    draw.text((80, header_y + 18), "AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB", fill=(3, 105, 161), font=font_brand)
+    draw.text((80, header_y + 18), "AI BUTTERFLY VISION | BIO-INTELLIGENCE LAB", fill=(3, 105, 161), font=font_brand)
 
     # Main Header Title & Subtitle
     draw.text((68, header_y + 52), "Official Specimen Inspection Certificate", fill=(15, 23, 42), font=font_main_hdr)
-    draw.text((68, header_y + 98), "PyTorch ResNet-18 Deep Transfer Learning Architecture • Native Grad-CAM XAI", fill=(71, 85, 105), font=font_sub_hdr)
+    draw.text((68, header_y + 98), "PyTorch ResNet-18 Deep Transfer Learning Architecture | Native Grad-CAM XAI", fill=(71, 85, 105), font=font_sub_hdr)
 
     # Dynamic Certificate Hash & Timestamp
     cert_hash = hashlib.md5(f"{pred_class}_{confidence}".encode()).hexdigest()[:8].upper()
@@ -305,15 +313,21 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
     draw.rounded_rectangle([b1_x, box_y, b1_x + box_w, box_y + 44], radius=16, fill=(240, 249, 255))
     draw.text((b1_x + 18, box_y + 10), "NEURO-VISUAL ATTENTION (GRAD-CAM XAI)", fill=(3, 105, 161), font=font_card_title)
 
-    draw.text((b1_x + 18, box_y + 56), "• Gradient Hotspot Diagnostic:", fill=(15, 23, 42), font=font_body_bold)
+    # Bullet 1
+    draw.ellipse([b1_x + 18, box_y + 64, b1_x + 24, box_y + 70], fill=(2, 132, 199))
+    draw.text((b1_x + 30, box_y + 56), "Gradient Hotspot Diagnostic:", fill=(15, 23, 42), font=font_body_bold)
     y_next = _draw_wrapped(meta['xai_insight'], font_body_text, b1_x + 18, box_y + 86, box_w - 36, (30, 41, 59), line_height=28)
 
+    # Bullet 2
     y_sec2 = max(y_next + 14, box_y + 180)
-    draw.text((b1_x + 18, y_sec2), "• Diagnostic Wing Markers:", fill=(15, 23, 42), font=font_body_bold)
+    draw.ellipse([b1_x + 18, y_sec2 + 8, b1_x + 24, y_sec2 + 14], fill=(2, 132, 199))
+    draw.text((b1_x + 30, y_sec2), "Diagnostic Wing Markers:", fill=(15, 23, 42), font=font_body_bold)
     y_next2 = _draw_wrapped(meta['appearance'], font_body_text, b1_x + 18, y_sec2 + 30, box_w - 36, (30, 41, 59), line_height=28)
 
+    # Bullet 3
     y_sec3 = max(y_next2 + 14, box_y + 345)
-    draw.text((b1_x + 18, y_sec3), "• Neural Backbone Architecture:", fill=(15, 23, 42), font=font_body_bold)
+    draw.ellipse([b1_x + 18, y_sec3 + 8, b1_x + 24, y_sec3 + 14], fill=(2, 132, 199))
+    draw.text((b1_x + 30, y_sec3), "Neural Backbone Architecture:", fill=(15, 23, 42), font=font_body_bold)
     draw.text((b1_x + 18, y_sec3 + 30), "PyTorch ResNet-18 (512-dim bottleneck) + Target Layer-4 Feature Maps", fill=(100, 116, 139), font=font_small)
 
     # Modular Box 2: Biogeography & Ecological Taxonomy
@@ -323,15 +337,21 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
     draw.rounded_rectangle([b2_x, box_y, b2_x + box_w, box_y + 44], radius=16, fill=(240, 253, 244))
     draw.text((b2_x + 18, box_y + 10), "TAXONOMIC & BIOGEOGRAPHIC PROFILE", fill=(6, 95, 70), font=font_card_title)
 
-    draw.text((b2_x + 18, box_y + 56), "• Geographic Distribution:", fill=(15, 23, 42), font=font_body_bold)
+    # Bullet 1
+    draw.ellipse([b2_x + 18, box_y + 64, b2_x + 24, box_y + 70], fill=(16, 185, 129))
+    draw.text((b2_x + 30, box_y + 56), "Geographic Distribution:", fill=(15, 23, 42), font=font_body_bold)
     y2_next = _draw_wrapped(meta['distribution'], font_body_text, b2_x + 18, box_y + 86, box_w - 36, (30, 41, 59), line_height=28)
 
+    # Bullet 2
     y2_sec2 = max(y2_next + 14, box_y + 180)
-    draw.text((b2_x + 18, y2_sec2), "• Key Biological Adaptation:", fill=(15, 23, 42), font=font_body_bold)
+    draw.ellipse([b2_x + 18, y2_sec2 + 8, b2_x + 24, y2_sec2 + 14], fill=(16, 185, 129))
+    draw.text((b2_x + 30, y2_sec2), "Key Biological Adaptation:", fill=(15, 23, 42), font=font_body_bold)
     y2_next2 = _draw_wrapped(meta['key_features'], font_body_text, b2_x + 18, y2_sec2 + 30, box_w - 36, (30, 41, 59), line_height=28)
 
+    # Bullet 3
     y2_sec3 = max(y2_next2 + 14, box_y + 345)
-    draw.text((b2_x + 18, y2_sec3), "• Model Decision Verification:", fill=(15, 23, 42), font=font_body_bold)
+    draw.ellipse([b2_x + 18, y2_sec3 + 8, b2_x + 24, y2_sec3 + 14], fill=(16, 185, 129))
+    draw.text((b2_x + 30, y2_sec3), "Model Decision Verification:", fill=(15, 23, 42), font=font_body_bold)
     draw.text((b2_x + 18, y2_sec3 + 30), "Validated by Cross-Entropy Loss Optimization & Grad-CAM Backprop", fill=(5, 150, 105), font=font_small)
 
     # -------------------------------------------------------------------------
@@ -340,12 +360,12 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
     footer_y = 998
     draw.line([50, footer_y, card_w - 50, footer_y], fill=(226, 232, 240), width=2)
 
-    draw.text((50, footer_y + 14), "AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture", fill=(15, 23, 42), font=font_body_bold)
-    draw.text((50, footer_y + 44), "TorchScript Mobile Export Ready • Native Explainable AI Grad-CAM Studio", fill=(100, 116, 139), font=font_small)
+    draw.text((50, footer_y + 14), "AI Butterfly Vision | PyTorch ResNet-18 Deep Transfer Learning Architecture", fill=(15, 23, 42), font=font_body_bold)
+    draw.text((50, footer_y + 44), "TorchScript Mobile Export Ready | Native Explainable AI Grad-CAM Studio", fill=(100, 116, 139), font=font_small)
     
     # Official Lead Engineer Signature Block
     eng_name_txt = "Lead AI Architect & Engineer: Ohi"
-    eng_sig_txt = "Official Specimen Certificate • Verified System Digital Signature"
+    eng_sig_txt = "Official Specimen Certificate | Verified System Digital Signature"
     
     eng_bbox1 = font_body_bold.getbbox(eng_name_txt)
     eng_w1 = eng_bbox1[2] - eng_bbox1[0]
