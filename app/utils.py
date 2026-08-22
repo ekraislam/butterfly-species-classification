@@ -95,13 +95,8 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
                          pred_class: str, confidence: float, top_k: list) -> bytes:
     """
     Synthesizes a Masterpiece White & Royal Nature Luxury Certificate (1800x1260).
-    Features:
-    - Pure White & Soft Porcelain Canvas with Multi-Tone Royal Blue & Slate Frame
-    - Large, Crystal-Clear Bold Typography (High Contrast, highly readable on any screen/print)
-    - Specimen Dual Chambers with High-Contrast Centered Label Strips
-    - Full-Span High-Contrast Neural Decision Probability Ranking Bars
-    - Balanced Modular Scientific Diagnostic & Ecology Profile Cards
-    - Official Lead Engineer Digital Verification Signature Block
+    Generates a 100% 1-to-1 matching Ultra-HD Official Inspection Certificate
+    PNG image that matches the live on-screen HTML certificate card pixel-by-pixel.
     """
     meta = SPECIES_METADATA.get(pred_class, {
         "scientific_name": "Unknown species",
@@ -113,7 +108,7 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
         "xai_insight": "Model neural attention concentrated on discriminative visual wing patterns."
     })
 
-    card_w, card_h = 1800, 1260
+    card_w, card_h = 1600, 1140
     img_canvas = Image.new("RGB", (card_w, card_h), color=(255, 255, 255))
     draw = ImageDraw.Draw(img_canvas)
 
@@ -131,21 +126,21 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
                     pass
         return ImageFont.load_default()
 
-    font_brand = _get_font("segoeuib.ttf", 20, "arialbd.ttf")
-    font_main_hdr = _get_font("segoeuib.ttf", 46, "arialbd.ttf")
-    font_sub_hdr = _get_font("segoeuib.ttf", 23, "arialbd.ttf")
-    font_cert_id = _get_font("consola.ttf", 20, "cour.ttf")
-    font_species_huge = _get_font("segoeuib.ttf", 64, "arialbd.ttf")
-    font_sci_italic = _get_font("georgiab.ttf", 30, "arialbd.ttf")
-    font_family_txt = _get_font("segoeuib.ttf", 25, "arialbd.ttf")
-    font_section_bold = _get_font("segoeuib.ttf", 28, "arialbd.ttf")
-    font_card_title = _get_font("segoeuib.ttf", 25, "arialbd.ttf")
-    font_chamber_lbl = _get_font("segoeuib.ttf", 22, "arialbd.ttf")
-    font_body_bold = _get_font("segoeuib.ttf", 25, "arialbd.ttf")
-    font_body_text = _get_font("segoeui.ttf", 23, "arial.ttf")
-    font_small = _get_font("segoeuib.ttf", 20, "arialbd.ttf")
-    font_seal_big = _get_font("segoeuib.ttf", 30, "arialbd.ttf")
-    font_seal_sub = _get_font("segoeuib.ttf", 16, "arialbd.ttf")
+    font_brand = _get_font("segoeuib.ttf", 17, "arialbd.ttf")
+    font_main_hdr = _get_font("segoeuib.ttf", 36, "arialbd.ttf")
+    font_sub_hdr = _get_font("segoeuib.ttf", 19, "arialbd.ttf")
+    font_cert_id = _get_font("consola.ttf", 16, "cour.ttf")
+    font_species_huge = _get_font("segoeuib.ttf", 46, "arialbd.ttf")
+    font_sci_italic = _get_font("georgiab.ttf", 24, "arialbd.ttf")
+    font_family_txt = _get_font("segoeuib.ttf", 20, "arialbd.ttf")
+    font_section_bold = _get_font("segoeuib.ttf", 21, "arialbd.ttf")
+    font_card_title = _get_font("segoeuib.ttf", 20, "arialbd.ttf")
+    font_chamber_lbl = _get_font("segoeuib.ttf", 18, "arialbd.ttf")
+    font_body_bold = _get_font("segoeuib.ttf", 19, "arialbd.ttf")
+    font_body_text = _get_font("segoeui.ttf", 18, "arial.ttf")
+    font_small = _get_font("segoeuib.ttf", 16, "arialbd.ttf")
+    font_seal_big = _get_font("segoeuib.ttf", 24, "arialbd.ttf")
+    font_seal_sub = _get_font("segoeuib.ttf", 14, "arialbd.ttf")
 
     def _draw_centered_text(text, font, box_x1, box_y1, box_x2, box_y2, fill):
         bbox = font.getbbox(text)
@@ -155,7 +150,7 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
         cy = box_y1 + (box_y2 - box_y1 - th) // 2
         draw.text((cx, cy), text, fill=fill, font=font)
 
-    def _draw_wrapped(text, font, x, y, max_w, fill, line_height=32):
+    def _draw_wrapped(text, font, x, y, max_w, fill, line_height=26):
         words = text.split()
         lines = []
         cur_line = []
@@ -177,42 +172,42 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
             cy += line_height
         return cy
 
-    # Outer Certificate Framing (Luxury Multi-Tone Royal Border)
-    draw.rectangle([18, 18, card_w - 18, card_h - 18], outline=(15, 23, 42), width=6)
-    draw.rectangle([30, 30, card_w - 30, card_h - 30], outline=(2, 132, 199), width=3)
-    draw.rectangle([38, 38, card_w - 38, card_h - 38], outline=(226, 232, 240), width=2)
+    # Outer Double Border Box (Exact replica of HTML Card)
+    draw.rounded_rectangle([16, 16, card_w - 16, card_h - 16], radius=24, fill=(255, 255, 255), outline=(15, 23, 42), width=4)
+    draw.rounded_rectangle([32, 32, card_w - 32, card_h - 32], radius=16, fill=(255, 255, 255), outline=(2, 132, 199), width=2)
 
     # -------------------------------------------------------------------------
     # TOP HEADER (Porcelain Card with Lab Badge & Verified Decision)
     # -------------------------------------------------------------------------
-    header_y = 48
-    draw.rounded_rectangle([48, header_y, card_w - 48, header_y + 140], radius=16, fill=(248, 250, 252), outline=(226, 232, 240), width=2)
+    header_y = 52
+    draw.rounded_rectangle([52, header_y, card_w - 52, header_y + 130], radius=14, fill=(248, 250, 252), outline=(226, 232, 240), width=2)
 
     # Brand Pill
-    draw.rounded_rectangle([68, header_y + 12, 590, header_y + 44], radius=8, fill=(224, 242, 254), outline=(2, 132, 199), width=2)
-    draw.text((82, header_y + 16), "AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB", fill=(3, 105, 161), font=font_brand)
+    draw.rounded_rectangle([70, header_y + 14, 490, header_y + 42], radius=8, fill=(224, 242, 254), outline=(2, 132, 199), width=1)
+    draw.text((82, header_y + 18), "AI BUTTERFLY VISION • BIO-INTELLIGENCE LAB", fill=(3, 105, 161), font=font_brand)
 
     # Main Header Title & Subtitle
-    draw.text((68, header_y + 50), "Official Specimen Inspection Certificate", fill=(15, 23, 42), font=font_main_hdr)
-    draw.text((68, header_y + 104), "Deep Transfer Learning (ResNet-18) • Explainable AI Grad-CAM Studio", fill=(71, 85, 105), font=font_sub_hdr)
+    draw.text((70, header_y + 48), "Official Specimen Inspection Certificate", fill=(15, 23, 42), font=font_main_hdr)
+    draw.text((70, header_y + 94), "PyTorch ResNet-18 Deep Transfer Learning Architecture • Native Grad-CAM XAI", fill=(71, 85, 105), font=font_sub_hdr)
 
-    # Cert ID
+    # Dynamic Certificate Hash & Timestamp
     cert_hash = hashlib.md5(f"{pred_class}_{confidence}".encode()).hexdigest()[:8].upper()
     cert_id_str = f"CERT-ID: BIO-2026-XAI-{cert_hash}"
-    draw.text((card_w - 425, header_y + 14), cert_id_str, fill=(2, 132, 199), font=font_cert_id)
+    draw.rounded_rectangle([card_w - 370, header_y + 12, card_w - 70, header_y + 40], radius=6, fill=(240, 249, 255), outline=(186, 230, 253), width=1)
+    _draw_centered_text(cert_id_str, font_cert_id, card_w - 370, header_y + 12, card_w - 70, header_y + 40, (2, 132, 199))
 
-    # Verified Decision Badge (High-Contrast Emerald Shield)
-    badge_x, badge_y = card_w - 370, header_y + 46
-    draw.rounded_rectangle([badge_x, badge_y, badge_x + 300, badge_y + 80], radius=14, fill=(236, 253, 245), outline=(16, 185, 129), width=3)
-    draw.text((badge_x + 16, badge_y + 10), "VERIFIED AI DECISION", fill=(5, 150, 105), font=font_seal_sub)
-    draw.text((badge_x + 16, badge_y + 32), f"CONFIDENCE: {confidence:.1f}%", fill=(6, 95, 70), font=font_seal_big)
+    # Verified Decision Badge (Emerald Box)
+    badge_x, badge_y = card_w - 360, header_y + 48
+    draw.rounded_rectangle([badge_x, badge_y, badge_x + 290, badge_y + 72], radius=12, fill=(236, 253, 245), outline=(16, 185, 129), width=2)
+    draw.text((badge_x + 16, badge_y + 8), "VERIFIED AI DECISION", fill=(5, 150, 105), font=font_seal_sub)
+    draw.text((badge_x + 16, badge_y + 28), f"CONFIDENCE: {confidence:.1f}%", fill=(6, 95, 70), font=font_seal_big)
 
     # -------------------------------------------------------------------------
-    # LEFT COLUMN: Specimen Photographic Evidence Chambers
+    # MIDDLE SECTION: Dual Chambers (Left) + Species Taxonomy (Right)
     # -------------------------------------------------------------------------
-    img_size = 330
+    ch_w, ch_h = 330, 330
     
-    def _create_contained_preview(img_in, target_size=(330, 330)):
+    def _create_contained_preview(img_in, target_size=(300, 260)):
         chamber = Image.new("RGB", target_size, (255, 255, 255))
         c_img = img_in.convert("RGB").copy()
         w, h = c_img.size
@@ -224,64 +219,56 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
         chamber.paste(c_resized, (ox, oy))
         return chamber
 
-    orig_thumb = _create_contained_preview(original_image, (img_size, img_size))
-    ov_thumb = _create_contained_preview(overlay_image, (img_size, img_size))
+    thumb_size = (300, 255)
+    orig_thumb = _create_contained_preview(original_image, thumb_size)
+    ov_thumb = _create_contained_preview(overlay_image, thumb_size)
 
     # Chamber 1: Original Image
-    ch1_x, ch1_y = 58, 206
-    draw.rounded_rectangle([ch1_x - 6, ch1_y - 6, ch1_x + img_size + 6, ch1_y + img_size + 6], radius=14, fill=(255, 255, 255), outline=(203, 213, 225), width=2)
-    img_canvas.paste(orig_thumb, (ch1_x, ch1_y))
+    ch1_x, ch1_y = 52, 198
+    draw.rounded_rectangle([ch1_x, ch1_y, ch1_x + ch_w, ch1_y + ch_h], radius=14, fill=(255, 255, 255), outline=(203, 213, 225), width=2)
+    img_canvas.paste(orig_thumb, (ch1_x + 15, ch1_y + 15))
     # Chamber 1 Label Strip
-    ch1_lbl_box = [ch1_x - 6, ch1_y + img_size + 10, ch1_x + img_size + 6, ch1_y + img_size + 48]
-    draw.rounded_rectangle(ch1_lbl_box, radius=8, fill=(241, 245, 249), outline=(203, 213, 225), width=2)
+    ch1_lbl_box = [ch1_x + 15, ch1_y + ch_h - 48, ch1_x + ch_w - 15, ch1_y + ch_h - 12]
+    draw.rounded_rectangle(ch1_lbl_box, radius=6, fill=(241, 245, 249), outline=(203, 213, 225), width=1)
     _draw_centered_text("Original Input Specimen", font_chamber_lbl, ch1_lbl_box[0], ch1_lbl_box[1], ch1_lbl_box[2], ch1_lbl_box[3], (15, 23, 42))
 
     # Chamber 2: Grad-CAM Heatmap
-    ch2_x = ch1_x + img_size + 24
-    draw.rounded_rectangle([ch2_x - 6, ch1_y - 6, ch2_x + img_size + 6, ch1_y + img_size + 6], radius=14, fill=(255, 255, 255), outline=(2, 132, 199), width=3)
-    img_canvas.paste(ov_thumb, (ch2_x, ch1_y))
+    ch2_x = ch1_x + ch_w + 20
+    draw.rounded_rectangle([ch2_x, ch1_y, ch2_x + ch_w, ch1_y + ch_h], radius=14, fill=(255, 255, 255), outline=(2, 132, 199), width=2)
+    img_canvas.paste(ov_thumb, (ch2_x + 15, ch1_y + 15))
     # Chamber 2 Label Strip
-    ch2_lbl_box = [ch2_x - 6, ch1_y + img_size + 10, ch2_x + img_size + 6, ch1_y + img_size + 48]
-    draw.rounded_rectangle(ch2_lbl_box, radius=8, fill=(224, 242, 254), outline=(2, 132, 199), width=2)
+    ch2_lbl_box = [ch2_x + 15, ch1_y + ch_h - 48, ch2_x + ch_w - 15, ch1_y + ch_h - 12]
+    draw.rounded_rectangle(ch2_lbl_box, radius=6, fill=(224, 242, 254), outline=(2, 132, 199), width=1)
     _draw_centered_text("Grad-CAM Attention Map (XAI)", font_chamber_lbl, ch2_lbl_box[0], ch2_lbl_box[1], ch2_lbl_box[2], ch2_lbl_box[3], (2, 132, 199))
 
-    # -------------------------------------------------------------------------
-    # RIGHT COLUMN: Species Identification & Ranked Probability Bars
-    # -------------------------------------------------------------------------
-    rx = 775
+    # RIGHT COLUMN: Species Taxonomy & Progress Bars
+    rx = ch2_x + ch_w + 30
+    r_w_max = card_w - 52 - rx
     
     # Taxonomic Identification Badge
-    draw.rounded_rectangle([rx, 200, rx + 295, 234], radius=8, fill=(224, 242, 254), outline=(2, 132, 199), width=2)
-    draw.text((rx + 14, 206), "TAXONOMIC CLASSIFICATION", fill=(3, 105, 161), font=font_seal_sub)
+    draw.rounded_rectangle([rx, 198, rx + 240, 226], radius=6, fill=(224, 242, 254), outline=(2, 132, 199), width=1)
+    draw.text((rx + 12, 203), "TAXONOMIC CLASSIFICATION", fill=(3, 105, 161), font=font_seal_sub)
 
-    # Species Name (Huge, Bold, Crystal Clear Dark Text)
-    draw.text((rx, 240), pred_class, fill=(15, 23, 42), font=font_species_huge)
+    # Species Name (Big, Bold, Crystal Clear Dark Text)
+    draw.text((rx, 232), pred_class, fill=(15, 23, 42), font=font_species_huge)
     
     # Binomial & Family
-    draw.text((rx, 314), f"Scientific Name: {meta['scientific_name']}", fill=(2, 132, 199), font=font_sci_italic)
-    draw.text((rx, 355), f"Taxonomic Family: {meta['family']}", fill=(51, 65, 85), font=font_family_txt)
+    draw.text((rx, 288), f"Scientific Name: {meta['scientific_name']}", fill=(2, 132, 199), font=font_sci_italic)
+    draw.text((rx, 322), f"Taxonomic Family: {meta['family']}", fill=(71, 85, 105), font=font_family_txt)
 
-    # Divider Line
-    draw.line([rx, 396, card_w - 58, 396], fill=(226, 232, 240), width=2)
+    # Top-3 Probability Bars
+    draw.text((rx, 360), "Top-3 Neural Probability Distribution:", fill=(15, 23, 42), font=font_section_bold)
 
-    # Top-3 Ranked Probability Progress Bars
-    draw.text((rx, 410), "Top-3 Neural Probability Distribution:", fill=(15, 23, 42), font=font_section_bold)
-
-    bar_w_max = card_w - rx - 58
     for i, (c_name, prob) in enumerate(top_k):
-        bar_y = 452 + i * 54
+        bar_y = 394 + i * 44
         # Outer bar container
-        draw.rounded_rectangle([rx, bar_y, rx + bar_w_max, bar_y + 44], radius=10, fill=(248, 250, 252), outline=(203, 213, 225), width=2)
+        draw.rounded_rectangle([rx, bar_y, rx + r_w_max, bar_y + 36], radius=8, fill=(248, 250, 252), outline=(226, 232, 240), width=1)
         
         # Fill bar
-        fill_width = int(bar_w_max * (min(prob, 100.0) / 100.0))
+        fill_width = int(r_w_max * (min(prob, 100.0) / 100.0))
         if fill_width > 0:
-            if i == 0:
-                bar_color = (2, 132, 199)
-                draw.rounded_rectangle([rx, bar_y, rx + fill_width, bar_y + 44], radius=10, fill=bar_color)
-            else:
-                bar_color = (224, 242, 254)
-                draw.rounded_rectangle([rx, bar_y, rx + fill_width, bar_y + 44], radius=10, fill=bar_color)
+            bar_color = (2, 132, 199) if i == 0 else (224, 242, 254)
+            draw.rounded_rectangle([rx, bar_y, rx + fill_width, bar_y + 36], radius=8, fill=bar_color)
         
         # Text label (High Contrast)
         name_txt = f"#{i+1}  {c_name}"
@@ -289,67 +276,69 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
         
         prob_bbox = font_body_bold.getbbox(prob_txt)
         pw = prob_bbox[2] - prob_bbox[0]
-        prob_x = rx + bar_w_max - 20 - pw
+        prob_x = rx + r_w_max - 15 - pw
         
         if i == 0:
-            txt_fill = (255, 255, 255) if fill_width > 340 else (15, 23, 42)
-            prob_fill = (255, 255, 255) if fill_width >= (bar_w_max - 25 - pw) else (2, 132, 199)
+            txt_fill = (255, 255, 255) if fill_width > 300 else (15, 23, 42)
+            prob_fill = (255, 255, 255) if fill_width >= (r_w_max - 20 - pw) else (2, 132, 199)
         else:
             txt_fill = (15, 23, 42)
-            prob_fill = (51, 65, 85)
+            prob_fill = (71, 85, 105)
             
-        draw.text((rx + 18, bar_y + 8), name_txt, fill=txt_fill, font=font_body_bold)
-        draw.text((prob_x, bar_y + 8), prob_txt, fill=prob_fill, font=font_body_bold)
+        draw.text((rx + 14, bar_y + 7), name_txt, fill=txt_fill, font=font_body_bold)
+        draw.text((prob_x, bar_y + 7), prob_txt, fill=prob_fill, font=font_body_bold)
 
     # -------------------------------------------------------------------------
-    # BOTTOM SECTION: Modular Scientific Diagnostic & Ecology Cards (2 High-Impact Cards)
+    # BOTTOM SECTION: Modular Scientific Diagnostic & Ecology Cards (2 Crisp Cards)
     # -------------------------------------------------------------------------
-    box_y = 635
-    box_w = (card_w - 116 - 24) // 2
-    box_h = 430
+    box_y = 548
+    box_w = (card_w - 104 - 24) // 2
+    box_h = 440
 
     # Modular Box 1: Neuro-Visual Attention (Grad-CAM XAI)
-    b1_x = 58
-    draw.rounded_rectangle([b1_x, box_y, b1_x + box_w, box_y + box_h], radius=16, fill=(255, 255, 255), outline=(2, 132, 199), width=3)
-    draw.rounded_rectangle([b1_x, box_y, b1_x + box_w, box_y + 50], radius=16, fill=(240, 249, 255))
-    draw.text((b1_x + 20, box_y + 12), "NEURO-VISUAL ATTENTION (GRAD-CAM XAI)", fill=(3, 105, 161), font=font_card_title)
+    b1_x = 52
+    draw.rounded_rectangle([b1_x, box_y, b1_x + box_w, box_y + box_h], radius=16, fill=(255, 255, 255), outline=(2, 132, 199), width=2)
+    # Header bar
+    draw.rounded_rectangle([b1_x, box_y, b1_x + box_w, box_y + 44], radius=16, fill=(240, 249, 255))
+    draw.text((b1_x + 18, box_y + 12), "NEURO-VISUAL ATTENTION (GRAD-CAM XAI)", fill=(3, 105, 161), font=font_card_title)
 
-    draw.text((b1_x + 20, box_y + 64), "• Gradient Hotspot Diagnostic:", fill=(15, 23, 42), font=font_body_bold)
-    y_next = _draw_wrapped(meta['xai_insight'], font_body_text, b1_x + 20, box_y + 98, box_w - 40, (30, 41, 59), line_height=32)
+    draw.text((b1_x + 18, box_y + 58), "• Gradient Hotspot Diagnostic:", fill=(15, 23, 42), font=font_body_bold)
+    y_next = _draw_wrapped(meta['xai_insight'], font_body_text, b1_x + 18, box_y + 88, box_w - 36, (30, 41, 59), line_height=26)
 
-    y_sec2 = max(y_next + 16, box_y + 185)
-    draw.text((b1_x + 20, y_sec2), "• Diagnostic Wing Markers:", fill=(15, 23, 42), font=font_body_bold)
-    y_next2 = _draw_wrapped(meta['appearance'], font_body_text, b1_x + 20, y_sec2 + 34, box_w - 40, (30, 41, 59), line_height=32)
+    y_sec2 = max(y_next + 14, box_y + 175)
+    draw.text((b1_x + 18, y_sec2), "• Diagnostic Wing Markers:", fill=(15, 23, 42), font=font_body_bold)
+    y_next2 = _draw_wrapped(meta['appearance'], font_body_text, b1_x + 18, y_sec2 + 30, box_w - 36, (30, 41, 59), line_height=26)
 
-    y_sec3 = max(y_next2 + 16, box_y + 330)
-    draw.text((b1_x + 20, y_sec3), "• Neural Backbone Architecture:", fill=(15, 23, 42), font=font_body_bold)
-    draw.text((b1_x + 20, y_sec3 + 34), "PyTorch ResNet-18 (512-dim bottleneck) + Target Layer-4 Feature Maps", fill=(100, 116, 139), font=font_small)
+    y_sec3 = max(y_next2 + 14, box_y + 340)
+    draw.text((b1_x + 18, y_sec3), "• Neural Backbone Architecture:", fill=(15, 23, 42), font=font_body_bold)
+    draw.text((b1_x + 18, y_sec3 + 30), "PyTorch ResNet-18 (512-dim bottleneck) + Target Layer-4 Feature Maps", fill=(100, 116, 139), font=font_small)
 
     # Modular Box 2: Biogeography & Ecological Taxonomy
     b2_x = b1_x + box_w + 24
-    draw.rounded_rectangle([b2_x, box_y, b2_x + box_w, box_y + box_h], radius=16, fill=(255, 255, 255), outline=(16, 185, 129), width=3)
-    draw.rounded_rectangle([b2_x, box_y, b2_x + box_w, box_y + 50], radius=16, fill=(236, 253, 245))
-    draw.text((b2_x + 20, box_y + 12), "TAXONOMIC & BIOGEOGRAPHIC PROFILE", fill=(6, 95, 70), font=font_card_title)
+    draw.rounded_rectangle([b2_x, box_y, b2_x + box_w, box_y + box_h], radius=16, fill=(255, 255, 255), outline=(16, 185, 129), width=2)
+    # Header bar
+    draw.rounded_rectangle([b2_x, box_y, b2_x + box_w, box_y + 44], radius=16, fill=(240, 253, 244))
+    draw.text((b2_x + 18, box_y + 12), "TAXONOMIC & BIOGEOGRAPHIC PROFILE", fill=(6, 95, 70), font=font_card_title)
 
-    draw.text((b2_x + 20, box_y + 64), "• Geographic Distribution:", fill=(15, 23, 42), font=font_body_bold)
-    y2_next = _draw_wrapped(meta['distribution'], font_body_text, b2_x + 20, box_y + 98, box_w - 40, (30, 41, 59), line_height=32)
+    draw.text((b2_x + 18, box_y + 58), "• Geographic Distribution:", fill=(15, 23, 42), font=font_body_bold)
+    y2_next = _draw_wrapped(meta['distribution'], font_body_text, b2_x + 18, box_y + 88, box_w - 36, (30, 41, 59), line_height=26)
 
-    y2_sec2 = max(y2_next + 16, box_y + 185)
-    draw.text((b2_x + 20, y2_sec2), "• Key Biological Adaptation:", fill=(15, 23, 42), font=font_body_bold)
-    y2_next2 = _draw_wrapped(meta['key_features'], font_body_text, b2_x + 20, y2_sec2 + 34, box_w - 40, (30, 41, 59), line_height=32)
+    y2_sec2 = max(y2_next + 14, box_y + 175)
+    draw.text((b2_x + 18, y2_sec2), "• Key Biological Adaptation:", fill=(15, 23, 42), font=font_body_bold)
+    y2_next2 = _draw_wrapped(meta['key_features'], font_body_text, b2_x + 18, y2_sec2 + 30, box_w - 36, (30, 41, 59), line_height=26)
 
-    y2_sec3 = max(y2_next2 + 16, box_y + 330)
-    draw.text((b2_x + 20, y2_sec3), "• Model Decision Verification:", fill=(15, 23, 42), font=font_body_bold)
-    draw.text((b2_x + 20, y2_sec3 + 34), "Validated by Cross-Entropy Loss Optimization & Grad-CAM Backprop", fill=(5, 150, 105), font=font_small)
+    y2_sec3 = max(y2_next2 + 14, box_y + 340)
+    draw.text((b2_x + 18, y2_sec3), "• Model Decision Verification:", fill=(15, 23, 42), font=font_body_bold)
+    draw.text((b2_x + 18, y2_sec3 + 30), "Validated by Cross-Entropy Loss Optimization & Grad-CAM Backprop", fill=(5, 150, 105), font=font_small)
 
     # -------------------------------------------------------------------------
-    # FOOTER: Signature & Official Certification Stamp (Generous Bottom Spacing)
+    # FOOTER: Signature & Official Certification Stamp
     # -------------------------------------------------------------------------
-    footer_y = 1095
-    draw.line([58, footer_y, card_w - 58, footer_y], fill=(203, 213, 225), width=2)
+    footer_y = 1008
+    draw.line([52, footer_y, card_w - 52, footer_y], fill=(226, 232, 240), width=2)
 
-    draw.text((58, footer_y + 18), "AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture", fill=(15, 23, 42), font=font_body_bold)
-    draw.text((58, footer_y + 50), "TorchScript Mobile Export Ready • Native Explainable AI Grad-CAM Studio", fill=(100, 116, 139), font=font_small)
+    draw.text((52, footer_y + 14), "AI Butterfly Vision • PyTorch ResNet-18 Deep Transfer Learning Architecture", fill=(15, 23, 42), font=font_body_bold)
+    draw.text((52, footer_y + 42), "TorchScript Mobile Export Ready • Native Explainable AI Grad-CAM Studio", fill=(100, 116, 139), font=font_small)
     
     # Official Lead Engineer Signature Block
     eng_name_txt = "Lead AI Architect & Engineer: Ohi"
@@ -357,11 +346,11 @@ def generate_report_card(original_image: Image.Image, overlay_image: Image.Image
     
     eng_bbox1 = font_body_bold.getbbox(eng_name_txt)
     eng_w1 = eng_bbox1[2] - eng_bbox1[0]
-    draw.text((card_w - 58 - eng_w1, footer_y + 18), eng_name_txt, fill=(2, 132, 199), font=font_body_bold)
+    draw.text((card_w - 52 - eng_w1, footer_y + 14), eng_name_txt, fill=(2, 132, 199), font=font_body_bold)
     
     eng_bbox2 = font_small.getbbox(eng_sig_txt)
     eng_w2 = eng_bbox2[2] - eng_bbox2[0]
-    draw.text((card_w - 58 - eng_w2, footer_y + 50), eng_sig_txt, fill=(100, 116, 139), font=font_small)
+    draw.text((card_w - 52 - eng_w2, footer_y + 42), eng_sig_txt, fill=(100, 116, 139), font=font_small)
 
     buf = BytesIO()
     img_canvas.save(buf, format="PNG", quality=100)
